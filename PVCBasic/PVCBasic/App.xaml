@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
+<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters ="clr-namespace:PVCBasic.Converters"
              x:Class="PVCBasic.App">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
     -->
     <Application.Resources>
+        <converters:ItemTappedEventArgsToObjectConverter x:Key="ItemTappedEventArgsToObjectConverter" />
         <ResourceDictionary>
             <Color x:Key="Primary">#2196F3</Color>
             <Style TargetType="Button">
@@ -29,4 +32,4 @@
             </Style>
         </ResourceDictionary>        
     </Application.Resources>
-</Application>
+</prism:PrismApplication>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PVCBasic.Views.MasterDetailPage"
+             xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
+             xmlns:converters="clr-namespace:PVCBasic.Converters"
+             xmlns:pages="clr-namespace:PVCBasic.Views"
+                  Title="{Binding Title}">
+    <MasterDetailPage.Resources>
+        <converters:ItemTappedEventArgsToObjectConverter x:Key="ItemTappedConverter" />
+    </MasterDetailPage.Resources>
+    <MasterDetailPage.Master>
+        <ContentPage Title="Master">
+            <Grid BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+              
+                <StackLayout  Grid.Row="1">
+                    <ListView HasUnevenRows="True" ItemsSource="{Binding Menu}" SelectionMode="None" >
+                        <ListView.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding NavigateCommand}" Converter="{StaticResource ItemTappedConverter}"/>
+                        </ListView.Behaviors>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="10">
+                                        <Label Text="{Binding Name}" FontSize="20"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </Grid>
+        </ContentPage>
+    </MasterDetailPage.Master>
+</MasterDetailPage>
