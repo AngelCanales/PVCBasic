@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "c2r1dGm3SIK+Vfnm0BpJF3dVMa4K4UTwfP6ytO+WsJ4nYqr+Guy6Viw5k3Bd8aq6zifsq1t5KsaN1PIq0drs+Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\AngelCanales\\source\\repos\\PVCBasic\\PVCBasic\\PVCBasic.iOS\\PVCBasic.iOS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\AngelCanales\\.nuget\\packages\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
+    "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.6.0.1141\\xamarin.forms.4.6.0.1141.nupkg.sha512"
+  ],
+  "logs": []
+}
