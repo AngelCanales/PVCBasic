@@ -26,7 +26,7 @@ namespace PVCBasic.ViewModels
                 new MenuItem
                 {
                     Name = "Ventas",
-                    Route = "MasterDetailPage/NavigationPage/Sales",
+                    Route = "MasterDetailPage/NavigationPage/SalesPage",
                 },
                 new MenuItem
                 {
