@@ -3,6 +3,7 @@
   <PropertyGroup>
     <SelectedDevice>pixel_2_cisa</SelectedDevice>
     <DefaultDevice>pixel_2_cisa</DefaultDevice>
-    <ProjectView>ShowAllFiles</ProjectView>
+    <ProjectView>ProjectFiles</ProjectView>
+    <AndroidDesignerPreferredTheme>Theme.AppCompat.Light.NoActionBar</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>

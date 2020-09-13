@@ -17,6 +17,8 @@ namespace PVCBasic.ViewModels
         private int purchaseQuantity;
         private decimal totalSales;
         private int salesQuantity;
+        private decimal box;
+        private string boxTextColor;
         private readonly IInvoicesManager invoicesManager;
         public SummaryPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
@@ -41,7 +43,15 @@ namespace PVCBasic.ViewModels
             this.TotalPurchases = purchase.Sum(s => s.Total);
             this.SalesQuantity = sales.Count();
             this.TotalSales = sales.Sum(s => s.Total);
-
+            this.Box = this.TotalSales - this.TotalPurchases;
+            if (this.Box < 0)
+            {
+                this.BoxTextColor = "#FC0505";
+            }
+            else
+            {
+                this.BoxTextColor = "#0561FC";
+            }
         }
         public int SalesQuantity
         {
@@ -93,5 +103,24 @@ namespace PVCBasic.ViewModels
             }
         }
 
+        public decimal Box
+        {
+            get => this.box;
+            set
+            {
+                this.box = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public string BoxTextColor
+        {
+            get => this.boxTextColor;
+            set
+            {
+                this.boxTextColor = value;
+                this.RaisePropertyChanged();
+            }
+        }
     }
 }

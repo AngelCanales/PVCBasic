@@ -43,6 +43,21 @@ namespace PVCBasic.ViewModels
                     Name = "Lista de Compras",
                     Route = "MasterDetailPage/NavigationPage/",
                 },
+                new MenuItem
+                {
+                    Name = "Reporte Diario",
+                    Route = "MasterDetailPage/NavigationPage/SummaryPage",
+                },
+                 new MenuItem
+                {
+                    Name = "Reporte Mensual",
+                    Route = "MasterDetailPage/NavigationPage/",
+                },
+                  new MenuItem
+                {
+                    Name = "Reporte Anual",
+                    Route = "MasterDetailPage/NavigationPage/",
+                },
             };
 
             this.NavigateCommand = new DelegateCommand<MenuItem>(async (item) => await this.ExecuteNavigate(item));

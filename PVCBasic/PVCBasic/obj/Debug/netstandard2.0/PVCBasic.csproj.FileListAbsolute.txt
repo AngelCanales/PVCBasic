@@ -4,6 +4,7 @@ C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\bin\Debug\netstand
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\bin\Debug\netstandard2.0\PVCBasic.pdb
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\bin\Debug\netstandard2.0\es-HN\PVCBasic.resources.dll
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\bin\Debug\netstandard2.0\es\PVCBasic.resources.dll
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.csprojAssemblyReference.cache
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.Resource.ResourceGlobal.resources
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.Resource.ResourceGlobal.es-HN.resources
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.Resource.ResourceGlobal.es.resources
