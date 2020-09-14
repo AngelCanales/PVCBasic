@@ -36,15 +36,26 @@ namespace PVCBasic.ViewModels
             this.AddItemCommand = new DelegateCommand(async () => await this.ExecuteAddItemCommand());
             this.UpdateItemCommand = new DelegateCommand(async () => await this.ExecuteUpdateItemCommand());
             this.DeleteItemCommand = new DelegateCommand(async () => await this.ExecuteDeleteItemCommand());
+            this.ClearItemsCommand = new DelegateCommand(async () => await this.ExecuteClearItemsCommand());
         }
 
         public DetailInvoicesViewModel SelectedItemDetails { get; set; }
 
         public ICommand AddItemCommand { get; set; }
 
+        public ICommand ClearItemsCommand { get; set; }
+
+        private async Task ExecuteClearItemsCommand()
+        {
+            this.DetailInvoices.Clear();
+        }
+
         private async Task ExecuteAddItemCommand()
         { 
-            var des = $"{this.NameProduct} -> {this.Quantity} x {this.Price} = {this.TotalItem}";
+            if(this.Quantity== null) { return; };
+            if (this.Price == null) { return; };
+
+            var des = $"{this.NameProduct} -> {this.Quantity.Value} x {this.Price.Value} = {this.TotalItem}";
             var item = new DetailInvoicesViewModel
             {
                 Id =  Guid.NewGuid(),

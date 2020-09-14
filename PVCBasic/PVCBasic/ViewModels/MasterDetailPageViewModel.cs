@@ -27,36 +27,43 @@ namespace PVCBasic.ViewModels
                 {
                     Name = "Ventas",
                     Route = "MasterDetailPage/NavigationPage/SalesPage",
+                    IconValue = "\uf07a",
                 },
                 new MenuItem
                 {
                     Name = "Compras",
                     Route = "MasterDetailPage/NavigationPage/Compras",
+                    IconValue = "\uf3d1",
                 },
                 new MenuItem
                 {
                     Name = "Lista de Ventas",
                     Route = "MasterDetailPage/NavigationPage/",
+                    IconValue = "\uf46d",
                 },
                 new MenuItem
                 {
                     Name = "Lista de Compras",
                     Route = "MasterDetailPage/NavigationPage/",
+                    IconValue = "\uf46d",
                 },
                 new MenuItem
                 {
                     Name = "Reporte Diario",
                     Route = "MasterDetailPage/NavigationPage/SummaryPage",
+                    IconValue = "\uf1fe",
                 },
                  new MenuItem
                 {
                     Name = "Reporte Mensual",
                     Route = "MasterDetailPage/NavigationPage/",
+                    IconValue = "\uf1fe",
                 },
                   new MenuItem
                 {
                     Name = "Reporte Anual",
                     Route = "MasterDetailPage/NavigationPage/",
+                    IconValue = "\uf1fe",
                 },
             };
 

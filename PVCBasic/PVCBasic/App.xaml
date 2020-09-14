@@ -56,6 +56,108 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+
+           
+
+                <!--Global Styles-->
+            <Color x:Key="NavigationPrimary">#fff</Color>
+                <Color x:Key="ErrorColor">#ff5252</Color>
+
+                <Color x:Key="Accent">#FFFFFF</Color>
+                <Color x:Key="LightTextColor">#999999</Color>
+
+
+                <x:Double x:Key="BigSize">
+                    16
+                </x:Double>
+                <x:Double x:Key="LittleSize">
+                    12
+                </x:Double>
+                <x:Double x:Key="BiggerSize">
+                    20
+                </x:Double>
+
+
+            <Color x:Key="LabelTextColor">#000000</Color>
+                <Color x:Key="EntryTextColor">#000000</Color>
+                <Color x:Key="DatePikerTextColor">#000000</Color>
+                <Color x:Key="ButtonBackgroundColor">#1f91f3</Color>
+                <Color x:Key="ButtonBorderColor">#1f91f3</Color>
+                <Color x:Key="ButtonTextColor">#FFFFFF</Color>
+
+
+                <x:Double x:Key="LabelFontSize">
+                    14
+                </x:Double>
+                <x:Double x:Key="EntryFontSize">
+                    14
+                </x:Double>
+                <x:Double x:Key="DatePikerFontSize">
+                    14
+                </x:Double>
+                <x:Double x:Key="ButtonFontSize">
+                    18
+                </x:Double>
+
+                <Style x:Key="LabelStyle"
+                   TargetType="{x:Type Label}">
+                    <Setter Property="TextColor"
+                           Value="{StaticResource LabelTextColor}" />
+                    <Setter Property="FontSize"
+                           Value="Medium" />
+                </Style>
+
+                
+
+                <Style x:Key="LabelSummaryStyle"
+                   TargetType="{x:Type Label}">
+                    <Setter Property="TextColor"
+                           Value="Black" />
+                    <Setter Property="FontSize"
+                           Value="Title" />
+                </Style>
+
+                <Style x:Key="EntryStyle"
+                   TargetType="{x:Type Entry}">
+                    <Setter Property="TextColor"
+                           Value="{StaticResource EntryTextColor}" />
+                    <Setter Property="FontSize"
+                           Value="Medium" />
+                </Style>
+
+                <Style x:Key="ContentPageStyle" TargetType="{x:Type ContentPage}">
+
+                <Setter Property="BackgroundColor" Value="#f8f9fa"/>
+                </Style>
+
+            <Style x:Key="MasterDetailPageStyle" TargetType="{x:Type ContentPage}">
+
+                <Setter Property="BackgroundColor" Value="#343a40"/>
+            </Style>
+            
+            <Style x:Key="DatePikerStyle"
+                   TargetType="{x:Type DatePicker}">
+                    <Setter Property="TextColor"
+                           Value="{StaticResource DatePikerTextColor}" />
+                    <Setter Property="FontSize"
+                           Value="Title" />
+                </Style>
+
+                <Style x:Key="ValidationErrorLabelStyle"
+                   TargetType="{x:Type Label}">
+                    <Setter Property="TextColor"
+                           Value="{StaticResource ErrorColor}" />
+                    <Setter Property="FontSize"
+                           Value="{StaticResource LittleSize}" />
+                </Style>
+
+                <Style TargetType="NavigationPage">
+                    <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
+                <Setter Property="BarTextColor" Value="#343a40" />
+                </Style>
+         
+
+
         </ResourceDictionary>        
     </Application.Resources>
 </prism:PrismApplication>

@@ -4,19 +4,23 @@
              x:Class="PVCBasic.Views.MasterDetailPage"
              xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
              xmlns:converters="clr-namespace:PVCBasic.Converters"
+                    xmlns:fontawesome="clr-namespace:FontAwesome"
              xmlns:pages="clr-namespace:PVCBasic.Views"
+                  Style="{StaticResource MasterDetailPageStyle}"
                   Title="{Binding Title}">
     <MasterDetailPage.Resources>
         <converters:ItemTappedEventArgsToObjectConverter x:Key="ItemTappedConverter" />
     </MasterDetailPage.Resources>
     <MasterDetailPage.Master>
-        <ContentPage Title="Master">
+        <ContentPage Title="Master" Style="{StaticResource MasterDetailPageStyle}">
             <Grid BackgroundColor="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-              
+                <StackLayout   BackgroundColor="#f8f9fa">
+                    <Label TextColor="Black" Text="PVCBasic" FontAttributes="Bold" FontSize="20"/>
+                </StackLayout>
                 <StackLayout  Grid.Row="1">
                     <ListView HasUnevenRows="True" ItemsSource="{Binding Menu}" SelectionMode="None" >
                         <ListView.Behaviors>
@@ -26,7 +30,13 @@
                             <DataTemplate>
                                 <ViewCell>
                                     <Grid Padding="10">
-                                        <Label Text="{Binding Name}" FontSize="20"/>
+                                        <StackLayout Orientation="Horizontal"  Padding="5">
+                                            <Label Text="{Binding IconValue}"
+                     FontFamily="{StaticResource FontAwesomeSolid}" TextColor="#C2C7D0"
+                       VerticalTextAlignment="Center"
+                       FontSize="25"/>
+                                            <Label TextColor="#C2C7D0" Text="{Binding Name}" FontAttributes="Bold" FontSize="20"/>
+                                            </StackLayout>
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>

@@ -8,6 +8,8 @@ namespace PVCBasic.Models
     {
         public string Name { get; set; }
 
+        public string IconValue { get; set; }
+
         public string Route { get; set; }
     }
 }
