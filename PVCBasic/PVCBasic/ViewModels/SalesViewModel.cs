@@ -19,13 +19,15 @@ namespace PVCBasic.ViewModels
     {
         private IPageDialogService dialogService;
         private int? quantity;
-        private decimal total;
+        private decimal? total;
         private string description;
         private string nameProduct;
         private string typeInvoice;
         private decimal? price;
         private ObservableCollection<DetailInvoicesViewModel> detailInvoices;
         private decimal totalitem;
+        private decimal? cash;
+        private decimal? exchange;
         private readonly IInvoicesManager invoicesManager;
         public SalesViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
@@ -37,6 +39,8 @@ namespace PVCBasic.ViewModels
             this.UpdateItemCommand = new DelegateCommand(async () => await this.ExecuteUpdateItemCommand());
             this.DeleteItemCommand = new DelegateCommand(async () => await this.ExecuteDeleteItemCommand());
             this.ClearItemsCommand = new DelegateCommand(async () => await this.ExecuteClearItemsCommand());
+            this.Title = "Ventas";
+
         }
 
         public DetailInvoicesViewModel SelectedItemDetails { get; set; }
@@ -48,6 +52,7 @@ namespace PVCBasic.ViewModels
         private async Task ExecuteClearItemsCommand()
         {
             this.DetailInvoices.Clear();
+            this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
         }
 
         private async Task ExecuteAddItemCommand()
@@ -66,6 +71,7 @@ namespace PVCBasic.ViewModels
                 Quantity = this.Quantity.Value,
             };
             this.DetailInvoices.Add(item);
+            this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
         }
 
         public ICommand UpdateItemCommand { get; set; }
@@ -83,6 +89,7 @@ namespace PVCBasic.ViewModels
                     item.Quantity = this.Quantity.Value;
                     item.Price = this.Price.Value;
                 }
+                this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
             }
         }
 
@@ -91,6 +98,7 @@ namespace PVCBasic.ViewModels
         private async Task ExecuteDeleteItemCommand()
         {
             this.DetailInvoices.Remove(this.SelectedItemDetails);
+            this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
         }
 
         public ICommand SalvarCommand { get; set; }
@@ -121,6 +129,40 @@ namespace PVCBasic.ViewModels
             }
         }
 
+        public string NumberQuantity
+        {
+            get
+            {
+                if (this.Quantity == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return this.Quantity.ToString();
+                }
+            }
+
+            set
+            {
+                try
+                {
+                    this.Quantity = int.Parse(value);
+                    decimal price = 0;
+                    if (this.Price != null) { price = this.Price.Value; }
+                    if (value != null)
+                    {
+                        this.TotalItem = this.Quantity.Value * price;
+                    }
+
+                }
+                catch
+                {
+                    this.Quantity = null;
+                    this.TotalItem = 0;
+                }
+            }
+        }
         public decimal? Price
         {
             get => this.price;
@@ -130,7 +172,96 @@ namespace PVCBasic.ViewModels
                 this.RaisePropertyChanged();
             }
         }
-        public decimal Total
+
+        public string NumberPrice
+        {
+            get
+            {
+                if (this.Price == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return this.Price.ToString();
+                }
+            }
+
+            set
+            {
+                try
+                {
+                    this.Price = int.Parse(value);
+                    decimal quantity = 0;
+                    if (this.Quantity != null) { quantity = this.Quantity.Value; }
+                    if (value != null)
+                    {
+                        this.TotalItem = this.Price.Value * quantity;
+                    }
+
+                }
+                catch
+                {
+                    this.Price = null;
+                    this.TotalItem = 0;
+                }
+            }
+        }
+
+        public decimal? Exchange
+        {
+            get => this.exchange;
+            set
+            {
+                this.exchange = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        public decimal? Cash
+        {
+            get => this.cash;
+            set
+            {
+                this.cash = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        
+        public string NumberCash
+        {
+            get
+            {
+                if (this.Cash == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return this.Cash.ToString();
+                }
+            }
+
+            set
+            {
+                try
+                {
+                    this.Cash = int.Parse(value);
+                    decimal total = 0;
+                    if (this.Total != null) { total = this.Total.Value; }
+                    if (value != null)
+                    {
+                        this.Exchange = total - this.Cash.Value;
+                    }
+
+                }
+                catch
+                {
+                    this.Cash = null;
+                    this.Exchange = 0;
+                }
+            }
+        }
+        public decimal? Total
         {
             get => this.total;
             set
