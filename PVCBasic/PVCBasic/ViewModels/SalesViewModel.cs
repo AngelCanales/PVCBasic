@@ -72,6 +72,12 @@ namespace PVCBasic.ViewModels
             };
             this.DetailInvoices.Add(item);
             this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
+
+            this.TotalItem = 0;
+            this.NumberQuantity = string.Empty;
+            this.NumberPrice = string.Empty; ;
+            this.NumberCash = string.Empty; ;
+            this.Exchange = null;
         }
 
         public ICommand UpdateItemCommand { get; set; }
@@ -90,6 +96,19 @@ namespace PVCBasic.ViewModels
                     item.Price = this.Price.Value;
                 }
                 this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
+
+                this.TotalItem = 0;
+                this.Total = 0;
+                this.TotalItem = 0;
+                this.NameProduct = string.Empty;
+                
+                this.Quantity = null;
+                this.Price = null;
+                this.Cash = null;
+                this.NumberQuantity = "";
+                this.NumberPrice = null;
+                this.NumberCash = string.Empty;
+                this.Exchange = null;
             }
         }
 
@@ -110,6 +129,7 @@ namespace PVCBasic.ViewModels
 
         public async Task SalvarAsync()
         {
+            if (!this.DetailInvoices.Any()) { return; }
             var invoice = new Invoices();
             var detail = this.DetailInvoices.Select(s => new DetailInvoices { Description = s.Description, TotalItem = s.TotalItem}).ToList();
             invoice.Date = DateTime.Now;
@@ -117,7 +137,21 @@ namespace PVCBasic.ViewModels
             invoice.InvoicesTypes = this.TypeInvoice;
             invoice.Total = this.DetailInvoices.Sum(t => t.TotalItem);
             invoice.DetailInvoices = detail;
+            invoice.InvoicesTypes = "V";
            await this.invoicesManager.CreateAsync(invoice);
+
+            this.Total = 0;
+            this.TotalItem = 0;
+            this.NameProduct = string.Empty;
+            this.Description = string.Empty;
+            this.Quantity =  null;
+            this.Price = null;
+            this.Cash = null;
+            this.NumberQuantity = "";
+            this.NumberPrice = null; 
+            this.NumberCash = string.Empty; 
+            this.Exchange = null;
+            this.DetailInvoices.Clear();
         }
         public int? Quantity
         {

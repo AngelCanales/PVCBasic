@@ -19,7 +19,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackLayout   BackgroundColor="#f8f9fa">
-                    <Label TextColor="Black" Text="PVCBasic" FontAttributes="Bold" FontSize="20"/>
+                    <Label TextColor="Black" Text="PVCBasic" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20"/>
                 </StackLayout>
                 <StackLayout  Grid.Row="1">
                     <ListView HasUnevenRows="True" ItemsSource="{Binding Menu}" SelectionMode="None" >
