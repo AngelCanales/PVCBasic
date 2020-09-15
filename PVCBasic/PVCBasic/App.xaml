@@ -57,9 +57,17 @@
                 </Setter>
             </Style>
 
-           
+            <x:String x:Key="Logo">
+                logo.png
+            </x:String>
+            <Style x:Key="ImageStyle"
+                   TargetType="{x:Type Image}">
+                <Setter Property="Source"
+                           Value="{StaticResource Logo}" />
 
-                <!--Global Styles-->
+            </Style>
+
+            <!--Global Styles-->
             <Color x:Key="NavigationPrimary">#fff</Color>
                 <Color x:Key="ErrorColor">#ff5252</Color>
 

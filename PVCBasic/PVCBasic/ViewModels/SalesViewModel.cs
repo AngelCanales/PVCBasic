@@ -100,13 +100,13 @@ namespace PVCBasic.ViewModels
                 this.TotalItem = 0;
                 this.Total = 0;
                 this.TotalItem = 0;
-                this.NameProduct = string.Empty;
+                this.NameProduct = "";
                 
                 this.Quantity = null;
                 this.Price = null;
                 this.Cash = null;
                 this.NumberQuantity = "";
-                this.NumberPrice = null;
+                this.NumberPrice = "";
                 this.NumberCash = string.Empty;
                 this.Exchange = null;
             }
@@ -195,6 +195,7 @@ namespace PVCBasic.ViewModels
                     this.Quantity = null;
                     this.TotalItem = 0;
                 }
+                this.RaisePropertyChanged();
             }
         }
         public decimal? Price
@@ -239,6 +240,7 @@ namespace PVCBasic.ViewModels
                     this.Price = null;
                     this.TotalItem = 0;
                 }
+                this.RaisePropertyChanged();
             }
         }
 
@@ -293,6 +295,7 @@ namespace PVCBasic.ViewModels
                     this.Cash = null;
                     this.Exchange = 0;
                 }
+                this.RaisePropertyChanged();
             }
         }
         public decimal? Total

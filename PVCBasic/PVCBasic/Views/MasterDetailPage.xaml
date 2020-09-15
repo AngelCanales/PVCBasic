@@ -19,7 +19,14 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackLayout   BackgroundColor="#f8f9fa">
-                    <Label TextColor="Black" Text="PVCBasic" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20"/>
+                    <!--<Label TextColor="Black" Text="PVCBasic" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20"/>-->
+                    <StackLayout HeightRequest="200"  BackgroundColor="{StaticResource Accent}" VerticalOptions="Fill" HorizontalOptions="Fill">
+                        <StackLayout  Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                            <ContentView  Padding="0,20,0,20" VerticalOptions="FillAndExpand">
+                                <Image  Style="{StaticResource ImageStyle}" VerticalOptions="Center" HeightRequest="64" />
+                            </ContentView>
+                        </StackLayout>
+                    </StackLayout>
                 </StackLayout>
                 <StackLayout  Grid.Row="1">
                     <ListView HasUnevenRows="True" ItemsSource="{Binding Menu}" SelectionMode="None" >

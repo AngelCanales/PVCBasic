@@ -13,6 +13,8 @@ using PVCBasic.Resource;
 using PVCBasic.Database;
 using PVCBasic.PVCBCore.Invoices;
 using PVCBasic.Database.Repositories;
+using Prism.Navigation;
+using PVCBasic.Models;
 
 namespace PVCBasic
 {
@@ -39,7 +41,13 @@ namespace PVCBasic
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture.IetfLanguageTag);
             ResourceGlobal.Culture = new CultureInfo(culture.IetfLanguageTag);
 
-            await this.NavigationService.NavigateAsync("MasterDetailPage/NavigationPage/SummaryPage");
+            var param = new NavigationParameters();
+            var lottieItem = new LottieItem();
+            lottieItem.NameFile = "dataCashBack.json";
+            lottieItem.Route = "MasterDetailPage/NavigationPage/SummaryPage";
+            param.Add("LottieItem", lottieItem);
+
+            await this.NavigationService.NavigateAsync("LottiePage", param);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -49,7 +57,8 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<Views.MasterDetailPage, MasterDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<SalesPage, SalesViewModel>();
             containerRegistry.RegisterForNavigation<SummaryPage, SummaryPageViewModel>();
-            
+            containerRegistry.RegisterForNavigation<LottiePage, LottiePageViewModel>();
+
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();
             containerRegistry.RegisterSingleton<IInvoicesManager, InvoicesManager>();
 

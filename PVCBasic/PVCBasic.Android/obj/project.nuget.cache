@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "cKM0gvBKjACVg5rP6eq8cg1jodFF5QhfJinElo/h+C24RMo1KhC+gyUeVOT/T53uGKlLUJJbj1cHUQuc/O0HaQ==",
+  "dgSpecHash": "dBJH1syTvkT7DMgeRf/qLtzvDCiW+9EL6YyM2laweLkhTLG+2GcZHM8FbSjgqVcNQjmszKcZZXXHqIUL2uMFBQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\AngelCanales\\source\\repos\\PVCBasic\\PVCBasic\\PVCBasic.Android\\PVCBasic.Android.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\AngelCanales\\.nuget\\packages\\com.airbnb.android.lottie\\3.4.3\\com.airbnb.android.lottie.3.4.3.nupkg.sha512",
+    "C:\\Users\\AngelCanales\\.nuget\\packages\\com.airbnb.xamarin.forms.lottie\\3.1.3\\com.airbnb.xamarin.forms.lottie.3.1.3.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\dryioc.dll\\4.0.7\\dryioc.dll.4.0.7.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
@@ -35,6 +37,7 @@
     "C:\\Users\\AngelCanales\\.nuget\\packages\\sqlitepclraw.core\\2.0.2\\sqlitepclraw.core.2.0.2.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3.android\\2.0.2\\sqlitepclraw.lib.e_sqlite3.android.2.0.2.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.0.2\\sqlitepclraw.provider.e_sqlite3.2.0.2.nupkg.sha512",
+    "C:\\Users\\AngelCanales\\.nuget\\packages\\square.okio\\1.17.4\\square.okio.1.17.4.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\system.collections.immutable\\1.7.1\\system.collections.immutable.1.7.1.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512",

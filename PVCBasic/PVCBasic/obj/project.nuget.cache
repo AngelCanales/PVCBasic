@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wLA2BS1PvQvz2kUlJt9oK/36PW3RzhbhABn9BpFY5KvLo/YJEz02aSqZoA4s8ON1fJfZwAORYNqVcjwKanX3nA==",
+  "dgSpecHash": "cE4m1fZzzJ+6QjBTuZ5+2kHNbjiLaK3pB1J4z3JH6Yd9Uxm28KL0pw1NdRNT7MnpwRclH03jMPiIKDqCJiZ0Ow==",
   "success": true,
   "projectFilePath": "C:\\Users\\AngelCanales\\source\\repos\\PVCBasic\\PVCBasic\\PVCBasic\\PVCBasic.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\AngelCanales\\.nuget\\packages\\com.airbnb.xamarin.forms.lottie\\3.1.3\\com.airbnb.xamarin.forms.lottie.3.1.3.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\dryioc.dll\\4.0.7\\dryioc.dll.4.0.7.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\AngelCanales\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",

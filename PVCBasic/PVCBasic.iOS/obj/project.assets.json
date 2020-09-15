@@ -2,6 +2,28 @@
   "version": 3,
   "targets": {
     "Xamarin.iOS,Version=v1.0": {
+      "Com.Airbnb.iOS.Lottie/2.5.12": {
+        "type": "package",
+        "compile": {
+          "lib/xamarinios10/Lottie.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/xamarinios10/Lottie.iOS.dll": {}
+        }
+      },
+      "Com.Airbnb.Xamarin.Forms.Lottie/3.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Com.Airbnb.iOS.Lottie": "2.5.12",
+          "Xamarin.Forms": "4.5.0.356"
+        },
+        "compile": {
+          "lib/xamarinios10/Lottie.Forms.dll": {}
+        },
+        "runtime": {
+          "lib/xamarinios10/Lottie.Forms.dll": {}
+        }
+      },
       "DryIoc.dll/4.0.7": {
         "type": "package",
         "dependencies": {
@@ -608,6 +630,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Com.Airbnb.Xamarin.Forms.Lottie": "3.1.3",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.8",
           "Plugin.Toast": "2.1.3",
           "Prism.DryIoc.Forms": "7.2.0.1422",
@@ -623,6 +646,28 @@
       }
     },
     "Xamarin.iOS,Version=v1.0/win": {
+      "Com.Airbnb.iOS.Lottie/2.5.12": {
+        "type": "package",
+        "compile": {
+          "lib/xamarinios10/Lottie.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/xamarinios10/Lottie.iOS.dll": {}
+        }
+      },
+      "Com.Airbnb.Xamarin.Forms.Lottie/3.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Com.Airbnb.iOS.Lottie": "2.5.12",
+          "Xamarin.Forms": "4.5.0.356"
+        },
+        "compile": {
+          "lib/xamarinios10/Lottie.Forms.dll": {}
+        },
+        "runtime": {
+          "lib/xamarinios10/Lottie.Forms.dll": {}
+        }
+      },
       "DryIoc.dll/4.0.7": {
         "type": "package",
         "dependencies": {
@@ -1229,6 +1274,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Com.Airbnb.Xamarin.Forms.Lottie": "3.1.3",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.8",
           "Plugin.Toast": "2.1.3",
           "Prism.DryIoc.Forms": "7.2.0.1422",
@@ -1244,6 +1290,28 @@
       }
     },
     "Xamarin.iOS,Version=v1.0/win-x64": {
+      "Com.Airbnb.iOS.Lottie/2.5.12": {
+        "type": "package",
+        "compile": {
+          "lib/xamarinios10/Lottie.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/xamarinios10/Lottie.iOS.dll": {}
+        }
+      },
+      "Com.Airbnb.Xamarin.Forms.Lottie/3.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Com.Airbnb.iOS.Lottie": "2.5.12",
+          "Xamarin.Forms": "4.5.0.356"
+        },
+        "compile": {
+          "lib/xamarinios10/Lottie.Forms.dll": {}
+        },
+        "runtime": {
+          "lib/xamarinios10/Lottie.Forms.dll": {}
+        }
+      },
       "DryIoc.dll/4.0.7": {
         "type": "package",
         "dependencies": {
@@ -1850,6 +1918,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Com.Airbnb.Xamarin.Forms.Lottie": "3.1.3",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.8",
           "Plugin.Toast": "2.1.3",
           "Prism.DryIoc.Forms": "7.2.0.1422",
@@ -1865,6 +1934,28 @@
       }
     },
     "Xamarin.iOS,Version=v1.0/win-x86": {
+      "Com.Airbnb.iOS.Lottie/2.5.12": {
+        "type": "package",
+        "compile": {
+          "lib/xamarinios10/Lottie.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/xamarinios10/Lottie.iOS.dll": {}
+        }
+      },
+      "Com.Airbnb.Xamarin.Forms.Lottie/3.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Com.Airbnb.iOS.Lottie": "2.5.12",
+          "Xamarin.Forms": "4.5.0.356"
+        },
+        "compile": {
+          "lib/xamarinios10/Lottie.Forms.dll": {}
+        },
+        "runtime": {
+          "lib/xamarinios10/Lottie.Forms.dll": {}
+        }
+      },
       "DryIoc.dll/4.0.7": {
         "type": "package",
         "dependencies": {
@@ -2471,6 +2562,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Com.Airbnb.Xamarin.Forms.Lottie": "3.1.3",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.8",
           "Plugin.Toast": "2.1.3",
           "Prism.DryIoc.Forms": "7.2.0.1422",
@@ -2487,6 +2579,62 @@
     }
   },
   "libraries": {
+    "Com.Airbnb.iOS.Lottie/2.5.12": {
+      "sha512": "bxQUhgbHgzYBavs3W60H5oiGqcCcJeGaMVMgTvYqDFvY0ngGF9OCuwJwezE2+dJ9KoSI1aASa7oyi1/6lnwVZA==",
+      "type": "package",
+      "path": "com.airbnb.ios.lottie/2.5.12",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "com.airbnb.ios.lottie.2.5.12.nupkg.sha512",
+        "com.airbnb.ios.lottie.nuspec",
+        "icon.png",
+        "lib/xamarinios10/Lottie.iOS.dll",
+        "lib/xamarinios10/Lottie.iOS.pdb",
+        "lib/xamarinios10/Lottie.iOS.xml",
+        "lib/xamarinmac20/Lottie.iOS.dll",
+        "lib/xamarinmac20/Lottie.iOS.pdb",
+        "lib/xamarinmac20/Lottie.iOS.xml",
+        "lib/xamarintvos10/Lottie.iOS.dll",
+        "lib/xamarintvos10/Lottie.iOS.pdb",
+        "lib/xamarintvos10/Lottie.iOS.xml",
+        "readme.txt"
+      ]
+    },
+    "Com.Airbnb.Xamarin.Forms.Lottie/3.1.3": {
+      "sha512": "4fRudSJ4aqgj6aYoLb7DS1WbTdjnsLtRSM6RNiH8kLmNasRZAxwBKspUXr54/DRjS7gYUDLPZiezRb0nLVEB4w==",
+      "type": "package",
+      "path": "com.airbnb.xamarin.forms.lottie/3.1.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "com.airbnb.xamarin.forms.lottie.3.1.3.nupkg.sha512",
+        "com.airbnb.xamarin.forms.lottie.nuspec",
+        "icon.png",
+        "lib/monoandroid10.0/Lottie.Forms.dll",
+        "lib/monoandroid10.0/Lottie.Forms.pdb",
+        "lib/monoandroid10.0/Lottie.Forms.xml",
+        "lib/netstandard2.0/Lottie.Forms.dll",
+        "lib/netstandard2.0/Lottie.Forms.pdb",
+        "lib/netstandard2.0/Lottie.Forms.xml",
+        "lib/tizen40/Lottie.Forms.dll",
+        "lib/tizen40/Lottie.Forms.pdb",
+        "lib/tizen40/Lottie.Forms.xml",
+        "lib/uap10.0.17763/Lottie.Forms.dll",
+        "lib/uap10.0.17763/Lottie.Forms.pdb",
+        "lib/uap10.0.17763/Lottie.Forms.pri",
+        "lib/uap10.0.17763/Lottie.Forms.xml",
+        "lib/xamarinios10/Lottie.Forms.dll",
+        "lib/xamarinios10/Lottie.Forms.pdb",
+        "lib/xamarinios10/Lottie.Forms.xml",
+        "lib/xamarinmac20/Lottie.Forms.dll",
+        "lib/xamarinmac20/Lottie.Forms.pdb",
+        "lib/xamarinmac20/Lottie.Forms.xml",
+        "readme.txt"
+      ]
+    },
     "DryIoc.dll/4.0.7": {
       "sha512": "CHSWiSNf0tTpnHFt+DPB8mzgQMM9PbaFk7DP4g70+kTXsAS7fQlUI/yW4S+b6COOYsVQ+FPhxAw9NMU/2PGE7Q==",
       "type": "package",
@@ -3727,6 +3875,7 @@
   },
   "projectFileDependencyGroups": {
     "Xamarin.iOS,Version=v1.0": [
+      "Com.Airbnb.Xamarin.Forms.Lottie >= 3.1.3",
       "Microsoft.EntityFrameworkCore.Sqlite >= 3.1.8",
       "PVCBasic >= 1.0.0",
       "Plugin.Toast >= 2.1.3",
@@ -3781,6 +3930,10 @@
     "frameworks": {
       "xamarinios10": {
         "dependencies": {
+          "Com.Airbnb.Xamarin.Forms.Lottie": {
+            "target": "Package",
+            "version": "[3.1.3, )"
+          },
           "Microsoft.EntityFrameworkCore.Sqlite": {
             "target": "Package",
             "version": "[3.1.8, )"

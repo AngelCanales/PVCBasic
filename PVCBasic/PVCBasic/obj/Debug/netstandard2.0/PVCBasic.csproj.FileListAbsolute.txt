@@ -15,10 +15,11 @@ C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstand
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\Views\SummaryPage.xaml.g.cs
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.AssemblyInfoInputs.cache
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.AssemblyInfo.cs
-C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.csproj.CoreCompileInputs.cache
-C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\XamlC.stamp
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\es-HN\PVCBasic.resources.dll
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\es\PVCBasic.resources.dll
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.dll
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\ref\PVCBasic.dll
 C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.pdb
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\Views\LottiePage.xaml.g.cs
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\PVCBasic.csproj.CoreCompileInputs.cache
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic\obj\Debug\netstandard2.0\XamlC.stamp
