@@ -38,13 +38,13 @@ namespace PVCBasic.ViewModels
                 new MenuItem
                 {
                     Name = "Lista de Ventas",
-                    Route = "MasterDetailPage/NavigationPage/",
+                    Route = "MasterDetailPage/NavigationPage/TransactionsPage",
                     IconValue = "\uf46d",
                 },
                 new MenuItem
                 {
                     Name = "Lista de Compras",
-                    Route = "MasterDetailPage/NavigationPage/",
+                    Route = "MasterDetailPage/NavigationPage/TransactionsPage",
                     IconValue = "\uf46d",
                 },
                 new MenuItem
@@ -95,6 +95,25 @@ namespace PVCBasic.ViewModels
                     param.Add("Title", "Compras");
                     await this.NavigationService.NavigateAsync(item.Route, param);
                 }
+
+                if (item.Name == "Lista de Ventas")
+                {
+                    var param = new NavigationParameters();
+
+                    param.Add("TypeInvoice", ConstantName.ConstantName.Sales);
+                    param.Add("Title", "Lista de Ventas");
+                    await this.NavigationService.NavigateAsync(item.Route, param);
+                }
+
+                if (item.Name == "Lista de Compras")
+                {
+                    var param = new NavigationParameters();
+
+                    param.Add("TypeInvoice", ConstantName.ConstantName.Purchases);
+                    param.Add("Title", "Lista de Compras");
+                    await this.NavigationService.NavigateAsync(item.Route, param);
+                }
+
 
                 await this.NavigationService.NavigateAsync(item.Route);
             }

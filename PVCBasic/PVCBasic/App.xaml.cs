@@ -58,6 +58,7 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<SalesPage, SalesViewModel>();
             containerRegistry.RegisterForNavigation<SummaryPage, SummaryPageViewModel>();
             containerRegistry.RegisterForNavigation<LottiePage, LottiePageViewModel>();
+            containerRegistry.RegisterForNavigation<TransactionsPage, TransactionsPageViewModel>();
 
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();
             containerRegistry.RegisterSingleton<IInvoicesManager, InvoicesManager>();

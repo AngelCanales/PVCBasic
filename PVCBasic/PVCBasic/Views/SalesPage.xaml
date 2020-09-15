@@ -38,7 +38,7 @@
                      FontFamily="{StaticResource FontAwesomeSolid}"
                     TextColor="White"
                     BackgroundColor="#007bff"
-                    CornerRadius="50"
+                    CornerRadius="70"
                     HeightRequest="100"
                     WidthRequest="100"
                     Command="{Binding SalvarCommand}"

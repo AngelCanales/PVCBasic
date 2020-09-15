@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Prism.Commands;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PVCBasic.ViewModels
 {
@@ -20,6 +23,8 @@ namespace PVCBasic.ViewModels
         private int salesQuantity;
         private decimal box;
         private string boxTextColor;
+        private bool isVisibleAnimation;
+        private bool isVisibleContent;
         private readonly IInvoicesManager invoicesManager;
         public SummaryPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
@@ -29,17 +34,60 @@ namespace PVCBasic.ViewModels
 
             var myCurrency = new CultureInfo("es-HN");
             CultureInfo.DefaultThreadCurrentCulture = myCurrency;
-
+            
+           this.DateSelectedCommand = new DelegateCommand(async () => await this.ExecuteDateSelectedCommand());
+           this.FinishedCommand = new DelegateCommand(async () => await this.ExecuteFinishedCommand());
+            this.IsVisibleAnimation = true;
+            this.IsVisibleContent = false;
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-           
-            var data = await invoicesManager.GetAllByDateAsync(DateTime.Now);
+          
+            this.Date = DateTime.Now;
+            await GetDataAsync();
+        }
+
+        public ICommand FinishedCommand { get; set; }
+
+        public bool IsVisibleAnimation
+        {
+            get => this.isVisibleAnimation;
+            set
+            {
+                this.isVisibleAnimation = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public bool IsVisibleContent
+        {
+            get => this.isVisibleContent;
+            set
+            {
+                this.isVisibleContent = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        private async Task ExecuteFinishedCommand()
+        {
+            this.IsVisibleAnimation = false;
+            this.IsVisibleContent = true;
+        }
+
+        public ICommand DateSelectedCommand { get; set; }
+        private async Task ExecuteDateSelectedCommand()
+        {
+            await GetDataAsync();
+        }
+
+        private async Task GetDataAsync()
+        {
+            var data = await invoicesManager.GetAllByDateAsync(this.Date);
             var purchase = data.Where(w => w.InvoicesTypes == ConstantName.ConstantName.Purchases);
             var sales = data.Where(w => w.InvoicesTypes == ConstantName.ConstantName.Sales);
-            this.Date = DateTime.Now;
             this.PurchaseQuantity = purchase.Count();
             this.TotalPurchases = purchase.Sum(s => s.Total);
             this.SalesQuantity = sales.Count();
@@ -54,6 +102,7 @@ namespace PVCBasic.ViewModels
                 this.BoxTextColor = "#0561FC";
             }
         }
+
         public int SalesQuantity
         {
             get => this.salesQuantity;

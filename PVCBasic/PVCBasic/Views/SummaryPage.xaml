@@ -1,11 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fontawesome="clr-namespace:FontAwesome"
+             xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
+             xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
               Title="{Binding Title}"
               Style="{StaticResource ContentPageStyle}"
              x:Class="PVCBasic.Views.SummaryPage">
     <ContentPage.Content>
         <StackLayout>
+            <StackLayout IsVisible="{Binding IsVisibleAnimation , Mode=TwoWay}">
+            <forms:AnimationView  
+	x:Name="animationView" 
+	Grid.Row="1"
+	Animation="dataCheck.json" 
+	Loop="false" 
+	AutoPlay="True"
+	PlaybackFinishedCommand="{Binding FinishedCommand}" 
+	VerticalOptions="FillAndExpand" 
+	HorizontalOptions="FillAndExpand" />
+        </StackLayout>
+            <StackLayout  IsVisible="{Binding IsVisibleContent , Mode=TwoWay}">
             <Grid  Padding="10,5,30,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.50*" />
@@ -22,7 +37,10 @@
 
                 <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Fecha:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
 
-                <DatePicker IsEnabled="False" Grid.Row="0" Grid.Column="1" Format="dd-MM-yyyy"  Date="{Binding Date, Mode=TwoWay}"     FontAttributes="Bold"   >
+                <DatePicker IsEnabled="True" Grid.Row="0" Grid.Column="1" Format="dd-MM-yyyy"  Date="{Binding Date, Mode=TwoWay}"     FontAttributes="Bold"   >
+                    <DatePicker.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="DateSelected" Command="{Binding DateSelectedCommand}" />
+                    </DatePicker.Behaviors>
                 </DatePicker>
                 <Label  Margin="0,10,0,10"  Grid.Row="1" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Ventas:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
                 <Label  Margin="0,10,0,10"  Grid.Row="1" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding SalesQuantity, Mode=OneWay}"         FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
@@ -41,6 +59,7 @@
 
             </Grid>
 
+        </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
