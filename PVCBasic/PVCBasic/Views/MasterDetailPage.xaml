@@ -22,9 +22,9 @@
                     <!--<Label TextColor="Black" Text="PVCBasic" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20"/>-->
                     <StackLayout HeightRequest="200"  BackgroundColor="{StaticResource Accent}" VerticalOptions="Fill" HorizontalOptions="Fill">
                         <StackLayout  Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                            <ContentView  Padding="0,20,0,20" VerticalOptions="FillAndExpand">
-                                <Image  Style="{StaticResource ImageStyle}" VerticalOptions="Center" HeightRequest="64" />
-                            </ContentView>
+                          
+                                <Image  Style="{StaticResource ImageStyle}" VerticalOptions="Center"  />
+                           
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>

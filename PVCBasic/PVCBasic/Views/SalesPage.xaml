@@ -4,7 +4,7 @@
              xmlns:fontawesome="clr-namespace:FontAwesome"
              xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
               Style="{StaticResource ContentPageStyle}"
-             Title="{Binding Title}"
+             Title="{Binding Title,Mode=TwoWay}"
              x:Class="PVCBasic.Views.SalesPage">
     <ContentPage.Content>
         <ScrollView>

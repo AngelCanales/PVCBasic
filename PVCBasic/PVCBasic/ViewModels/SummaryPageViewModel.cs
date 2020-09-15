@@ -1,6 +1,7 @@
 ﻿using Prism.Navigation;
 using Prism.Services;
 using PVCBasic.PVCBCore.Invoices;
+using PVCBasic.ConstantName;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -34,10 +35,10 @@ namespace PVCBasic.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-
+           
             var data = await invoicesManager.GetAllByDateAsync(DateTime.Now);
-            var purchase = data.Where(w => w.InvoicesTypes == "C");
-            var sales = data.Where(w => w.InvoicesTypes == "V");
+            var purchase = data.Where(w => w.InvoicesTypes == ConstantName.ConstantName.Purchases);
+            var sales = data.Where(w => w.InvoicesTypes == ConstantName.ConstantName.Sales);
             this.Date = DateTime.Now;
             this.PurchaseQuantity = purchase.Count();
             this.TotalPurchases = purchase.Sum(s => s.Total);

@@ -32,7 +32,7 @@ namespace PVCBasic.ViewModels
                 new MenuItem
                 {
                     Name = "Compras",
-                    Route = "MasterDetailPage/NavigationPage/Compras",
+                    Route = "MasterDetailPage/NavigationPage/SalesPage",
                     IconValue = "\uf3d1",
                 },
                 new MenuItem
@@ -78,6 +78,24 @@ namespace PVCBasic.ViewModels
         {
             if (item.Route != null)
             {
+                if(item.Name == "Ventas") 
+                {
+                    var param = new NavigationParameters();
+                    
+                    param.Add("TypeInvoice", ConstantName.ConstantName.Sales);
+                    param.Add("Title", "Ventas");
+                    await this.NavigationService.NavigateAsync(item.Route, param);
+                }
+
+                if (item.Name == "Compras")
+                {
+                    var param = new NavigationParameters();
+
+                    param.Add("TypeInvoice", ConstantName.ConstantName.Purchases);
+                    param.Add("Title", "Compras");
+                    await this.NavigationService.NavigateAsync(item.Route, param);
+                }
+
                 await this.NavigationService.NavigateAsync(item.Route);
             }
         }

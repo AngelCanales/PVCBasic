@@ -39,10 +39,24 @@ namespace PVCBasic.ViewModels
             this.UpdateItemCommand = new DelegateCommand(async () => await this.ExecuteUpdateItemCommand());
             this.DeleteItemCommand = new DelegateCommand(async () => await this.ExecuteDeleteItemCommand());
             this.ClearItemsCommand = new DelegateCommand(async () => await this.ExecuteClearItemsCommand());
-            this.Title = "Ventas";
+            
 
         }
 
+        public async override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            if (parameters.ContainsKey("TypeInvoice"))
+            {
+                this.TypeInvoice = parameters["TypeInvoice"] as string;
+            }
+
+            if (parameters.ContainsKey("Title"))
+            {
+                this.Title = parameters["Title"] as string;
+            }
+        }
         public DetailInvoicesViewModel SelectedItemDetails { get; set; }
 
         public ICommand AddItemCommand { get; set; }
@@ -72,7 +86,7 @@ namespace PVCBasic.ViewModels
             };
             this.DetailInvoices.Add(item);
             this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
-
+            this.NameProduct = "";
             this.TotalItem = 0;
             this.NumberQuantity = string.Empty;
             this.NumberPrice = string.Empty; ;
@@ -137,7 +151,7 @@ namespace PVCBasic.ViewModels
             invoice.InvoicesTypes = this.TypeInvoice;
             invoice.Total = this.DetailInvoices.Sum(t => t.TotalItem);
             invoice.DetailInvoices = detail;
-            invoice.InvoicesTypes = "V";
+         //   invoice.InvoicesTypes = "V";
            await this.invoicesManager.CreateAsync(invoice);
 
             this.Total = 0;

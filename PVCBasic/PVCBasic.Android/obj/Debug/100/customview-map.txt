@@ -20,6 +20,7 @@ background;obj\Debug\100\res\mipmap-anydpi-v26\icon.xml
 background;obj\Debug\100\res\mipmap-anydpi-v26\icon_round.xml
 cache-path;C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\lp\46\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
 color;obj\Debug\100\res\values\colors.xml
+color;obj\Debug\100\res\values\styles.xml
 com.google.android.material.appbar.AppBarLayout;C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\lp\47\jl\res\layout\flyoutcontent.xml
 com.google.android.material.appbar.AppBarLayout;C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\lp\47\jl\res\layout\rootlayout.xml
 com.google.android.material.appbar.AppBarLayout;C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\lp\47\jl\res\layout\shellcontent.xml
