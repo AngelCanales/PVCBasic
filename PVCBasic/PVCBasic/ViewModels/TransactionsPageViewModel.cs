@@ -54,7 +54,7 @@ namespace PVCBasic.ViewModels
                 this.TapNumber = 0;
                 var param = new NavigationParameters();
                 param.Add("Invoice", invoice);
-                await this.NavigationService.NavigateAsync("LottiePage", param);
+                await this.NavigationService.NavigateAsync("TransactionDetailsPage", param);
             }
             else 
             {

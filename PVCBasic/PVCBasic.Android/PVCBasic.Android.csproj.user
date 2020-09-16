@@ -4,7 +4,7 @@
     <SelectedDevice>pixel_2_cisa</SelectedDevice>
     <DefaultDevice>pixel_2_cisa</DefaultDevice>
     <ProjectView>ShowAllFiles</ProjectView>
-    <AndroidDesignerPreferredTheme>Theme.DeviceDefault</AndroidDesignerPreferredTheme>
+    <AndroidDesignerPreferredTheme>MainTheme</AndroidDesignerPreferredTheme>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
   </PropertyGroup>
 </Project>

@@ -7,11 +7,7 @@
               Style="{StaticResource ContentPageStyle}"
              
              x:Class="PVCBasic.Views.TransactionsPage">
-    <ContentPage.ToolbarItems>
-
-        <ToolbarItem   Text="Eliminar" Order="Secondary"  Priority="2" Command="{Binding DeleteCommand}" />
-      
-    </ContentPage.ToolbarItems>
+  
     <ContentPage.Content>
         
         <StackLayout>

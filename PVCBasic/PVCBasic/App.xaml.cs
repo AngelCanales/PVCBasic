@@ -43,7 +43,7 @@ namespace PVCBasic
 
             var param = new NavigationParameters();
             var lottieItem = new LottieItem();
-            lottieItem.NameFile = "dataCashBack.json";
+            lottieItem.NameFile = "dataReport.json";
             lottieItem.Route = "MasterDetailPage/NavigationPage/SummaryPage";
             param.Add("LottieItem", lottieItem);
 
@@ -59,6 +59,7 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<SummaryPage, SummaryPageViewModel>();
             containerRegistry.RegisterForNavigation<LottiePage, LottiePageViewModel>();
             containerRegistry.RegisterForNavigation<TransactionsPage, TransactionsPageViewModel>();
+            containerRegistry.RegisterForNavigation<TransactionDetailsPage, TransactionDetailsPageViewModel>();
 
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.DetailInvoices>, DetailInvoicesRepository>();

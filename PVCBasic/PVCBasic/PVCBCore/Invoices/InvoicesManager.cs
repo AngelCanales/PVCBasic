@@ -27,14 +27,9 @@ namespace PVCBasic.PVCBCore.Invoices
 
         public async Task DeleteAsync(Database.Models.Invoices invoices)
         {
-            //foreach (var root in invoices.DetailInvoices)
-            //{
-            //    this.detailInvoices.Delete(root);
-                
-            //}
-            //// this.detailInvoices.Delete();
-            //this.invoices.Delete(invoices);
-            //await this.invoices.SaveChangesAsync();
+            
+            this.invoices.Delete(invoices);
+            await this.invoices.SaveChangesAsync();
         }
 
         public async Task EditAsync(Database.Models.Invoices invoices)

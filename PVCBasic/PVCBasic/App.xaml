@@ -68,7 +68,7 @@
             </Style>
 
             <!--Global Styles-->
-            <Color x:Key="NavigationPrimary">#fff</Color>
+            <Color x:Key="NavigationPrimary">#343a40</Color>
                 <Color x:Key="ErrorColor">#ff5252</Color>
 
                 <Color x:Key="Accent">#FFFFFF</Color>
@@ -161,7 +161,7 @@
 
                 <Style TargetType="NavigationPage">
                     <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
-                <Setter Property="BarTextColor" Value="#343a40" />
+                <Setter Property="BarTextColor" Value="#fff" />
                 </Style>
          
 

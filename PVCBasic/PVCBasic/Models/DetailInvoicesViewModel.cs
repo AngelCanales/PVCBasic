@@ -6,6 +6,7 @@ namespace PVCBasic.Models
 {
    public class DetailInvoicesViewModel
     {
+        public int IdD { get; set; }
         public Guid Id { get; set; }
         public string ProductName { get; set; }
 

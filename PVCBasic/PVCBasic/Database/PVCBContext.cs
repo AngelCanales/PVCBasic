@@ -24,7 +24,11 @@ namespace PVCBasic.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        
+            modelBuilder.Entity<DetailInvoices>()
+                .HasOne(i => i.Invoices)
+                .WithMany(c => c.DetailInvoices)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
         //public PVCBContext()
         //{
