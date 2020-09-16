@@ -11,10 +11,12 @@ namespace PVCBasic.PVCBCore.Invoices
     public class InvoicesManager : IInvoicesManager
     {
         private readonly IRepository<PVCBasic.Database.Models.Invoices> invoices;
+        private readonly IRepository<PVCBasic.Database.Models.DetailInvoices> detailInvoices;
 
-        public InvoicesManager(IRepository<PVCBasic.Database.Models.Invoices> invoices)
+        public InvoicesManager(IRepository<PVCBasic.Database.Models.Invoices> invoices, IRepository<PVCBasic.Database.Models.DetailInvoices> detailInvoices)
         {
             this.invoices = invoices;
+            this.detailInvoices = detailInvoices;
         }
 
         public async Task CreateAsync(Database.Models.Invoices invoices)
@@ -25,8 +27,14 @@ namespace PVCBasic.PVCBCore.Invoices
 
         public async Task DeleteAsync(Database.Models.Invoices invoices)
         {
-            this.invoices.Delete(invoices);
-            await this.invoices.SaveChangesAsync();
+            //foreach (var root in invoices.DetailInvoices)
+            //{
+            //    this.detailInvoices.Delete(root);
+                
+            //}
+            //// this.detailInvoices.Delete();
+            //this.invoices.Delete(invoices);
+            //await this.invoices.SaveChangesAsync();
         }
 
         public async Task EditAsync(Database.Models.Invoices invoices)

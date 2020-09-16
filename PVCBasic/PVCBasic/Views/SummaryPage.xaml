@@ -9,17 +9,18 @@
              x:Class="PVCBasic.Views.SummaryPage">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout IsVisible="{Binding IsVisibleAnimation , Mode=TwoWay}">
+           
             <forms:AnimationView  
 	x:Name="animationView" 
 	Grid.Row="1"
-	Animation="dataCheck.json" 
+	Animation="dataReport.json" 
 	Loop="false" 
+                IsVisible="{Binding IsVisibleAnimation , Mode=TwoWay}"
 	AutoPlay="True"
 	PlaybackFinishedCommand="{Binding FinishedCommand}" 
 	VerticalOptions="FillAndExpand" 
 	HorizontalOptions="FillAndExpand" />
-        </StackLayout>
+        
             <StackLayout  IsVisible="{Binding IsVisibleContent , Mode=TwoWay}">
             <Grid  Padding="10,5,30,0">
                 <Grid.ColumnDefinitions>

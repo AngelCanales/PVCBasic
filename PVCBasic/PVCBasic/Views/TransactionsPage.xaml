@@ -5,27 +5,17 @@
              xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
               Title="{Binding Title}"
               Style="{StaticResource ContentPageStyle}"
+             
              x:Class="PVCBasic.Views.TransactionsPage">
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem   Text="Eliminar" Order="Secondary"  Priority="2" Command="{Binding DeleteCommand}" />
+      
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
+        
         <StackLayout>
-            <Grid  Padding="10,5,30,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.50*" />
-                    <ColumnDefinition Width="0.50*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
-                 
-                </Grid.RowDefinitions>
-
-                <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Fecha:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
-
-                <DatePicker IsEnabled="True" Grid.Row="0" Grid.Column="1" Format="dd-MM-yyyy"  Date="{Binding Date, Mode=TwoWay}"     FontAttributes="Bold"   >
-                    <DatePicker.Behaviors>
-                        <behaviors:EventToCommandBehavior EventName="DateSelected" Command="{Binding DateSelectedCommand}" />
-                    </DatePicker.Behaviors>
-                </DatePicker>
-            </Grid>
+            
             <Grid  Padding="10,0,30,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.100*" />
@@ -39,7 +29,31 @@
                 VerticalOptions="FillAndExpand"
                  HasUnevenRows="true"
                  CachingStrategy="RecycleElement"
+                              
                       SelectedItem="{Binding SelectedItemInvoice, Mode=TwoWay}" >
+                        <ListView.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailInvoiceCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>
+                        </ListView.Behaviors>
+                        <ListView.Header>
+                            <Grid  Padding="10,5,30,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.50*" />
+                                    <ColumnDefinition Width="0.50*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+
+                                </Grid.RowDefinitions>
+
+                                <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Fecha:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+
+                                <DatePicker IsEnabled="True" Grid.Row="0" Grid.Column="1" Format="dd-MM-yyyy"  Date="{Binding Date, Mode=TwoWay}"     FontAttributes="Bold"   >
+                                    <DatePicker.Behaviors>
+                                        <behaviors:EventToCommandBehavior EventName="DateSelected" Command="{Binding DateSelectedCommand}" />
+                                    </DatePicker.Behaviors>
+                                </DatePicker>
+                            </Grid>
+                        </ListView.Header>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -85,7 +99,7 @@
                                         <ColumnDefinition Width="0.50*" />
                                     </Grid.ColumnDefinitions>
                                     <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Suma Total:"   FontAttributes="Bold"  HorizontalTextAlignment="End"/>
-                                    <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding SumTotal, Mode=OneWay, StringFormat='{0:c}'}"         FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+                                    <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding SumTotal, Mode=OneWay, StringFormat='{0:c}'}"    TextColor="#0561FC"     FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
                                 </Grid>
                             </StackLayout>
                         </ListView.Footer>

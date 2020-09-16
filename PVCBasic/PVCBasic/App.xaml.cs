@@ -61,6 +61,7 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<TransactionsPage, TransactionsPageViewModel>();
 
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.DetailInvoices>, DetailInvoicesRepository>();
             containerRegistry.RegisterSingleton<IInvoicesManager, InvoicesManager>();
 
             if (containerRegistry.IsRegistered<IInvoicesManager>())

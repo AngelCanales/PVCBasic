@@ -22,13 +22,16 @@ namespace PVCBasic.Database
             this.Database.EnsureCreated();
         }
 
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        
+        }
         //public PVCBContext()
         //{
         //    SQLitePCL.Batteries_V2.Init();
 
-        //    this.Database.EnsureCreated();
-        //}
+            //    this.Database.EnsureCreated();
+            //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
