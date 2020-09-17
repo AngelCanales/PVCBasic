@@ -56,7 +56,7 @@
             },
             "Plugin.Toast": {
               "target": "Package",
-              "version": "[2.1.3, )"
+              "version": "[2.2.0, )"
             },
             "Prism.DryIoc.Forms": {
               "target": "Package",
@@ -68,7 +68,7 @@
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[4.8.0.1364, )"
+              "version": "[4.8.0.1451, )"
             }
           }
         }
@@ -143,7 +143,7 @@
             },
             "Plugin.Toast": {
               "target": "Package",
-              "version": "[2.1.3, )"
+              "version": "[2.2.0, )"
             },
             "Prism.DryIoc.Forms": {
               "target": "Package",
@@ -155,7 +155,7 @@
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[4.8.0.1364, )"
+              "version": "[4.8.0.1451, )"
             }
           },
           "imports": [

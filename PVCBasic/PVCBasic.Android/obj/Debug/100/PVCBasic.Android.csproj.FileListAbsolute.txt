@@ -1,0 +1,9 @@
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\MonoAndroid,Version=v10.0.AssemblyAttributes.cs
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\build.props
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\adb.props
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\PVCBasic.Android.csprojAssemblyReference.cache
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\stamp\_BuildLibraryImportsCache.stamp
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\res.flag
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\R.txt
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\R.cs.flag
+C:\Users\AngelCanales\source\repos\PVCBasic\PVCBasic\PVCBasic.Android\obj\Debug\100\PVCBasic.Android.csproj.CoreCompileInputs.cache

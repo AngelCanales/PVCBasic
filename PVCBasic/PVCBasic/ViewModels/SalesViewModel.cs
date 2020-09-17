@@ -1,17 +1,16 @@
 ﻿using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
-using PVCBasic.Database;
 using PVCBasic.Database.Models;
 using PVCBasic.Models;
 using PVCBasic.PVCBCore.Invoices;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Plugin.Toast;
+using Plugin.Toast.Abstractions;
 
 namespace PVCBasic.ViewModels
 {
@@ -74,7 +73,7 @@ namespace PVCBasic.ViewModels
             if(this.Quantity== null) { return; };
             if (this.Price == null) { return; };
 
-            var des = $"{this.NameProduct} -> {this.Quantity.Value} x {this.Price.Value} = {this.TotalItem}";
+            var des = $"{this.NameProduct} => {this.Quantity.Value} x {this.Price.Value} = {this.TotalItem.ToString("C2")}";
             var item = new DetailInvoicesViewModel
             {
                 Id =  Guid.NewGuid(),
@@ -154,6 +153,8 @@ namespace PVCBasic.ViewModels
          //   invoice.InvoicesTypes = "V";
            await this.invoicesManager.CreateAsync(invoice);
 
+            
+            CrossToastPopUp.Current.ShowToastSuccess($"Se guardo en: {this.Title}", ToastLength.Long);
             this.Total = 0;
             this.TotalItem = 0;
             this.NameProduct = string.Empty;
