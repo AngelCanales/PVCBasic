@@ -49,18 +49,9 @@ namespace PVCBasic.ViewModels
         }
         private async Task ExecuteDetailInvoiceCommand(InvoicesViewModel invoice)
         {
-            if (this.TapNumber >= 1)
-            {
-                this.TapNumber = 0;
                 var param = new NavigationParameters();
                 param.Add("Invoice", invoice);
                 await this.NavigationService.NavigateAsync("TransactionDetailsPage", param);
-            }
-            else 
-            {
-                this.TapNumber++;
-            }
-           
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)

@@ -102,7 +102,7 @@ namespace PVCBasic.ViewModels
             {
                 if( item.Id == this.SelectedItemDetails.Id) 
                 {
-                    var des = $"{this.NameProduct} -> {this.Quantity} x {this.Price} = {this.TotalItem}";
+                    var des = $"{this.NameProduct} => {this.Quantity} x {this.Price} = {this.TotalItem.ToString("C2")}";
 
                     item.Description = des;
                     item.ProductName = this.NameProduct;
@@ -145,7 +145,7 @@ namespace PVCBasic.ViewModels
         {
             if (!this.DetailInvoices.Any()) { return; }
             var invoice = new Invoices();
-            var detail = this.DetailInvoices.Select(s => new DetailInvoices { Description = s.Description, TotalItem = s.TotalItem}).ToList();
+            var detail = this.DetailInvoices.Select(s => new DetailInvoices { IdInvoices = invoice.Id, Invoices = invoice, Description = s.Description, TotalItem = s.TotalItem}).ToList();
             invoice.Date = DateTime.Now;
             invoice.Description = this.Description;
             invoice.InvoicesTypes = this.TypeInvoice;

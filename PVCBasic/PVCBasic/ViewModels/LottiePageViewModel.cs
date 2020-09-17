@@ -17,6 +17,7 @@ namespace PVCBasic.ViewModels
         private string nameFile;
         private string route;
         private LottieItem lottieItem;
+        private bool isPlayingChange;
 
         public LottiePageViewModel(INavigationService navigationService, IPageDialogService dialogService) : base(navigationService)
         {
@@ -57,6 +58,17 @@ namespace PVCBasic.ViewModels
             }
         }
 
+
+        public bool IsPlayingChange
+        {
+            get => this.isPlayingChange;
+            set
+            {
+                this.isPlayingChange = value;
+                if (!isPlayingChange) { this.FinishedCommand.Execute(true); }
+                this.RaisePropertyChanged();
+            }
+        }
         public string NameFile
         {
             get => this.nameFile;

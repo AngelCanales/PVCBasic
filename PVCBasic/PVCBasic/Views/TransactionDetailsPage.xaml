@@ -53,9 +53,9 @@
                                     <DatePicker IsEnabled="False" Grid.Row="2" Grid.Column="1" Format="dd-MM-yyyy"  Date="{Binding Invoices.Date, Mode=TwoWay}"     FontAttributes="Bold"   >
                                     </DatePicker>
 
-
+                                   
                                 </Grid>
-
+                                <Label  Margin="0,10,0,10"    Style="{StaticResource LabelSummaryStyle}" Text="Detalle"   FontAttributes="Bold" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
 
                             </StackLayout>
                         </ListView.Header>

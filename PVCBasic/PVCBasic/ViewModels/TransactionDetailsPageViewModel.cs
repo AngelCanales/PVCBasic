@@ -60,8 +60,7 @@ namespace PVCBasic.ViewModels
             if (this.Invoices == null) { return; };
             var invoicedelete = await invoicesManager.FindByIdAsync(this.Invoices.Id);
             await invoicesManager.DeleteAsync(invoicedelete);
-            //var param = new NavigationParameters();
-            //param.Add("Date", this.Invoices.Date);
+
             await this.NavigationService.GoBackAsync();
         }
 

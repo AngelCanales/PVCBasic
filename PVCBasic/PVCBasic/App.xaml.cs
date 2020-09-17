@@ -38,12 +38,16 @@ namespace PVCBasic
 
 
             var culture = CultureInfo.InstalledUICulture;
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture.IetfLanguageTag);
-            ResourceGlobal.Culture = new CultureInfo(culture.IetfLanguageTag);
+
+            var myCurrency = new CultureInfo("es-HN");
+            CultureInfo.DefaultThreadCurrentCulture = myCurrency;
+
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(myCurrency.IetfLanguageTag);
+            ResourceGlobal.Culture = new CultureInfo(myCurrency.IetfLanguageTag);
 
             var param = new NavigationParameters();
             var lottieItem = new LottieItem();
-            lottieItem.NameFile = "dataReport.json";
+            lottieItem.NameFile = "dataCashBack.json";
             lottieItem.Route = "MasterDetailPage/NavigationPage/SummaryPage";
             param.Add("LottieItem", lottieItem);
 
