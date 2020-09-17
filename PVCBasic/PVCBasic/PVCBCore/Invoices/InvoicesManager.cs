@@ -61,5 +61,11 @@ namespace PVCBasic.PVCBCore.Invoices
             var invoicesDatalist = await this.invoices.All().Where(w => w.Date.Date == date.Date ).Include(i => i.DetailInvoices).ToListAsync();
             return invoicesDatalist;
         }
+
+        public async Task<IEnumerable<Database.Models.Invoices>> GetAllByDateYearAsync(DateTime datestar, DateTime dateend)
+        {
+            var invoicesDatalist = await this.invoices.All().Where(w => w.Date.Date >= datestar.Date && w.Date.Date <= dateend.Date).Include(i => i.DetailInvoices).ToListAsync();
+            return invoicesDatalist;
+        }
     }
 }

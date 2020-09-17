@@ -11,6 +11,8 @@ namespace PVCBasic.PVCBCore.Invoices
 
         Task<IEnumerable<PVCBasic.Database.Models.Invoices>> GetAllByDateAsync(DateTime date);
 
+        Task<IEnumerable<PVCBasic.Database.Models.Invoices>> GetAllByDateYearAsync(DateTime datestar, DateTime dateend);
+
         Task<PVCBasic.Database.Models.Invoices> FindByIdAsync(int id);
 
         Task<PVCBasic.Database.Models.Invoices> FindAllByDateAsync(DateTime date);
