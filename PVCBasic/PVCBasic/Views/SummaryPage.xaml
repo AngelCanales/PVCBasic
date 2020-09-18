@@ -9,7 +9,18 @@
              x:Class="PVCBasic.Views.SummaryPage">
     <ContentPage.Content>
         <StackLayout>
-           
+
+            <!--<forms:AnimationView 
+	x:Name="animationstarView" 
+	Grid.Row="1"
+	Animation="dataCashBack.json" 
+	Loop="false" 
+	AutoPlay="True"
+                IsVisible="{Binding IsVisibleStarAnimation , Mode=TwoWay}" 
+	PlaybackFinishedCommand="{Binding FinishedStarCommand}" 
+	VerticalOptions="FillAndExpand" 
+	HorizontalOptions="FillAndExpand" />-->
+            
             <forms:AnimationView  
 	x:Name="animationView" 
 	Grid.Row="1"

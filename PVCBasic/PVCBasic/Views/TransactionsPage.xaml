@@ -26,6 +26,7 @@
                  HasUnevenRows="true"
                  CachingStrategy="RecycleElement"
                                SeparatorColor="#343a40"
+                              
                       SelectedItem="{Binding SelectedItemInvoice, Mode=TwoWay}" >
                         <ListView.Behaviors>
                             <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailInvoiceCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>
@@ -41,7 +42,7 @@
 
                                 </Grid.RowDefinitions>
 
-                                <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Fecha:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                                <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelInvoiceStyle}" Text="Fecha:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
 
                                 <DatePicker IsEnabled="True" Grid.Row="0" Grid.Column="1" Format="dd-MM-yyyy"  Date="{Binding Date, Mode=TwoWay}"     FontAttributes="Bold"   >
                                     <DatePicker.Behaviors>
@@ -54,7 +55,7 @@
                             <DataTemplate>
                                 <ViewCell>
 
-                                    <StackLayout Padding="2">
+                                    <StackLayout Padding="2" BackgroundColor="#999999">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
@@ -65,14 +66,14 @@
                                                 <ColumnDefinition Width="0.50*" />
                                                 <ColumnDefinition Width="0.50*" />
                                             </Grid.ColumnDefinitions>
-                                            <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Id:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
-                                            <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding Id, Mode=OneWay}"         FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+                                            <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelInvoiceStyle}" Text="Id:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                                            <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="1"  Style="{StaticResource LabelInvoiceStyle}" Text="{Binding Id, Mode=OneWay}"         FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
 
-                                            <Label  Margin="0,10,0,10"  Grid.Row="1" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Descripción:"   FontAttributes="Bold"  HorizontalTextAlignment="End"/>
-                                            <Label  Margin="0,10,0,10"  Grid.Row="1" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding Description, Mode=OneWay}"          FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+                                            <Label  Margin="0,10,0,10"  Grid.Row="1" Grid.Column="0"  Style="{StaticResource LabelInvoiceStyle}" Text="Descripción:"   FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                                            <Label  Margin="0,10,0,10"  Grid.Row="1" Grid.Column="1"  Style="{StaticResource LabelInvoiceStyle}" Text="{Binding Description, Mode=OneWay}"          FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
                                             
-                                            <Label  Margin="0,10,0,10"  Grid.Row="2" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Total:"   FontAttributes="Bold"  HorizontalTextAlignment="End"/>
-                                            <Label  Margin="0,10,0,10"  Grid.Row="2" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding Total, Mode=OneWay, StringFormat='{0:c}'}"         FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+                                            <Label  Margin="0,10,0,10"  Grid.Row="2" Grid.Column="0"  Style="{StaticResource LabelInvoiceStyle}" Text="Total:"   FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                                            <Label  Margin="0,10,0,10"  Grid.Row="2" Grid.Column="1"  Style="{StaticResource LabelInvoiceStyle}" Text="{Binding Total, Mode=OneWay, StringFormat='{0:c}'}"         FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
 
 
                                         </Grid>
@@ -94,8 +95,8 @@
                                         <ColumnDefinition Width="0.50*" />
                                         <ColumnDefinition Width="0.50*" />
                                     </Grid.ColumnDefinitions>
-                                    <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Suma Total:"   FontAttributes="Bold"  HorizontalTextAlignment="End"/>
-                                    <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding SumTotal, Mode=OneWay, StringFormat='{0:c}'}"    TextColor="#0561FC"     FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+                                    <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelInvoiceStyle}" Text="Suma Total:"   FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                                    <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="1"  Style="{StaticResource LabelInvoiceStyle}" Text="{Binding SumTotal, Mode=OneWay, StringFormat='{0:c}'}"    TextColor="#0561FC"     FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
                                 </Grid>
                             </StackLayout>
                         </ListView.Footer>

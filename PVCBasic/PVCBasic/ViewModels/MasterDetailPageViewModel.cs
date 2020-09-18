@@ -23,6 +23,12 @@ namespace PVCBasic.ViewModels
 
             this.Menu = new ObservableCollection<MenuItem>
             {
+                  new MenuItem
+                {
+                    Name = "Productos",
+                    Route = "MasterDetailPage/NavigationPage/ListProducPage",
+                    IconValue = "\uf468",
+                },
                 new MenuItem
                 {
                     Name = "Ventas",
@@ -62,8 +68,14 @@ namespace PVCBasic.ViewModels
                   new MenuItem
                 {
                     Name = "Reporte Anual",
-                    Route = "MasterDetailPage/NavigationPage/",
+                    Route = "MasterDetailPage/NavigationPage/AnnualReportPage",
                     IconValue = "\uf1fe",
+                },
+                    new MenuItem
+                {
+                    Name = "Configuración",
+                    Route = "MasterDetailPage/NavigationPage/SalesPage",
+                    IconValue = "\uf085",
                 },
             };
 

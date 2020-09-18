@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:fontawesome="clr-namespace:FontAwesome"
+             xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
+             xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+              Title="{Binding Title}"
+              Style="{StaticResource ContentPageStyle}"
+             x:Class="PVCBasic.Views.AnnualReportPage">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <forms:AnimationView  
+	x:Name="animationView" 
+	Grid.Row="1"
+	Animation="dataReport.json" 
+	Loop="false" 
+                IsVisible="{Binding IsVisibleAnimation , Mode=TwoWay}"
+	AutoPlay="True"
+	PlaybackFinishedCommand="{Binding FinishedCommand}" 
+	VerticalOptions="FillAndExpand" 
+	HorizontalOptions="FillAndExpand" />
+
+            <StackLayout  IsVisible="{Binding IsVisibleContent , Mode=TwoWay}">
+                <Grid  Padding="10,5,30,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.50*" />
+                        <ColumnDefinition Width="0.50*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Fecha:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+
+                    <DatePicker IsEnabled="True" Grid.Row="0" Grid.Column="1" Format="dd-MM-yyyy"  Date="{Binding Date, Mode=TwoWay}"     FontAttributes="Bold"   >
+                        <DatePicker.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="DateSelected" Command="{Binding DateSelectedCommand}" />
+                        </DatePicker.Behaviors>
+                    </DatePicker>
+                    <Label  Margin="0,10,0,10"  Grid.Row="1" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Ventas:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <Label  Margin="0,10,0,10"  Grid.Row="1" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding SalesQuantity, Mode=OneWay}"         FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="2" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Total Ventas:"   FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <Label  Margin="0,10,0,10"  Grid.Row="2" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding TotalSales, Mode=OneWay, StringFormat='{0:c}'}"         FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="3" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Compras:"   FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <Label  Margin="0,10,0,10"  Grid.Row="3" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding PurchaseQuantity, Mode=OneWay}"          FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="4" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="Total Compras:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <Label  Margin="0,10,0,10"  Grid.Row="4" Grid.Column="1"  Style="{StaticResource LabelSummaryStyle}" Text="{Binding TotalPurchases, Mode=OneWay, StringFormat='{0:c}'}"         FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="5" Grid.Column="0"  Style="{StaticResource LabelSummaryStyle}" Text="En Caja:"    FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <Label  Margin="0,10,0,10"  Grid.Row="5" Grid.Column="1" TextColor="{Binding BoxTextColor,Mode=OneWay}" Text="{Binding Box, Mode=OneWay, StringFormat='{0:c}'}"  FontSize="Title"   FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+
+                </Grid>
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

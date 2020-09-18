@@ -125,7 +125,15 @@
                            Value="Title" />
                 </Style>
 
-                <Style x:Key="EntryStyle"
+            <Style x:Key="LabelInvoiceStyle"
+                   TargetType="{x:Type Label}">
+                <Setter Property="TextColor"
+                           Value="Black" />
+                <Setter Property="FontSize"
+                           Value="Small" />
+            </Style>
+            
+            <Style x:Key="EntryStyle"
                    TargetType="{x:Type Entry}">
                     <Setter Property="TextColor"
                            Value="{StaticResource EntryTextColor}" />

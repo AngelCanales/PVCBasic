@@ -11,9 +11,10 @@ using Prism.Commands;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+
 namespace PVCBasic.ViewModels
 {
-   public class SummaryPageViewModel : BaseViewModel
+   public class AnnualReportPageViewModel : BaseViewModel
     {
         private IPageDialogService dialogService;
         private DateTime date;
@@ -25,38 +26,31 @@ namespace PVCBasic.ViewModels
         private string boxTextColor;
         private bool isVisibleAnimation;
         private bool isVisibleContent;
-        private bool isVisibleStarAnimation;
         private readonly IInvoicesManager invoicesManager;
-        public SummaryPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
+        public AnnualReportPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
             this.dialogService = dialogService;
             this.invoicesManager = invoicesManager;
-            this.Title = "Reporte Diario";
+            this.Title = "Reporte Anual";
 
             var myCurrency = new CultureInfo("es-HN");
             CultureInfo.DefaultThreadCurrentCulture = myCurrency;
-            this.IsVisibleAnimation = true;
+
             this.DateSelectedCommand = new DelegateCommand(async () => await this.ExecuteDateSelectedCommand());
-           this.FinishedCommand = new DelegateCommand(async () => await this.ExecuteFinishedCommand());
-           this.FinishedStarCommand = new DelegateCommand(async () => await this.ExecuteFinishedStarCommand());
-           this.IsVisibleContent = false;
+            this.FinishedCommand = new DelegateCommand(async () => await this.ExecuteFinishedCommand());
+            this.IsVisibleAnimation = true;
+            this.IsVisibleContent = false;
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
 
-            if (parameters.ContainsKey("LottieItem"))
-            {
-                this.IsVisibleStarAnimation = (bool)parameters["LottieItem"];
-            }
             this.Date = DateTime.Now;
             await GetDataAsync();
         }
 
         public ICommand FinishedCommand { get; set; }
-
-        public ICommand FinishedStarCommand { get; set; }
 
         public bool IsVisibleAnimation
         {
@@ -64,16 +58,6 @@ namespace PVCBasic.ViewModels
             set
             {
                 this.isVisibleAnimation = value;
-                this.RaisePropertyChanged();
-            }
-        }
-
-        public bool IsVisibleStarAnimation
-        {
-            get => this.isVisibleStarAnimation;
-            set
-            {
-                this.isVisibleStarAnimation = value;
                 this.RaisePropertyChanged();
             }
         }
@@ -94,13 +78,6 @@ namespace PVCBasic.ViewModels
             this.IsVisibleContent = true;
         }
 
-        private async Task ExecuteFinishedStarCommand()
-        {
-            this.IsVisibleStarAnimation = false;
-            this.IsVisibleAnimation = true;
-            this.IsVisibleContent = false;
-        }
-
         public ICommand DateSelectedCommand { get; set; }
         private async Task ExecuteDateSelectedCommand()
         {
@@ -109,7 +86,7 @@ namespace PVCBasic.ViewModels
 
         private async Task GetDataAsync()
         {
-            var data = await invoicesManager.GetAllByDateAsync(this.Date);
+            var data = await invoicesManager.GetAllByDateYearAsync(new DateTime(this.Date.Year, 1, 1), new DateTime(this.Date.Year, 12, 31));
             var purchase = data.Where(w => w.InvoicesTypes == ConstantName.ConstantName.Purchases);
             var sales = data.Where(w => w.InvoicesTypes == ConstantName.ConstantName.Sales);
             this.PurchaseQuantity = purchase.Count();
