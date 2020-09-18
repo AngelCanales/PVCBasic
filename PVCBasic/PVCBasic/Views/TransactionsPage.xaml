@@ -25,7 +25,7 @@
                 VerticalOptions="FillAndExpand"
                  HasUnevenRows="true"
                  CachingStrategy="RecycleElement"
-                              
+                               SeparatorColor="#343a40"
                       SelectedItem="{Binding SelectedItemInvoice, Mode=TwoWay}" >
                         <ListView.Behaviors>
                             <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailInvoiceCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>

@@ -22,12 +22,13 @@ namespace PVCBasic.ViewModels
         private IPageDialogService dialogService;
         private IInvoicesManager invoicesManager;
         private ObservableCollection<MonthlyReportModel> detailInvoices;
+        private decimal total;
 
         public MonthlyReportViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
             this.dialogService = dialogService;
             this.invoicesManager = invoicesManager;
-            this.Title = "Reporte Mensuak";
+            this.Title = "Reporte Mensual";
             this.DetailInvoices = new ObservableCollection<MonthlyReportModel>();
             this.DateSelectedCommand = new DelegateCommand(async () => await this.ExecuteDateSelectedCommand());
 
@@ -68,6 +69,7 @@ namespace PVCBasic.ViewModels
                                       TotalSales = s.Sum(d => d.Total),
                                       TypeInvoice = "V",
                                       Date = s.FirstOrDefault().Date,
+                                      CountSales = s.Count()
                                   });
 
             var groupPurchase = data.Where(c => c.InvoicesTypes == "C")
@@ -78,6 +80,7 @@ namespace PVCBasic.ViewModels
                                       TotalPurchase = s.Sum(d => d.Total),
                                       TypeInvoice = "C",
                                       Date = s.FirstOrDefault().Date,
+                                      CountPurchase = s.Count(),
                                   });
 
             var result = groupSales.Join(groupPurchase,
@@ -91,7 +94,8 @@ namespace PVCBasic.ViewModels
                     Difference = sales.TotalSales - purchase.TotalPurchase,
                     DifferenceTextColor = (sales.TotalSales - purchase.TotalPurchase) < 0 ? "#FC0505" : "#0561FC",
                     MonthName = sales.Date.ToString("MMMM", CultureInfo.InvariantCulture),
-
+                    CountPurchase = sales.CountPurchase,
+                    CountSales = sales.CountSales
                 }).ToList();
 
             this.DetailInvoices.Clear();
@@ -118,6 +122,16 @@ namespace PVCBasic.ViewModels
             set
             {
                 this.boxTextColor = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public decimal SumTotal
+        {
+            get => this.total;
+            set
+            {
+                this.total = value;
                 this.RaisePropertyChanged();
             }
         }

@@ -29,6 +29,7 @@
                  HasUnevenRows="true"
                  CachingStrategy="RecycleElement"
                         SelectionMode="None"      
+                               SeparatorColor="#343a40"
                       >
                        
                         <ListView.Header>

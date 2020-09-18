@@ -56,7 +56,7 @@ namespace PVCBasic.ViewModels
                  new MenuItem
                 {
                     Name = "Reporte Mensual",
-                    Route = "MasterDetailPage/NavigationPage/",
+                    Route = "MasterDetailPage/NavigationPage/MonthlyReportPage",
                     IconValue = "\uf1fe",
                 },
                   new MenuItem

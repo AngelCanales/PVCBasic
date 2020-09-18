@@ -20,6 +20,10 @@ namespace PVCBasic.Models
 
         public string TypeInvoice { get; set; }
 
+        public int CountSales { get; set; }
+
+        public int CountPurchase { get; set; }
+
         public string DifferenceTextColor { get; set; }
     }
 }
