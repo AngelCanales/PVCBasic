@@ -15,6 +15,8 @@ using PVCBasic.PVCBCore.Invoices;
 using PVCBasic.Database.Repositories;
 using Prism.Navigation;
 using PVCBasic.Models;
+using PVCBasic.PVCBCore.Products;
+using PVCBasic.PVCBCore.Parameters;
 
 namespace PVCBasic
 {
@@ -69,7 +71,11 @@ namespace PVCBasic
 
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.DetailInvoices>, DetailInvoicesRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.Products>, ProductRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.Parameters>, ParametersRepository>();
             containerRegistry.RegisterSingleton<IInvoicesManager, InvoicesManager>();
+            containerRegistry.RegisterSingleton<IProductsManager, ProductsManager>();
+            containerRegistry.RegisterSingleton<IParametersManager, ParametersManager>();
 
             if (containerRegistry.IsRegistered<IInvoicesManager>())
             {

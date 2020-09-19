@@ -15,6 +15,10 @@ namespace PVCBasic.Database
         public DbSet<Invoices> Invoices { get; set; }
         public DbSet<DetailInvoices> DetailInvoices { get; set; }
 
+        public DbSet<Products> Products { get; set; }
+
+        public DbSet<Parameters> Parameters { get; set; }
+
         public PVCBContext(DbContextOptions<PVCBContext> options)
       : base(options)
         {
@@ -29,7 +33,22 @@ namespace PVCBasic.Database
                 .WithMany(c => c.DetailInvoices)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-        }
+
+            modelBuilder.Entity<Parameters>().HasData(
+                new { Key = "EmissionPoint", Value = "" },
+                new { Key = "Establishment", Value = "" },
+                new { Key = "DocumentType", Value = "" },
+                new { Key = "CurrenInvoiceNumber", Value = "" },
+                new { Key = "FirstInvoiceNumber", Value = "" },
+                new { Key = "LastInvoiceNumber", Value = "" },
+                new { Key = "PrintCode", Value = "" },
+                new { Key = "Store", Value = "" },
+                new { Key = "Logo", Value = "" },
+                new { Key = "ValidUntilDate", Value = "" }
+                );
+
+            
+    }
         //public PVCBContext()
         //{
         //    SQLitePCL.Batteries_V2.Init();

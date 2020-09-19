@@ -12,6 +12,8 @@ namespace PVCBasic.Database.Models
 
         public string Description { get; set; }
 
+        public string NumFactura { get; set; }
+
         public decimal Total { get; set; }
 
         public string InvoicesTypes { get; set; }
