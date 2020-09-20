@@ -22,8 +22,11 @@ namespace PVCBasic.Database.Repositories
         {
             oldEntity.Key = newEntity.Key;
             oldEntity.Value = newEntity.Value;
-            oldEntity.Image = newEntity.Image;
-            oldEntity.Date = newEntity.Date;
+            oldEntity.ValueImage = newEntity.ValueImage;
+            oldEntity.ValueDate = newEntity.ValueDate;
+            oldEntity.ValueInt = newEntity.ValueInt;
+            oldEntity.ValueDecimal = newEntity.ValueDecimal;
+            oldEntity.ValueBool = newEntity.ValueBool;
 
             return oldEntity;
         }

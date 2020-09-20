@@ -26,7 +26,7 @@ namespace PVCBasic.ViewModels
                   new MenuItem
                 {
                     Name = "Productos",
-                    Route = "MasterDetailPage/NavigationPage/ListProducPage",
+                    Route = "MasterDetailPage/NavigationPage/ListProductsPage",
                     IconValue = "\uf468",
                 },
                 new MenuItem

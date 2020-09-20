@@ -1,4 +1,6 @@
-﻿using Prism.Commands;
+﻿using Plugin.Toast;
+using Plugin.Toast.Abstractions;
+using Prism.Commands;
 using Prism.Navigation;
 using PVCBasic.Models;
 using PVCBasic.PVCBCore.Products;
@@ -22,6 +24,7 @@ namespace PVCBasic.ViewModels
         private string searchText;
         private bool isBusySearchBar;
         private bool isBusy;
+        private bool isError;
 
         public ListProductsPageViewModel(INavigationService navigationService, IProductsManager productsManager) : base(navigationService)
         {
@@ -29,19 +32,30 @@ namespace PVCBasic.ViewModels
 
             this.DetailProductCommand = new DelegateCommand<ProductsModel>(async (c) => await this.ExecuteDetailProductCommand(c));
             this.SearchCommand = new DelegateCommand(async () => await this.PerformSearch());
+            this.AddCommand = new DelegateCommand(async () => await this.ExecuteAddCommand());
 
             this.ListOfProducts = new ObservableCollection<ProductsModel>();
             this.ListOfProductsbackup = new List<ProductsModel>();
             this.ListProducts = new List<ProductsModel>();
             this.IsBusySearchBar = false;
+            this.IsError = false;
+        }
+
+        private async Task ExecuteAddCommand()
+        {
+            var param = new NavigationParameters();
+            await this.NavigationService.NavigateAsync("AddProductPage");
         }
 
         public ICommand DetailProductCommand { get; set; }
-
         public ICommand SearchCommand { get; set; }
+
+        public ICommand AddCommand { get; set; }
 
         private async Task ExecuteDetailProductCommand(ProductsModel selectedProduct)
         {
+           
+
             var param = new NavigationParameters();
             param.Add("SelectedProduct", selectedProduct);
             await this.NavigationService.NavigateAsync("ListProductsDetailPage", param);
@@ -56,17 +70,20 @@ namespace PVCBasic.ViewModels
         {
             if (!string.IsNullOrEmpty(this.SearchText))
             {
+                CrossToastPopUp.Current.ShowToastSuccess($"Buscando :{this.SearchText}", ToastLength.Long);
                 var data = this.ListProducts.ToList()
-                    .Where(c => c.Code.ToUpper().Contains(this.SearchText.ToUpper()) || c.Name.ToUpper().Contains(this.SearchText.ToUpper()) || c.ShortName.ToUpper().Contains(this.SearchText.ToUpper()) || c.Code.ToUpper().Contains(this.SearchText.ToUpper()))
+                    .Where(c => c.Code.ToUpper().Contains(this.SearchText.ToUpper()) || 
+                    c.Name.ToUpper().Contains(this.SearchText.ToUpper()) || 
+                    c.ShortName.ToUpper().Contains(this.SearchText.ToUpper()))
                     .Select(s => new ProductsModel
                     {
                         Id = s.Id,
-                        Cost = s.Cost,
+                        Cost = s.Cost.Value,
                         Name = s.Name,
                         ShortName = s.ShortName,
                         Code = s.Code,
                         Tax = s.Tax,
-                        Price = s.Price,
+                        Price = s.Price.Value,
                         Image = s.Image,
                         Discount = s.Discount,
                         Date = s.Date
@@ -74,6 +91,7 @@ namespace PVCBasic.ViewModels
 
                 if (data.Any())
                 {
+
                     this.ListOfProducts.Clear();
                     foreach (var item in data.OrderBy(c => c.Name))
                     {
@@ -105,6 +123,16 @@ namespace PVCBasic.ViewModels
             this.ListProducts.Clear();
             this.ListOfProductsbackup.Clear();
             await this.GetProductsListAsync();
+        }
+
+        public bool IsError
+        {
+            get => this.isError;
+            set
+            {
+                this.isError = value;
+                this.RaisePropertyChanged();
+            }
         }
 
         public async Task GetProductsListAsync()
@@ -146,7 +174,12 @@ namespace PVCBasic.ViewModels
                            productsList
                                .OrderBy(c => c.Name));
 
-                    this.ListOfProductsbackup =
+                this.ListProducts =
+                      new List<ProductsModel>(
+                          productsList
+                              .OrderBy(c => c.Name));
+
+                this.ListOfProductsbackup =
                        new List<ProductsModel>(
                            productsList
                                .OrderBy(c => c.Name));

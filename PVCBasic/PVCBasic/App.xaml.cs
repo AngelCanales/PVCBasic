@@ -53,7 +53,7 @@ namespace PVCBasic
             lottieItem.Route = "MasterDetailPage/NavigationPage/SummaryPage";
             param.Add("LottieItem", lottieItem);
 
-            await this.NavigationService.NavigateAsync("LottiePage", param);
+            await this.NavigationService.NavigateAsync("MasterDetailPage/NavigationPage/SummaryPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -69,6 +69,8 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<MonthlyReportPage, MonthlyReportViewModel>();
             containerRegistry.RegisterForNavigation<AnnualReportPage, AnnualReportPageViewModel>();
             containerRegistry.RegisterForNavigation<ListProductsPage,ListProductsPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddProductPage, AddProductPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListProductsDetailPage, ListProductsDetailPageViewModel>();
 
 
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();

@@ -16,9 +16,9 @@ namespace PVCBasic.Models
 
         public string ShortName { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
-        public decimal Cost { get; set; }
+        public decimal? Cost { get; set; }
 
         public decimal Tax { get; set; }
 

@@ -1,12 +1,130 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:fontawesome="clr-namespace:FontAwesome"
+             xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
+             xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+              Title="{Binding Title}"
+              Style="{StaticResource ContentPageStyle}"
              x:Class="PVCBasic.Views.ListProductsPage">
+ 
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+       
+        <AbsoluteLayout  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.100*" />
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.10*" />
+                    <RowDefinition Height="0.90*" />
+                   
+                </Grid.RowDefinitions>
+
+                <StackLayout  Grid.Row="0" Grid.Column="0" Padding="10,10,10,20">
+            <SearchBar   Placeholder="Buscar Producto" Text="{Binding SearchText}">
+                <SearchBar.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SearchButtonPressed" Command="{Binding SearchCommand}"/>
+                    <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding SearchCommand}"/>
+                </SearchBar.Behaviors>
+            </SearchBar>
+            </StackLayout>
+                <StackLayout  Grid.Row="1" Grid.Column="0">
+
+                <ListView x:Name="_ListView" 
+                ItemsSource="{Binding ListOfProducts}"
+              HasUnevenRows="true"
+                CachingStrategy="RecycleElement"
+                           SeparatorColor="#343a40"
+                >
+                    <ListView.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailProductCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <!--<StackLayout Padding="10">
+
+                                    <Label Text="{Binding Name}" 
+                       LineBreakMode="NoWrap" 
+                       Style="{DynamicResource ListItemTextStyle}" 
+                       FontSize="18"  FontAttributes="Bold"/>
+                                  
+                                </StackLayout>-->
+
+                                <Grid Padding="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="40"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Text="{Binding Name}" 
+                                       LineBreakMode="NoWrap"
+                                      TextColor="Black" 
+                                       FontSize="{StaticResource BigSize}"
+                                           FontAttributes="Bold"
+                                       Grid.Row="0"
+                                       Grid.Column="1" />
+                                    <StackLayout Padding="0,-7,0,0" Grid.Row="1"
+                                       Grid.Column="1" >
+                                        <Label Text="{Binding Code}"
+                                       LineBreakMode="NoWrap" 
+                                       TextColor="Black" 
+                                       FontSize="{StaticResource LittleSize}"
+                                      FontAttributes="Bold"
+                                       />
+                                    </StackLayout>
+                                    <StackLayout Padding="0,-7,0,0" Grid.Row="2"
+                                       Grid.Column="1">
+                                        <Label Text="{Binding ShortName}"
+                                      TextColor="Black" 
+                                       FontSize="{StaticResource LittleSize}"
+                                       FontAttributes="Bold"
+                                       />
+                                    </StackLayout>
+                                </Grid>
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            </Grid>
+
+            <Frame
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+				AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
+                HasShadow="True"
+                CornerRadius="30"
+                HeightRequest="60"
+                WidthRequest="60"
+                BackgroundColor="White"
+                Padding="0"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                Margin="18">
+
+                <Button
+                    Text="{x:Static fontawesome:FontAwesomeIcons.Plus}"
+                    FontFamily="{StaticResource FontAwesomeSolid}"
+                    IsEnabled="{Binding IsError,Mode=TwoWay}"
+                    TextColor="White"
+                    BackgroundColor="#28a745"
+                    CornerRadius="30"
+                    HeightRequest="60"
+                    WidthRequest="60"
+                    Command="{Binding AddCommand}"
+                    FontSize="30"
+                    Margin="0"
+                    />
+            </Frame>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
