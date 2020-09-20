@@ -3,11 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:fontawesome="clr-namespace:FontAwesome"
              xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
+             xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
               Title="{Binding Title}"
               Style="{StaticResource ContentPageStyle}"
              x:Class="PVCBasic.Views.MonthlyReportPage">
     <ContentPage.Content>
         <StackLayout>
+        <forms:AnimationView  
+	x:Name="animationView" 
+	Grid.Row="1"
+	Animation="dataReport.json" 
+	Loop="false" 
+                IsVisible="{Binding IsVisibleAnimation , Mode=TwoWay}"
+	AutoPlay="True"
+	PlaybackFinishedCommand="{Binding FinishedCommand}" 
+	VerticalOptions="FillAndExpand" 
+	HorizontalOptions="FillAndExpand" />
+
+            <StackLayout  IsVisible="{Binding IsVisibleContent , Mode=TwoWay}">
 
             <Grid  Padding="10,0,30,0">
                 <Grid.ColumnDefinitions>
@@ -22,11 +35,10 @@
                 VerticalOptions="FillAndExpand"
                  HasUnevenRows="true"
                  CachingStrategy="RecycleElement"
+                              SelectionMode="None"
                                SeparatorColor="#343a40"
                        >
-                        <ListView.Behaviors>
-                            <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailInvoiceCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>
-                        </ListView.Behaviors>
+                        
                         <ListView.Header>
                             <Grid  Padding="10,5,30,0">
                                 <Grid.ColumnDefinitions>
@@ -54,13 +66,13 @@
                                     <StackLayout Padding="2">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="50"/>
+                                                <RowDefinition Height="50"/>
+                                                <RowDefinition Height="50"/>
+                                                <RowDefinition Height="50"/>
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions >
-                                                <ColumnDefinition Width="0.0*" />
+                                                <ColumnDefinition Width="0.50*" />
                                                 <ColumnDefinition Width="0.40*" />
                                                 <ColumnDefinition Width="0.10*" />
                                             </Grid.ColumnDefinitions>
@@ -94,6 +106,7 @@
                 </StackLayout>
             </Grid>
 
+        </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

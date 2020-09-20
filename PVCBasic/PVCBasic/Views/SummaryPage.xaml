@@ -24,7 +24,7 @@
             <forms:AnimationView  
 	x:Name="animationView" 
 	Grid.Row="1"
-	Animation="dataReport.json" 
+	Animation="{Binding NameFile}" 
 	Loop="false" 
                 IsVisible="{Binding IsVisibleAnimation , Mode=TwoWay}"
 	AutoPlay="True"

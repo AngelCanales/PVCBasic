@@ -14,8 +14,7 @@ using System.Windows.Input;
 
 namespace PVCBasic.ViewModels
 {
-
-    public class ListProductsPageViewModel : BaseViewModel
+   public class SearchProductPageViewModel :BaseViewModel
     {
         private readonly IProductsManager productsManager;
         private ObservableCollection<ProductsModel> listOfProducts;
@@ -26,7 +25,7 @@ namespace PVCBasic.ViewModels
         private bool isBusy;
         private bool isError;
 
-        public ListProductsPageViewModel(INavigationService navigationService, IProductsManager productsManager) : base(navigationService)
+        public SearchProductPageViewModel(INavigationService navigationService, IProductsManager productsManager) : base(navigationService)
         {
             this.productsManager = productsManager;
 
@@ -37,9 +36,9 @@ namespace PVCBasic.ViewModels
             this.ListOfProducts = new ObservableCollection<ProductsModel>();
             this.ListOfProductsbackup = new List<ProductsModel>();
             this.ListProducts = new List<ProductsModel>();
+            this.Title = "Seleccionar Productos";
             this.IsBusySearchBar = false;
             this.IsError = false;
-            this.Title = "Lista de productos";
         }
 
         private async Task ExecuteAddCommand()
@@ -55,11 +54,11 @@ namespace PVCBasic.ViewModels
 
         private async Task ExecuteDetailProductCommand(ProductsModel selectedProduct)
         {
-           
+
 
             var param = new NavigationParameters();
             param.Add("SelectedProduct", selectedProduct);
-            await this.NavigationService.NavigateAsync("ListProductsDetailPage", param);
+            await this.NavigationService.GoBackAsync(param);
         }
 
         public async Task PerformSearch()
@@ -73,8 +72,8 @@ namespace PVCBasic.ViewModels
             {
                 CrossToastPopUp.Current.ShowToastSuccess($"Buscando :{this.SearchText}", ToastLength.Long);
                 var data = this.ListProducts.ToList()
-                    .Where(c => c.Code.ToUpper().Contains(this.SearchText.ToUpper()) || 
-                    c.Name.ToUpper().Contains(this.SearchText.ToUpper()) || 
+                    .Where(c => c.Code.ToUpper().Contains(this.SearchText.ToUpper()) ||
+                    c.Name.ToUpper().Contains(this.SearchText.ToUpper()) ||
                     c.ShortName.ToUpper().Contains(this.SearchText.ToUpper()))
                     .Select(s => new ProductsModel
                     {
@@ -139,17 +138,17 @@ namespace PVCBasic.ViewModels
         public async Task GetProductsListAsync()
         {
             this.ListOfProducts = new ObservableCollection<ProductsModel>();
-            
+
             await Task.Yield();
             await Task.Delay(500);
             this.IsBusy = true;
-           
-            
-                var productsList = new ObservableCollection<ProductsModel>();
-                try
-                {
+
+
+            var productsList = new ObservableCollection<ProductsModel>();
+            try
+            {
                 var plist = await productsManager.GetAllAsync();
-                var data  = plist.Select(s => new ProductsModel
+                var data = plist.Select(s => new ProductsModel
                 {
                     Id = s.Id,
                     Cost = s.Cost,
@@ -161,19 +160,19 @@ namespace PVCBasic.ViewModels
                     Image = s.Image,
                     Discount = s.Discount,
                     Date = s.Date
-                }); 
+                });
 
                 foreach (var item in data)
                 {
                     productsList.Add(item);
                 }
 
-                    await Task.Yield();
+                await Task.Yield();
 
-                    this.ListOfProducts =
-                       new ObservableCollection<ProductsModel>(
-                           productsList
-                               .OrderBy(c => c.Name));
+                this.ListOfProducts =
+                   new ObservableCollection<ProductsModel>(
+                       productsList
+                           .OrderBy(c => c.Name));
 
                 this.ListProducts =
                       new List<ProductsModel>(
@@ -185,38 +184,33 @@ namespace PVCBasic.ViewModels
                            productsList
                                .OrderBy(c => c.Name));
 
-                  
-                   
-                }
-                catch (Exception e)
-                {
-                    var x = e.Message;
-                }
-            
+
+
+            }
+            catch (Exception e)
+            {
+                var x = e.Message;
+            }
+
 
             this.IsBusy = false;
         }
         public async override void OnNavigatedTo(INavigationParameters parameters)
-    {
-        base.OnNavigatedTo(parameters);
-
-        if (parameters.ContainsKey("Title"))
         {
-            this.Title = parameters["Title"] as string;
-        }
+            base.OnNavigatedTo(parameters);
 
             await LoadAsync();
-    }
-
-    public bool IsBusySearchBar
-    {
-        get => this.isBusySearchBar;
-        set
-        {
-            this.isBusySearchBar = value;
-            this.RaisePropertyChanged();
         }
-    }
+
+        public bool IsBusySearchBar
+        {
+            get => this.isBusySearchBar;
+            set
+            {
+                this.isBusySearchBar = value;
+                this.RaisePropertyChanged();
+            }
+        }
 
         public bool IsBusy
         {
@@ -229,41 +223,40 @@ namespace PVCBasic.ViewModels
         }
 
         public ObservableCollection<ProductsModel> ListOfProducts
-    {
-        get => this.listOfProducts;
-        set
         {
-            this.SetProperty(ref this.listOfProducts, value);
+            get => this.listOfProducts;
+            set
+            {
+                this.SetProperty(ref this.listOfProducts, value);
+            }
+        }
+
+        public List<ProductsModel> ListOfProductsbackup
+        {
+            get => this.listOfProductsbackup;
+            set
+            {
+                this.SetProperty(ref this.listOfProductsbackup, value);
+            }
+        }
+
+        public string SearchText
+        {
+            get { return searchText; }
+            set
+            {
+                searchText = value;
+                OnPropertyChanged("SearchText");
+            }
+        }
+
+        public List<ProductsModel> ListProducts
+        {
+            get => this.listProducts;
+            set
+            {
+                this.SetProperty(ref this.listProducts, value);
+            }
         }
     }
-
-    public List<ProductsModel> ListOfProductsbackup
-    {
-        get => this.listOfProductsbackup;
-        set
-        {
-            this.SetProperty(ref this.listOfProductsbackup, value);
-        }
-    }
-
-    public string SearchText
-    {
-        get { return searchText; }
-        set
-        {
-            searchText = value;
-            OnPropertyChanged("SearchText");
-        }
-    }
-
-    public List<ProductsModel> ListProducts
-    {
-        get => this.listProducts;
-        set
-        {
-            this.SetProperty(ref this.listProducts, value);
-        }
-    }
-
-}
 }

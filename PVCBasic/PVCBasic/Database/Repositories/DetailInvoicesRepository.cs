@@ -23,6 +23,11 @@ namespace PVCBasic.Database.Repositories
         {
             oldEntity.Description = newEntity.Description;
             oldEntity.TotalItem = newEntity.TotalItem;
+            oldEntity.Price = newEntity.Price;
+            oldEntity.Quantity = newEntity.Quantity;
+            oldEntity.IdProduct = newEntity.IdProduct;
+            oldEntity.Tax = newEntity.Tax;
+            oldEntity.Discount = newEntity.Discount;
             return oldEntity;
         }
     }

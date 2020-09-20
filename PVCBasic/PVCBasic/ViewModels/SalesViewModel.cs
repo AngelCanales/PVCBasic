@@ -38,8 +38,14 @@ namespace PVCBasic.ViewModels
             this.UpdateItemCommand = new DelegateCommand(async () => await this.ExecuteUpdateItemCommand());
             this.DeleteItemCommand = new DelegateCommand(async () => await this.ExecuteDeleteItemCommand());
             this.ClearItemsCommand = new DelegateCommand(async () => await this.ExecuteClearItemsCommand());
-            
+            this.SearchProductCommand = new DelegateCommand(async () => await this.ExecuteSearchProductCommand());
 
+            
+        }
+
+        private async Task ExecuteSearchProductCommand()
+        {
+            await this.NavigationService.NavigateAsync("SearchProductPage");
         }
 
         public async override void OnNavigatedTo(INavigationParameters parameters)
@@ -55,12 +61,48 @@ namespace PVCBasic.ViewModels
             {
                 this.Title = parameters["Title"] as string;
             }
+
+            if (parameters.ContainsKey("SelectedProduct"))
+            {
+                var product = parameters["SelectedProduct"] as ProductsModel;
+              //  CrossToastPopUp.Current.ShowToastSuccess($"price :{product.Price.Value.ToString()}", ToastLength.Long);
+              if (this.TypeInvoice == ConstantName.ConstantName.Sales) 
+                { 
+                this.NumberPrice = product.Price.Value.ToString();
+                this.Price = product.Price.Value;
+                this.NameProduct = product.ShortName;
+                }
+                if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                {
+                    this.NumberPrice = product.Cost.Value.ToString();
+                    this.Price = product.Cost.Value;
+                    this.NameProduct = product.ShortName;
+                }
+            }
+
+            if (parameters.ContainsKey("DetailInvoices"))
+            {
+                this.DetailInvoices = parameters["DetailInvoices"] as ObservableCollection<DetailInvoicesViewModel>;
+                this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
+            }
+
         }
+
+        public override async void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+            parameters.Add("DetailInvoices", this.DetailInvoices);
+            parameters.Add("Title", this.Title);
+            parameters.Add("TypeInvoice", this.TypeInvoice);
+        }
+
         public DetailInvoicesViewModel SelectedItemDetails { get; set; }
 
         public ICommand AddItemCommand { get; set; }
 
         public ICommand ClearItemsCommand { get; set; }
+
+        public ICommand SearchProductCommand { get; set; }
 
         private async Task ExecuteClearItemsCommand()
         {
@@ -241,7 +283,7 @@ namespace PVCBasic.ViewModels
             {
                 try
                 {
-                    this.Price = int.Parse(value);
+                    this.Price = decimal.Parse(value);
                     decimal quantity = 0;
                     if (this.Quantity != null) { quantity = this.Quantity.Value; }
                     if (value != null)

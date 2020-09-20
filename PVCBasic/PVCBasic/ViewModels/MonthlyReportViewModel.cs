@@ -23,6 +23,8 @@ namespace PVCBasic.ViewModels
         private IInvoicesManager invoicesManager;
         private ObservableCollection<MonthlyReportModel> detailInvoices;
         private decimal total;
+        private bool isVisibleContent;
+        private bool isVisibleAnimation;
 
         public MonthlyReportViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
@@ -32,6 +34,9 @@ namespace PVCBasic.ViewModels
             this.DetailInvoices = new ObservableCollection<MonthlyReportModel>();
             this.DateSelectedCommand = new DelegateCommand(async () => await this.ExecuteDateSelectedCommand());
 
+            this.FinishedCommand = new DelegateCommand(async () => await this.ExecuteFinishedCommand());
+            this.IsVisibleAnimation = true;
+            this.IsVisibleContent = false;
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -42,7 +47,6 @@ namespace PVCBasic.ViewModels
             await GetDataAsync();
         }
 
-        public ICommand FinishedCommand { get; set; }
 
 
         public ObservableCollection<MonthlyReportModel> DetailInvoices
@@ -57,33 +61,98 @@ namespace PVCBasic.ViewModels
             await GetDataAsync();
         }
 
+        public ICommand FinishedCommand { get; set; }
+
+        public bool IsVisibleAnimation
+        {
+            get => this.isVisibleAnimation;
+            set
+            {
+                this.isVisibleAnimation = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public bool IsVisibleContent
+        {
+            get => this.isVisibleContent;
+            set
+            {
+                this.isVisibleContent = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        private async Task ExecuteFinishedCommand()
+        {
+            this.IsVisibleAnimation = false;
+            this.IsVisibleContent = true;
+        }
+
         private async Task GetDataAsync()
         {
+
+            var salesList = new List<MonthlyReportModel>();
+            var purchasesList = new List<MonthlyReportModel>();
+            for (int i = 1; i < 13; i++)
+            {
+                var item = new MonthlyReportModel() { mes = i , Date = new DateTime(this.Date.Year, i, 1) };
+                salesList.Add(item);
+                purchasesList.Add(item);
+            }
+
             var data = await invoicesManager.GetAllByDateYearAsync(new DateTime(this.Date.Year, 1, 1), new DateTime(this.Date.Year, 12, 31));
 
-            var groupSales = data.Where(c => c.InvoicesTypes == "V")
+            var groupSales = data.Where(c => c.InvoicesTypes == ConstantName.ConstantName.Sales)
                                   .GroupBy(g => g.Date.Month)
                                   .Select(s => new MonthlyReportModel
                                   {
                                       mes = s.Key,
                                       TotalSales = s.Sum(d => d.Total),
-                                      TypeInvoice = "V",
-                                      Date = s.FirstOrDefault().Date,
+                                      TypeInvoice = ConstantName.ConstantName.Sales,
+                                      Date =  s.FirstOrDefault().Date,
                                       CountSales = s.Count()
                                   });
 
-            var groupPurchase = data.Where(c => c.InvoicesTypes == "C")
+            foreach (var item in salesList)
+            {
+                foreach (var g in groupSales)
+                {
+                    if(item.mes == g.mes)
+                    {
+                        item.TotalSales = g.TotalSales;
+                        item.TypeInvoice = g.TypeInvoice;
+                       // item.Date = g.Date;
+                        item.CountSales = g.CountSales;
+                    }
+                }
+            }
+
+            var groupPurchase = data.Where(c => c.InvoicesTypes == ConstantName.ConstantName.Purchases)
                                   .GroupBy(g => g.Date.Month)
                                   .Select(s => new MonthlyReportModel
                                   {
                                       mes = s.Key,
                                       TotalPurchase = s.Sum(d => d.Total),
-                                      TypeInvoice = "C",
+                                      TypeInvoice = ConstantName.ConstantName.Purchases,
                                       Date = s.FirstOrDefault().Date,
                                       CountPurchase = s.Count(),
                                   });
 
-            var result = groupSales.Join(groupPurchase,
+            foreach (var item in purchasesList)
+            {
+                foreach (var g in groupPurchase)
+                {
+                    if (item.mes == g.mes)
+                    {
+                        item.TotalPurchase = g.TotalPurchase;
+                        item.TypeInvoice = g.TypeInvoice;
+                      //  item.Date = g.Date;
+                        item.CountPurchase = g.CountPurchase;
+                    }
+                }
+            }
+            var result = salesList.Join(purchasesList,
                 sales => sales.mes,
                 purchase => purchase.mes,
                 (sales, purchase) => new MonthlyReportModel

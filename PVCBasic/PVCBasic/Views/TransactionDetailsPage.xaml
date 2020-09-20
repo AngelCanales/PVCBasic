@@ -34,7 +34,7 @@
                       >
                        
                         <ListView.Header>
-                            <StackLayout Padding="2" BackgroundColor="#999999">
+                            <StackLayout Padding="2" BackgroundColor="#fff">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>

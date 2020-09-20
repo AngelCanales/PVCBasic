@@ -47,13 +47,10 @@ namespace PVCBasic
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(myCurrency.IetfLanguageTag);
             ResourceGlobal.Culture = new CultureInfo(myCurrency.IetfLanguageTag);
 
+          
             var param = new NavigationParameters();
-            var lottieItem = new LottieItem();
-            lottieItem.NameFile = "dataCashBack.json";
-            lottieItem.Route = "MasterDetailPage/NavigationPage/SummaryPage";
-            param.Add("LottieItem", lottieItem);
-
-            await this.NavigationService.NavigateAsync("MasterDetailPage/NavigationPage/SummaryPage");
+            param.Add("NameFile", "dataCashBack.json");
+            await this.NavigationService.NavigateAsync("MasterDetailPage/NavigationPage/SummaryPage", param);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -71,8 +68,11 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<ListProductsPage,ListProductsPageViewModel>();
             containerRegistry.RegisterForNavigation<AddProductPage, AddProductPageViewModel>();
             containerRegistry.RegisterForNavigation<ListProductsDetailPage, ListProductsDetailPageViewModel>();
-
-
+            containerRegistry.RegisterForNavigation<SearchProductPage, SearchProductPageViewModel>();
+            containerRegistry.RegisterForNavigation<InvoiceTabbedPage, InvoiceTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<InvoiceDetailPage, InvoiceDetailPageViewModel>();
+            
+            // Data access
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.DetailInvoices>, DetailInvoicesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Products>, ProductRepository>();
@@ -80,11 +80,6 @@ namespace PVCBasic
             containerRegistry.RegisterSingleton<IInvoicesManager, InvoicesManager>();
             containerRegistry.RegisterSingleton<IProductsManager, ProductsManager>();
             containerRegistry.RegisterSingleton<IParametersManager, ParametersManager>();
-
-            if (containerRegistry.IsRegistered<IInvoicesManager>())
-            {
-                // Do something...
-            }
 
         }
     }

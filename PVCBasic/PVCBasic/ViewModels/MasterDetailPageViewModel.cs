@@ -32,13 +32,13 @@ namespace PVCBasic.ViewModels
                 new MenuItem
                 {
                     Name = "Ventas",
-                    Route = "MasterDetailPage/NavigationPage/SalesPage",
+                    Route = "MasterDetailPage/NavigationPage/InvoiceTabbedPage",
                     IconValue = "\uf07a",
                 },
                 new MenuItem
                 {
                     Name = "Compras",
-                    Route = "MasterDetailPage/NavigationPage/SalesPage",
+                    Route = "MasterDetailPage/NavigationPage/InvoiceTabbedPage",
                     IconValue = "\uf3d1",
                 },
                 new MenuItem
@@ -126,6 +126,13 @@ namespace PVCBasic.ViewModels
                     await this.NavigationService.NavigateAsync(item.Route, param);
                 }
 
+                if (item.Name == "Reporte Diario")
+                {
+                    var param = new NavigationParameters();
+                    param.Add("NameFile", "dataReport.json");
+                    await this.NavigationService.NavigateAsync(item.Route, param);
+                }
+                
 
                 await this.NavigationService.NavigateAsync(item.Route);
             }

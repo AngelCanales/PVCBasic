@@ -26,6 +26,7 @@ namespace PVCBasic.ViewModels
         private bool isVisibleAnimation;
         private bool isVisibleContent;
         private bool isVisibleStarAnimation;
+        private string nameFile;
         private readonly IInvoicesManager invoicesManager;
         public SummaryPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
@@ -50,6 +51,11 @@ namespace PVCBasic.ViewModels
             {
                 this.IsVisibleStarAnimation = (bool)parameters["LottieItem"];
             }
+
+            if (parameters.ContainsKey("NameFile"))
+            {
+                this.NameFile = parameters["NameFile"] as string;
+            }
             this.Date = DateTime.Now;
             await GetDataAsync();
         }
@@ -64,6 +70,16 @@ namespace PVCBasic.ViewModels
             set
             {
                 this.isVisibleAnimation = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public string NameFile
+        {
+            get => this.nameFile;
+            set
+            {
+                this.nameFile = value;
                 this.RaisePropertyChanged();
             }
         }
