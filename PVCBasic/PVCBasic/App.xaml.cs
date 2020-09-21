@@ -71,6 +71,9 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<SearchProductPage, SearchProductPageViewModel>();
             containerRegistry.RegisterForNavigation<InvoiceTabbedPage, InvoiceTabbedPageViewModel>();
             containerRegistry.RegisterForNavigation<InvoiceDetailPage, InvoiceDetailPageViewModel>();
+            containerRegistry.RegisterForNavigation<ReceiptPage, ReceiptPageViewModel>();
+
+
             
             // Data access
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();

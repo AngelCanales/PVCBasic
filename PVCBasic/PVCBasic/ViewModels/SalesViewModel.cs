@@ -27,6 +27,7 @@ namespace PVCBasic.ViewModels
         private decimal totalitem;
         private decimal? cash;
         private decimal? exchange;
+        private string receipt;
         private readonly IInvoicesManager invoicesManager;
         public SalesViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
@@ -195,7 +196,7 @@ namespace PVCBasic.ViewModels
          //   invoice.InvoicesTypes = "V";
            await this.invoicesManager.CreateAsync(invoice);
 
-            
+            this.Receipt = await this.ReceiptGenerateAsyc();
             CrossToastPopUp.Current.ShowToastSuccess($"Se guardo en: {this.Title}", ToastLength.Long);
             this.Total = 0;
             this.TotalItem = 0;
@@ -209,6 +210,10 @@ namespace PVCBasic.ViewModels
             this.NumberCash = string.Empty; 
             this.Exchange = null;
             this.DetailInvoices.Clear();
+
+            var param = new NavigationParameters();
+            param.Add("Receipt", this.Receipt);
+            await this.NavigationService.NavigateAsync("ReceiptPage", param);
         }
         public int? Quantity
         {
@@ -395,6 +400,145 @@ namespace PVCBasic.ViewModels
             }
         }
 
+        public async Task<string> ReceiptGenerateAsyc()
+        {
+            var reci = @" <!DOCTYPE html>
+<html>
+<body>
+<section class='container'>
+                        <div style = 'font-family:monospace'>
+<section>
+<div>
+<div>
+ 
+                     <dl style = 'text-align:center' >
+                      
+                        <dt style = 'color:black;font-weight: bold; font-family:Arial'>
+                            " + $"{this.Title}" + @"
+                        </dt>
+                        <dt>
+                            Detalle
+                        </dt>
+                        
+                        <dt>
+                            Fecha: " + $"{DateTime.Now.ToString("dd/mm/yyyy")}" + @"
+                        </dt>
+                        <dt>
+                            Dirrecion:XXXXXXXXX
+                        </dt>
+                        <dt>
+                            Telefono: +504 XXXX-XXXX
+                        </dt>
+                        <dt>
+                            Email: XXXX@XXXX.com
+                        </dt>
+                    </dl>
+                 
+                </div>
+            </div>
+            <hr style = 'border:1px dashed black; width:300px' />
+            <div>
+                <div>
+                    <table style='text-align:left'>
+                        <thead>
+                            <tr>
+                                <th style = 'width: 20px; padding-right: 4px' >
+                                    Detalle
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+";
+                            foreach(var item in this.DetailInvoices)
+                            {
+                reci = reci + @"<tr>
+                                    <td style = 'padding-right:4px' > "+$"{item.Description}"+ @" </td>
+                                     </tr>";
+                            }
+
+                     reci = reci + @"</tbody>
+                    </table>
+                    <br />
+                    <hr style = 'border:1px dashed black; width:300px' />
+                    <div style='float:right;' class='pull-right'>
+                        <div>
+                            <table> 
+                                    
+                                <tr>
+                                    <th> Total:</th>
+                                    <td style = 'padding-right:4px; text-align:right' > "+ this.Total.Value.ToString("C2") + @" </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr style='border:1px dashed black; width:300px' />
+
+
+        *** Gracias por su compra ***
+        <dl> </dl>
+        <dl style = 'text-align:center' > ********************</ dl >
+    </div>
+
+</section>
+
+<style>
+    .container {
+        width: 320px;
+        height: auto;
+    }
+
+    dt {
+    }
+
+table
+{
+}
+
+dl
+{
+}
+
+div
+{
+}
+
+    .boxooo
+{
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 320px;
+    height: auto;
+    border - style: solid;
+    background - color: white;
+}
+
+    .btnimp
+{
+    position: absolute;
+    width: 20px;
+    height: auto;
+    margin: 0 auto;
+}
+</style>
+</body>
+</html> ";
+
+            return reci;
+        }
+        public string Receipt
+        {
+            get => this.receipt;
+            set
+            {
+                this.receipt = value;
+                this.RaisePropertyChanged();
+            }
+        }
         public string TypeInvoice
         {
             get => this.typeInvoice;
