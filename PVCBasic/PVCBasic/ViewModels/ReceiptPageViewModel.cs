@@ -1,7 +1,9 @@
 ﻿
+using Plugin.Toast;
+using Plugin.Toast.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
-using PVCBasic.Helper.Utility;
+using PVCBasic.DependencyService;
 using PVCBasic.Models;
 using System;
 using System.Collections.Generic;
@@ -40,18 +42,25 @@ namespace PVCBasic.ViewModels
 
         private async Task ExecuteShareItemCommand()
         {
-            
-            PDFToHtml = new PDFToHtml();
-            PDFToHtml.FileName = $"Receipt-{DateTime.Now}-{Guid.NewGuid()}";
-            PDFToHtml.HTMLString = this.Receipt;
-            PDFToHtml.GeneratePDF();
 
-            await Share.RequestAsync(new ShareFileRequest
+            try
             {
-                Title = Title,
-                File = new ShareFile(PDFToHtml.FilePath)
-            });
-           
+                
+              var path =  Xamarin.Forms.DependencyService.Get<IFileHelper>().StrartConverting(this.Receipt, "Receipt");
+
+                CrossToastPopUp.Current.ShowToastSuccess($"{path}", ToastLength.Long);
+
+                await Share.RequestAsync(new ShareFileRequest
+                {
+                    Title = Title,
+                    File = new ShareFile(path)
+                });
+
+            }
+            catch (Exception e)
+            {
+                CrossToastPopUp.Current.ShowToastError($"{e.Message}", ToastLength.Long);
+            }
         }
 
 
@@ -78,7 +87,7 @@ namespace PVCBasic.ViewModels
             parameters.Add("TypeInvoice", this.TypeInvoice);
         }
         
-        private PDFToHtml PDFToHtml { get; set; }
+     
 
 
         public string TypeInvoice

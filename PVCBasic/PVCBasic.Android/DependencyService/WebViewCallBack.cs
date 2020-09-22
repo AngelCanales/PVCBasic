@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
+using Android.Graphics.Pdf;
 using Android.OS;
 using Android.Print;
 using Android.Runtime;
 using Android.Views;
 using Android.Webkit;
 using Android.Widget;
-using PVCBasic.Helper.Enum;
+using Java.IO;
 using PVCBasic.Models;
 using Xamarin.Forms;
 
@@ -21,70 +23,34 @@ namespace PVCBasic.Droid.DependencyService
 {
     class WebViewCallBack : WebViewClient
     {
-        bool _complete;
-        readonly PDFToHtml pDFToHtml;
+       
 
-        public WebViewCallBack(PDFToHtml _PDFToHtml)
+        string fileNameWithPath = null;
+
+        public WebViewCallBack(string path)
         {
-            pDFToHtml = _PDFToHtml;
+            this.fileNameWithPath = path;
         }
 
-        public override void OnPageFinished(Android.Webkit.WebView view, string url)
-        {
-            if (!_complete)
-            {
-                _complete = true;
 
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    OnPageLoaded(view);
-                });
-            }
-        }
-        public override void OnLoadResource(Android.Webkit.WebView view, string url)
+        public override void OnPageFinished(Android.Webkit.WebView myWebview, string url)
         {
-            base.OnLoadResource(view, url);
-            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
-            {
-                if (!_complete)
-                    OnPageFinished(view, url);
-                return false;
-            });
-        }
+            PdfDocument document = new PdfDocument();
+            PdfDocument.Page page = document.StartPage(new PdfDocument.PageInfo.Builder(2120, 3000, 1).Create());
 
-        internal void OnPageLoaded(Android.Webkit.WebView webView)
-        {
+            myWebview.Draw(page.Canvas);
+            document.FinishPage(page);
+            Stream filestream = new MemoryStream();
+            FileOutputStream fos = new Java.IO.FileOutputStream(fileNameWithPath, false); ;
             try
             {
-                if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Kitkat)
-                {
-                    var builder = new PrintAttributes.Builder();
-                    builder.SetMediaSize(PrintAttributes.MediaSize.IsoA4);
-                    builder.SetResolution(new PrintAttributes.Resolution("pdf", "pdf", (int)pDFToHtml.PageDPI, (int)pDFToHtml.PageDPI));
-                    builder.SetMinMargins(PrintAttributes.Margins.NoMargins);
-                    var attributes = builder.Build();
-                    var adapter = webView.CreatePrintDocumentAdapter(pDFToHtml.FileName);
-                    var layoutResultCallback = new PdfLayoutResultCallback();
-                    layoutResultCallback.Adapter = adapter;
-                    layoutResultCallback.PDFToHtml = pDFToHtml;
-                    adapter.OnLayout(null, attributes, null, layoutResultCallback, null);
-                }
+                document.WriteTo(filestream);
+                fos.Write(((MemoryStream)filestream).ToArray(), 0, (int)filestream.Length);
+                fos.Close();
             }
             catch
             {
-                pDFToHtml.Status = PDFEnum.Failed;
             }
-        }
-        public override void OnReceivedError(Android.Webkit.WebView view, IWebResourceRequest request, WebResourceError error)
-        {
-            base.OnReceivedError(view, request, error);
-            pDFToHtml.Status = PDFEnum.Failed;
-        }
-
-        public override void OnReceivedHttpError(Android.Webkit.WebView view, IWebResourceRequest request, WebResourceResponse errorResponse)
-        {
-            base.OnReceivedHttpError(view, request, errorResponse);
-            pDFToHtml.Status = PDFEnum.Failed;
         }
     }
 }

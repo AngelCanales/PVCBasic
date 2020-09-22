@@ -64,7 +64,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DependencyService\FileHelper.cs" />
-    <Compile Include="DependencyService\PDFConverter.cs" />
     <Compile Include="DependencyService\WebViewCallBack.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

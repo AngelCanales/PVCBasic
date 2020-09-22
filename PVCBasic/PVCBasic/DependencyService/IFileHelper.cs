@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace PVCBasic.DependencyService
 {
     public interface IFileHelper
     {
-        string DocumentFilePath { get; }
-
-        string ResourcesBaseUrl { get; }
+     
+        string StrartConverting(string html, string namefile);
+       
     }
 }
