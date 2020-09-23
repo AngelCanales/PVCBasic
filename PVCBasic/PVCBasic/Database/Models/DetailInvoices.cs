@@ -16,11 +16,11 @@ namespace PVCBasic.Database.Models
 
         public int Quantity { get; set; }
 
-        public decimal Tax { get; set; }
+        public decimal? Tax { get; set; }
 
-        public decimal Discount { get; set; }
+        public decimal? Discount { get; set; }
 
-        public int IdProduct { get; set; }
+        public int? IdProduct { get; set; }
 
         public int IdInvoices { get; set; }
 

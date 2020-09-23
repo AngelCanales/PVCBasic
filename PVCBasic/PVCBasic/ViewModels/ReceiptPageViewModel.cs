@@ -48,7 +48,7 @@ namespace PVCBasic.ViewModels
                 
               var path =  Xamarin.Forms.DependencyService.Get<IFileHelper>().StrartConverting(this.Receipt, "Receipt");
 
-                CrossToastPopUp.Current.ShowToastSuccess($"{path}", ToastLength.Long);
+               // CrossToastPopUp.Current.ShowToastSuccess($"{path}", ToastLength.Long);
 
                 await Share.RequestAsync(new ShareFileRequest
                 {
@@ -79,27 +79,6 @@ namespace PVCBasic.ViewModels
             }
         }
 
-        public override async void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            base.OnNavigatedFrom(parameters);
-            parameters.Add("DetailInvoices", this.DetailInvoices);
-            parameters.Add("Title", this.TitleInvoice);
-            parameters.Add("TypeInvoice", this.TypeInvoice);
-        }
-        
-     
-
-
-        public string TypeInvoice
-        {
-            get => this.typeInvoice;
-            set
-            {
-                this.typeInvoice = value;
-                this.RaisePropertyChanged();
-            }
-        }
-
         public string Receipt
         {
             get => this.receipt;
@@ -110,37 +89,12 @@ namespace PVCBasic.ViewModels
             }
         }
 
-        
-
-
-        public string TitleInvoice
-        {
-            get => this.titleInvoice;
-            set
-            {
-                this.titleInvoice = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        public DetailInvoicesViewModel SelectedItemDetails { get; set; }
-
-        public ObservableCollection<DetailInvoicesViewModel> DetailInvoices
-        {
-            get => this.detailInvoices;
-            set => this.SetProperty(ref this.detailInvoices, value);
-        }
-
+    
         public ICommand PrintItemCommand { get; set; }
 
         public ICommand ShareItemCommand { get; set; }
 
         public ICommand CloseItemsCommand { get; set; }
-
-
-
-        public ICommand DeleteItemCommand { get; set; }
-
-
 
     }
 }

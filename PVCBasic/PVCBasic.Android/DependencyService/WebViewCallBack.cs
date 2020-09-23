@@ -18,7 +18,6 @@ using Java.IO;
 using PVCBasic.Models;
 using Xamarin.Forms;
 
-
 namespace PVCBasic.Droid.DependencyService
 {
     class WebViewCallBack : WebViewClient
@@ -36,7 +35,7 @@ namespace PVCBasic.Droid.DependencyService
         public override void OnPageFinished(Android.Webkit.WebView myWebview, string url)
         {
             PdfDocument document = new PdfDocument();
-            PdfDocument.Page page = document.StartPage(new PdfDocument.PageInfo.Builder(2120, 3000, 1).Create());
+            PdfDocument.Page page = document.StartPage(new PdfDocument.PageInfo.Builder(850, 3000, 1).Create());
 
             myWebview.Draw(page.Canvas);
             document.FinishPage(page);

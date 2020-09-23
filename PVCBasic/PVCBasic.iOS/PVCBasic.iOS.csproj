@@ -63,6 +63,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DependencyService\BthPrint.cs" />
     <Compile Include="DependencyService\FileHelper.cs" />
     <Compile Include="DependencyService\WebViewCallBack.cs" />
     <Compile Include="Main.cs" />

@@ -14,9 +14,13 @@ namespace PVCBasic.Models
 
         public decimal TotalItem { get; set; }
 
-        public decimal Quantity { get; set; }
+        public int Quantity { get; set; }
 
         public decimal Price { get; set; }
+
+        public decimal Tax { get; set; }
+
+        public int? IdProduct { get; set; }
 
     }
 }

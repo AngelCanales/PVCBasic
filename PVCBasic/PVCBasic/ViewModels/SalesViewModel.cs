@@ -29,6 +29,8 @@ namespace PVCBasic.ViewModels
         private decimal? exchange;
         private string receipt;
         private readonly IInvoicesManager invoicesManager;
+        private  int? idProduct;
+
         public SalesViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
             this.dialogService = dialogService;
@@ -66,8 +68,9 @@ namespace PVCBasic.ViewModels
             if (parameters.ContainsKey("SelectedProduct"))
             {
                 var product = parameters["SelectedProduct"] as ProductsModel;
-              //  CrossToastPopUp.Current.ShowToastSuccess($"price :{product.Price.Value.ToString()}", ToastLength.Long);
-              if (this.TypeInvoice == ConstantName.ConstantName.Sales) 
+                this.IdProduct = product.Id;
+                //  CrossToastPopUp.Current.ShowToastSuccess($"price :{product.Price.Value.ToString()}", ToastLength.Long);
+                if (this.TypeInvoice == ConstantName.ConstantName.Sales) 
                 { 
                 this.NumberPrice = product.Price.Value.ToString();
                 this.Price = product.Price.Value;
@@ -75,10 +78,12 @@ namespace PVCBasic.ViewModels
                 }
                 if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
                 {
+                   
                     this.NumberPrice = product.Cost.Value.ToString();
                     this.Price = product.Cost.Value;
                     this.NameProduct = product.ShortName;
                 }
+
             }
 
             if (parameters.ContainsKey("DetailInvoices"))
@@ -125,6 +130,7 @@ namespace PVCBasic.ViewModels
                 ProductName = this.NameProduct,
                 Price = this.Price.Value,
                 Quantity = this.Quantity.Value,
+                IdProduct = this.IdProduct
             };
             this.DetailInvoices.Add(item);
             this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
@@ -186,17 +192,35 @@ namespace PVCBasic.ViewModels
         public async Task SalvarAsync()
         {
             if (!this.DetailInvoices.Any()) { return; }
-            var invoice = new Invoices();
-            var detail = this.DetailInvoices.Select(s => new DetailInvoices { IdInvoices = invoice.Id, Invoices = invoice, Description = s.Description, TotalItem = s.TotalItem}).ToList();
-            invoice.Date = DateTime.Now;
-            invoice.Description = this.Description;
-            invoice.InvoicesTypes = this.TypeInvoice;
-            invoice.Total = this.DetailInvoices.Sum(t => t.TotalItem);
-            invoice.DetailInvoices = detail;
-         //   invoice.InvoicesTypes = "V";
-           await this.invoicesManager.CreateAsync(invoice);
 
-            this.Receipt = await this.ReceiptGenerateAsyc();
+            try
+            {
+                var invoice = new Invoices();
+                var detail = this.DetailInvoices.Select(s => new DetailInvoices { IdInvoices = invoice.Id, Invoices = invoice, Description = s.Description, TotalItem = s.TotalItem, Price = s.Price, Quantity = s.Quantity, Tax = s.Tax, IdProduct = this.IdProduct }).ToList();
+                invoice.Date = DateTime.Now;
+                invoice.Description = this.Description;
+                invoice.InvoicesTypes = this.TypeInvoice;
+                invoice.Total = this.DetailInvoices.Sum(t => t.TotalItem);
+                invoice.DetailInvoices = detail;
+
+                
+                await this.invoicesManager.CreateAsync(invoice);
+            }
+            catch (Exception e)
+            {
+                CrossToastPopUp.Current.ShowToastError($"Error Data base{e.Message}", ToastLength.Long);
+            }
+
+            try
+            {
+                this.Receipt = await this.ReceiptGenerateAsyc();
+            }
+            catch (Exception e)
+            {
+
+                CrossToastPopUp.Current.ShowToastError($"Error Receipt{e.Message}", ToastLength.Long);
+            }
+            
             CrossToastPopUp.Current.ShowToastSuccess($"Se guardo en: {this.Title}", ToastLength.Long);
             this.Total = 0;
             this.TotalItem = 0;
@@ -400,8 +424,20 @@ namespace PVCBasic.ViewModels
             }
         }
 
+        public int? IdProduct
+        {
+            get => this.idProduct;
+            set
+            {
+                this.idProduct = value;
+                this.RaisePropertyChanged();
+            }
+        }
         public async Task<string> ReceiptGenerateAsyc()
         {
+            decimal value = 0;
+            var exchangenewx = this.Exchange != null ? this.Exchange.Value.ToString("C2") : value.ToString("C2");
+            var cashnew = this.Cash != null ? this.Cash.Value.ToString("C2") : value.ToString("C2");
             var reci = @" <!DOCTYPE html>
 <html>
 <body>
@@ -416,21 +452,18 @@ namespace PVCBasic.ViewModels
                         <dt style = 'color:black;font-weight: bold; font-family:Arial'>
                             " + $"{this.Title}" + @"
                         </dt>
-                        <dt>
-                            Detalle
-                        </dt>
-                        
+                        <dt style = 'color:black;font-weight: bold; font-family:Arial'>Depósito Canales</dt>                       
                         <dt>
                             Fecha: " + $"{DateTime.Now.ToString("dd/mm/yyyy")}" + @"
                         </dt>
                         <dt>
-                            Dirrecion:XXXXXXXXX
+                            Dirrecion:La Lima,Cortés
                         </dt>
                         <dt>
-                            Telefono: +504 XXXX-XXXX
+                            Telefono: +504 2509-1893
                         </dt>
                         <dt>
-                            Email: XXXX@XXXX.com
+                            Email: acanales199@gmail.com
                         </dt>
                     </dl>
                  
@@ -442,7 +475,7 @@ namespace PVCBasic.ViewModels
                     <table style='text-align:left'>
                         <thead>
                             <tr>
-                                <th style = 'width: 20px; padding-right: 4px' >
+                                <th 'color:black;font-weight: bold; font-family:Arial' >
                                     Detalle
                                 </th>
                             </tr>
@@ -452,7 +485,7 @@ namespace PVCBasic.ViewModels
                             foreach(var item in this.DetailInvoices)
                             {
                 reci = reci + @"<tr>
-                                    <td style = 'padding-right:4px' > "+$"{item.Description}"+ @" </td>
+                                    <td style = 'padding-right:4px;text-align:center;' > " + $"{item.Description}"+ @" </td>
                                      </tr>";
                             }
 
@@ -461,25 +494,35 @@ namespace PVCBasic.ViewModels
                     <br />
                     <hr style = 'border:1px dashed black; width:300px' />
                     <div style='float:right;' class='pull-right'>
-                        <div>
-                            <table> 
-                                    
-                                <tr>
-                                    <th> Total:</th>
-                                    <td style = 'padding-right:4px; text-align:right' > "+ this.Total.Value.ToString("C2") + @" </td>
-                                </tr>
-                            </table>
-                        </div>
+                        <table style='text-align:left'>
+                        <thead>
+                            <tr>
+                                <th >
+                                </th>
+<th >
+</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+<tr>
+<td style = 'padding-right:4px;text-align:center;color:black;font-weight: bold;'> Total:</td><td style = 'padding-right:4px;text-align:center;'>" + this.Total.Value.ToString("C2") + @" </td>
+</tr>
+<tr>
+<td style = 'padding-right:4px;text-align:center;color:black;font-weight: bold;'> Efectivo:</td><td style = 'padding-right:4px;text-align:center;'>" + cashnew + @" </td>
+</tr>
+<tr>
+<td style = 'padding-right:4px;text-align:center;color:black;font-weight: bold;'> Cambio:</td><td style = 'padding-right:4px;text-align:center;'>" + exchangenewx + @" </td>
+</tr>
+                            </tbody>
+                    </table>
+                    <br />
                     </div>
                 </div>
             </div>
         </section>
         <hr style='border:1px dashed black; width:300px' />
-
-
-        *** Gracias por su compra ***
-        <dl> </dl>
-        <dl style = 'text-align:center' > ********************</ dl >
+        <dl > *** Gracias por su compra ***</dl>
+        <dl style = 'text-align:center'> ********************</dl>
     </div>
 
 </section>
