@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.Toast;
 using Plugin.Toast.Abstractions;
+using PVCBasic.PVCBCore.Inventories;
 
 namespace PVCBasic.ViewModels
 {
@@ -29,12 +30,14 @@ namespace PVCBasic.ViewModels
         private decimal? exchange;
         private string receipt;
         private readonly IInvoicesManager invoicesManager;
+        private readonly IInventoriesManager inventoriesManager;
         private  int? idProduct;
 
-        public SalesViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
+        public SalesViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager, IInventoriesManager inventoriesManager) : base(navigationService)
         {
             this.dialogService = dialogService;
             this.invoicesManager = invoicesManager;
+            this.inventoriesManager = inventoriesManager;
             this.DetailInvoices = new ObservableCollection<DetailInvoicesViewModel>();
             this.SalvarCommand = new DelegateCommand(async () => await this.ExecuteSalvarCommand());
             this.AddItemCommand = new DelegateCommand(async () => await this.ExecuteAddItemCommand());
@@ -205,6 +208,45 @@ namespace PVCBasic.ViewModels
 
                 
                 await this.invoicesManager.CreateAsync(invoice);
+
+                foreach (var item in this.DetailInvoices)
+                {
+                    if(item.IdProduct != null)
+                    {
+                        var exi = await this.inventoriesManager.FindByIdAsync(item.IdProduct.Value);
+                        if (exi != null)
+                        {
+                            if(this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                            {
+                                exi.Existence = exi.Existence + item.Quantity;
+                                await this.inventoriesManager.EditAsync(exi);
+                            }
+                            if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+                            {
+                                exi.Existence = exi.Existence - item.Quantity;
+                                await this.inventoriesManager.EditAsync(exi);
+                            }
+                        }
+                        else
+                        {
+                            if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                            {
+                                var p = new Inventories();
+                                p.Existence = item.Quantity;
+                                p.IdProduct = item.IdProduct.Value;
+                                await this.inventoriesManager.CreateAsync(p);
+                            }
+                            if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+                            {
+                                var p = new Inventories();
+                                p.Existence = (-1 * item.Quantity);
+                                p.IdProduct = item.IdProduct.Value;
+                                await this.inventoriesManager.CreateAsync(p);
+                            }
+                        }
+                    }
+                }
+
             }
             catch (Exception e)
             {

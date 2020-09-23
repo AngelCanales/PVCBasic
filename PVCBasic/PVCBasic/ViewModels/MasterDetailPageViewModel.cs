@@ -23,6 +23,12 @@ namespace PVCBasic.ViewModels
 
             this.Menu = new ObservableCollection<MenuItem>
             {
+                   new MenuItem
+                {
+                    Name = "Inventario",
+                    Route = "MasterDetailPage/NavigationPage/InventoriesPage",
+                    IconValue = "\uf474",
+                },
                   new MenuItem
                 {
                     Name = "Productos",

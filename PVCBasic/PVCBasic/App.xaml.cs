@@ -17,6 +17,7 @@ using Prism.Navigation;
 using PVCBasic.Models;
 using PVCBasic.PVCBCore.Products;
 using PVCBasic.PVCBCore.Parameters;
+using PVCBasic.PVCBCore.Inventories;
 
 namespace PVCBasic
 {
@@ -72,9 +73,10 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<InvoiceTabbedPage, InvoiceTabbedPageViewModel>();
             containerRegistry.RegisterForNavigation<InvoiceDetailPage, InvoiceDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<ReceiptPage, ReceiptPageViewModel>();
+            containerRegistry.RegisterForNavigation<InventoriesPage, InventoriesPageViewModel>();
 
 
-            
+
             // Data access
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.DetailInvoices>, DetailInvoicesRepository>();
@@ -83,7 +85,8 @@ namespace PVCBasic
             containerRegistry.RegisterSingleton<IInvoicesManager, InvoicesManager>();
             containerRegistry.RegisterSingleton<IProductsManager, ProductsManager>();
             containerRegistry.RegisterSingleton<IParametersManager, ParametersManager>();
-
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.Inventories>, InventoriesRepository>();
+            containerRegistry.RegisterSingleton<IInventoriesManager, InventoriesManager>();
         }
     }
 }

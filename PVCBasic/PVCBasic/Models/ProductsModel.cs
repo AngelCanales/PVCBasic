@@ -24,6 +24,10 @@ namespace PVCBasic.Models
 
         public decimal Discount { get; set; }
 
+        public int Existence { get; set; }
+
+        public string ExistenceText { get; set; }
+
         public byte[] Image { get; set; }
     }
 }

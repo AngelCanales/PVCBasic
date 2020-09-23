@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:fontawesome="clr-namespace:FontAwesome"
+             xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
+             xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+              Title="{Binding Title}"
+              Style="{StaticResource ContentPageStyle}"
+             x:Class="PVCBasic.Views.InventoriesPage">
+    <ContentPage.Content>
+
+        <AbsoluteLayout  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.100*" />
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.10*" />
+                    <RowDefinition Height="0.90*" />
+
+                </Grid.RowDefinitions>
+
+                <StackLayout  Grid.Row="0" Grid.Column="0" Padding="10,10,10,20">
+                    <SearchBar   Placeholder="Buscar Producto" Text="{Binding SearchText}">
+                        <SearchBar.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="SearchButtonPressed" Command="{Binding SearchCommand}"/>
+                            <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding SearchCommand}"/>
+                        </SearchBar.Behaviors>
+                    </SearchBar>
+                </StackLayout>
+                <StackLayout  Grid.Row="1" Grid.Column="0">
+
+                    <ListView x:Name="_ListView" 
+                ItemsSource="{Binding ListOfProducts}"
+              HasUnevenRows="true"
+                CachingStrategy="RecycleElement"
+                           SeparatorColor="#343a40"
+                >
+                        
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    
+
+                                    <Grid Padding="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="40"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <!--<RowDefinition Height="Auto"></RowDefinition>-->
+                                        </Grid.RowDefinitions>
+
+                                        <Frame 
+                                    HeightRequest="40"
+                                    WidthRequest="40"
+                                    CornerRadius="20"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start"
+                                    Margin="0"
+                                    Padding="0"
+                                           BorderColor="#28a745"
+                                    BackgroundColor="#fff"
+                                    Grid.RowSpan="2">
+                                            <Label
+                                        Text="{x:Static fontawesome:FontAwesomeIcons.Box}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}" 
+                                        TextColor="#28a745"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalTextAlignment="Center" />
+                                        </Frame>
+
+
+
+                                        <Label Text="{Binding Name}" 
+                                       LineBreakMode="NoWrap"
+                                      TextColor="Black" 
+                                       FontSize="{StaticResource BigSize}"
+                                           FontAttributes="Bold"
+                                       Grid.Row="0"
+                                       Grid.Column="1" />
+                                        
+                                        <StackLayout Padding="0,-7,0,0" Grid.Row="1"
+                                       Grid.Column="1" >
+                                            <Label Text="{Binding Code}"
+                                       LineBreakMode="NoWrap" 
+                                       TextColor="Black" 
+                                       FontSize="{StaticResource LittleSize}"
+                                      FontAttributes="Bold"
+                                       />
+                                        </StackLayout>
+                                        <StackLayout Padding="0,-7,0,0" Grid.Row="2"
+                                       Grid.Column="1" >
+                                                <Label Text="{Binding ExistenceText}"
+                                       LineBreakMode="NoWrap" 
+                                       TextColor="#0561FC" 
+                                       FontSize="{StaticResource BigSize}"
+                                      FontAttributes="Bold"
+                                       />
+                                            </StackLayout>
+                                      
+                                    </Grid>
+
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </Grid>
+
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

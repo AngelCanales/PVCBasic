@@ -19,6 +19,8 @@ namespace PVCBasic.Database
 
         public DbSet<Parameters> Parameters { get; set; }
 
+        public DbSet<Inventories> Inventories { get; set; }
+        
         public PVCBContext(DbContextOptions<PVCBContext> options)
       : base(options)
         {
