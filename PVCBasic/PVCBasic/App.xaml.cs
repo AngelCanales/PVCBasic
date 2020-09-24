@@ -18,6 +18,7 @@ using PVCBasic.Models;
 using PVCBasic.PVCBCore.Products;
 using PVCBasic.PVCBCore.Parameters;
 using PVCBasic.PVCBCore.Inventories;
+using Microsoft.EntityFrameworkCore;
 
 namespace PVCBasic
 {
@@ -48,7 +49,23 @@ namespace PVCBasic
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(myCurrency.IetfLanguageTag);
             ResourceGlobal.Culture = new CultureInfo(myCurrency.IetfLanguageTag);
 
-          
+           
+           
+                try
+                {
+                if (!DesignMode.IsDesignModeEnabled)
+                {
+                    var context = new PVCBContext();
+                    await PVCBasic.PVCBasicSeedData.PVCBasicSeedData.EnsurePVCBasicSeedData(context);
+                }
+            }
+                catch (Exception e)
+                {
+                }
+           
+
+         
+
             var param = new NavigationParameters();
             param.Add("NameFile", "dataCashBack.json");
             await this.NavigationService.NavigateAsync("MasterDetailPage/NavigationPage/SummaryPage", param);
@@ -74,7 +91,7 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<InvoiceDetailPage, InvoiceDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<ReceiptPage, ReceiptPageViewModel>();
             containerRegistry.RegisterForNavigation<InventoriesPage, InventoriesPageViewModel>();
-
+            containerRegistry.RegisterForNavigation<ListParametersPage, ListParametersPageViewModel>();
 
 
             // Data access

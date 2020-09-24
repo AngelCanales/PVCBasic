@@ -12,6 +12,11 @@ namespace PVCBasic.Database
 {
     public class PVCBContext : DbContext
     {
+        public PVCBContext()
+        {
+
+        }
+
         public DbSet<Invoices> Invoices { get; set; }
         public DbSet<DetailInvoices> DetailInvoices { get; set; }
 
@@ -21,12 +26,21 @@ namespace PVCBasic.Database
 
         public DbSet<Inventories> Inventories { get; set; }
         
-        public PVCBContext(DbContextOptions<PVCBContext> options)
-      : base(options)
-        {
-            SQLitePCL.Batteries_V2.Init();
-            this.Database.EnsureCreated();
-        }
+      //  public PVCBContext(DbContextOptions<PVCBContext> options)
+      //: base(options)
+      //  {
+      //      try
+      //      {
+      //          SQLitePCL.Batteries_V2.Init();
+      //          this.Database.EnsureCreated();
+      //      }
+      //      catch (Exception)
+      //      {
+
+      //          throw;
+      //      }
+            
+      //  }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,27 +50,22 @@ namespace PVCBasic.Database
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
+
             //modelBuilder.Entity<Parameters>().HasData(
-            //    new { Key = "EmissionPoint", Value = "" },
-            //    new { Key = "Establishment", Value = "" },
-            //    new { Key = "DocumentType", Value = "" },
-            //    new { Key = "CurrenInvoiceNumber", Value = "" },
-            //    new { Key = "FirstInvoiceNumber", Value = "" },
-            //    new { Key = "LastInvoiceNumber", Value = "" },
-            //    new { Key = "PrintCode", Value = "" },
-            //    new { Key = "Store", Value = "" },
-            //    new { Key = "Logo", Value = "" },
-            //    new { Key = "ValidUntilDate", Value = "" }
+            //    new { Id = 1, Key = "EmissionPoint", Value = "" },
+            //    new { Id = 2, Key = "Establishment", Value = "" },
+            //    new { Id = 3, Key = "DocumentType", Value = "" },
+            //    new { Id = 4, Key = "CurrenInvoiceNumber", Value = "" },
+            //    new { Id = 5, Key = "FirstInvoiceNumber", Value = "" },
+            //    new { Id = 5, Key = "LastInvoiceNumber", Value = "" },
+            //    new { Id = 7, Key = "PrintCode", Value = "" },
+            //    new { Id = 8, Key = "Store", Value = "" },
+            //    new { Id = 9, Key = "Logo", Value = "" },
+            //    new { Id = 10, Key = "ValidUntilDate", Value = "" }
             //    );
-
-
         }
-        //public PVCBContext()
-        //{
-        //    SQLitePCL.Batteries_V2.Init();
 
-            //    this.Database.EnsureCreated();
-            //}
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

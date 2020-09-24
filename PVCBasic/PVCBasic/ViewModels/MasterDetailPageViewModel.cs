@@ -80,7 +80,7 @@ namespace PVCBasic.ViewModels
                     new MenuItem
                 {
                     Name = "Configuración",
-                    Route = "MasterDetailPage/NavigationPage/SalesPage",
+                    Route = "MasterDetailPage/NavigationPage/ListParametersPage",
                     IconValue = "\uf085",
                 },
             };
