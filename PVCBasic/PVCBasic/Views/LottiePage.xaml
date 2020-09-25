@@ -4,8 +4,8 @@
              xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
              x:Class="PVCBasic.Views.LottiePage">
     <ContentPage.Content>
-      
-            <forms:AnimationView 
+        <StackLayout></StackLayout>
+            <!--<forms:AnimationView 
 	x:Name="animationView" 
 	Grid.Row="1"
 	Animation="{Binding NameFile}" 
@@ -15,6 +15,6 @@
                 Duration="0"
 	PlaybackFinishedCommand="{Binding FinishedCommand}" 
 	VerticalOptions="FillAndExpand" 
-	HorizontalOptions="FillAndExpand" />
+	HorizontalOptions="FillAndExpand" />-->
     </ContentPage.Content>
 </ContentPage>

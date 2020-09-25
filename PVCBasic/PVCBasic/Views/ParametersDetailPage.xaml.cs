@@ -10,16 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace PVCBasic.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MonthlyReportPage : ContentPage
+    public partial class ParametersDetailPage : ContentPage
     {
-        public MonthlyReportPage()
+        public ParametersDetailPage()
         {
             InitializeComponent();
-        }
-
-        private void animationView_OnRepeatAnimation(object sender, EventArgs e)
-        {
-
         }
     }
 }

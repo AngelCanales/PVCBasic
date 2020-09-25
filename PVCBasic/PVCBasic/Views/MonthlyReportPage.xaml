@@ -13,12 +13,19 @@
 	x:Name="animationView" 
 	Grid.Row="1"
 	Animation="dataReport.json" 
-	Loop="false" 
+	
                 IsVisible="{Binding IsVisibleAnimation , Mode=TwoWay}"
 	AutoPlay="True"
-	PlaybackFinishedCommand="{Binding FinishedCommand}" 
+	RepeatCount="2"
+                 RepeatMode="Restart"
+             OnRepeatAnimation="animationView_OnRepeatAnimation"
 	VerticalOptions="FillAndExpand" 
-	HorizontalOptions="FillAndExpand" />
+	HorizontalOptions="FillAndExpand" >
+            <forms:AnimationView.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="OnRepeatAnimation" Command="{Binding FinishedCommand}" />
+            </forms:AnimationView.Behaviors>
+            </forms:AnimationView>
+
 
             <StackLayout  IsVisible="{Binding IsVisibleContent , Mode=TwoWay}">
 

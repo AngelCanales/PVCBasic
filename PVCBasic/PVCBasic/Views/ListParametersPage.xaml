@@ -32,7 +32,9 @@
                               
                            SeparatorColor="#343a40"
                 >
-
+                        <ListView.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailParameterCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>
+                        </ListView.Behaviors>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

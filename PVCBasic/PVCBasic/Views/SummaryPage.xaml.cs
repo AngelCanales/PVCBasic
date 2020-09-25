@@ -16,5 +16,10 @@ namespace PVCBasic.Views
         {
             InitializeComponent();
         }
+
+        private void animationView_OnRepeatAnimation(object sender, EventArgs e)
+        {
+
+        }
     }
 }

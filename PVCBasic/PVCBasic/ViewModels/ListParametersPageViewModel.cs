@@ -1,10 +1,12 @@
-﻿using Prism.Navigation;
+﻿using Prism.Commands;
+using Prism.Navigation;
 using PVCBasic.Models;
 using PVCBasic.PVCBCore.Parameters;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PVCBasic.ViewModels
 {
@@ -19,6 +21,7 @@ namespace PVCBasic.ViewModels
         {
             this.parametersManager = parametersManager;
 
+            this.DetailParameterCommand = new DelegateCommand<ParametersModel>(async (c) => await this.ExecuteDetailParameterCommand(c));
             this.ListOfParameters = new ObservableCollection<ParametersModel>();
 
             this.IsError = false;
@@ -26,11 +29,17 @@ namespace PVCBasic.ViewModels
         }
 
 
-      
+        private async Task ExecuteDetailParameterCommand(ParametersModel selectedParameter)
+        {
+            var param = new NavigationParameters();
+            param.Add("SelectedParameter", selectedParameter);
+            await this.NavigationService.NavigateAsync("ParametersDetailPage", param);
+        }
+
+        public ICommand DetailParameterCommand { get; set; }
+
        
 
-
-   
         private async Task LoadAsync()
         {
             this.ListOfParameters.Clear();

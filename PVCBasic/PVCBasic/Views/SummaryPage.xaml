@@ -25,13 +25,20 @@
 	x:Name="animationView" 
 	Grid.Row="1"
 	Animation="{Binding NameFile}" 
-	Loop="false" 
+	RepeatCount="2"
+                 RepeatMode="Restart"
                 IsVisible="{Binding IsVisibleAnimation , Mode=TwoWay}"
+               OnRepeatAnimation="animationView_OnRepeatAnimation"
 	AutoPlay="True"
-	PlaybackFinishedCommand="{Binding FinishedCommand}" 
+	
 	VerticalOptions="FillAndExpand" 
-	HorizontalOptions="FillAndExpand" />
-        
+	HorizontalOptions="FillAndExpand" >
+            <forms:AnimationView.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="OnRepeatAnimation" Command="{Binding FinishedCommand}" />
+            </forms:AnimationView.Behaviors>
+            </forms:AnimationView>
+
+
             <StackLayout  IsVisible="{Binding IsVisibleContent , Mode=TwoWay}">
             <Grid  Padding="10,5,30,0">
                 <Grid.ColumnDefinitions>

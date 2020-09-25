@@ -92,6 +92,8 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<ReceiptPage, ReceiptPageViewModel>();
             containerRegistry.RegisterForNavigation<InventoriesPage, InventoriesPageViewModel>();
             containerRegistry.RegisterForNavigation<ListParametersPage, ListParametersPageViewModel>();
+            containerRegistry.RegisterForNavigation<ParametersDetailPage, ParametersDetailPageViewModel>();
+
 
 
             // Data access

@@ -9,6 +9,7 @@
     -->
     <Application.Resources>
         <converters:ItemTappedEventArgsToObjectConverter x:Key="ItemTappedEventArgsToObjectConverter" />
+        <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage" />
         <ResourceDictionary>
 
             <OnPlatform x:TypeArguments="x:String"

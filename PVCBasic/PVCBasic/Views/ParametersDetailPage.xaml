@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:fontawesome="clr-namespace:FontAwesome"
+             xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
+             xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+              Title="{Binding Title}"
+              Style="{StaticResource ContentPageStyle}"
+             x:Class="PVCBasic.Views.ParametersDetailPage">
+    <ContentPage.Content>
+        <AbsoluteLayout  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+            <ScrollView>
+
+                <Grid  Padding="10,15,30,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.40*" />
+                        <ColumnDefinition Width="0.60*" />
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="200" />
+                        
+                    </Grid.RowDefinitions>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="0" Grid.Column="0"   Text="Key:" Style="{StaticResource LabelInvoiceStyle}"  FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <StackLayout Spacing="-1" Grid.Row="0"  Grid.Column="1" >
+                        <Entry   Keyboard="Text" IsEnabled="True"     Text="{Binding Parameter.Key, Mode=TwoWay}" Style="{StaticResource LabelInvoiceStyle}"       FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+                    </StackLayout>
+
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="1" Grid.Column="0"   Text="Value:" Style="{StaticResource LabelInvoiceStyle}"  FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <StackLayout Spacing="-1" Grid.Row="1" Grid.Column="1" >
+                        <Entry  Keyboard="Text"      Text="{Binding Parameter.Value, Mode=TwoWay}" Style="{StaticResource LabelInvoiceStyle}"       FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+                    </StackLayout>
+
+
+                    
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="2" Grid.Column="0"   Text="ValueDate:" Style="{StaticResource LabelInvoiceStyle}"  FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <StackLayout Spacing="-1" Grid.Row="2" Grid.Column="1">
+                        <DatePicker  Format="dd-MM-yyyy"  Date="{Binding Parameter.ValueDate, Mode=TwoWay}"     FontAttributes="Bold"   >
+                        </DatePicker>
+                    </StackLayout>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="3" Grid.Column="0"   Text="ValueInt:" Style="{StaticResource LabelInvoiceStyle}"  FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <StackLayout Spacing="-1" Grid.Row="3" Grid.Column="1" >
+                        <Entry   Keyboard="Numeric"      Text="{Binding Parameter.ValueInt, Mode=TwoWay}" Style="{StaticResource LabelInvoiceStyle}"       FontAttributes="Bold"  HorizontalTextAlignment="Start">
+                            
+                        </Entry>
+                    </StackLayout>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="4" Grid.Column="0"   Text="ValueDecimal:" Style="{StaticResource LabelInvoiceStyle}"  FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <StackLayout Spacing="-1" Grid.Row="4" Grid.Column="1" >
+                        <Entry   Keyboard="Numeric"      Text="{Binding Parameter.ValueDecimal, Mode=TwoWay}" Style="{StaticResource LabelInvoiceStyle}"       FontAttributes="Bold"  HorizontalTextAlignment="Start">
+
+                        </Entry>
+                    </StackLayout>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="5" Grid.Column="0"   Text="ValueBool:" Style="{StaticResource LabelInvoiceStyle}"  FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <StackLayout Spacing="-1" Grid.Row="5" Grid.Column="1" >
+                      
+                        <CheckBox IsChecked="{Binding Parameter.ValueBool, Mode=TwoWay}"></CheckBox>
+                    </StackLayout>
+
+                    <Label  Margin="0,10,0,10"  Grid.Row="6" Grid.Column="0"   Text="ValueImage:" Style="{StaticResource LabelInvoiceStyle}"  FontAttributes="Bold"  HorizontalTextAlignment="End"/>
+                    <StackLayout Spacing="-1" Grid.Row="6" Grid.Column="1" >
+                        <Image   Source="{Binding Parameter.ValueImage, TargetNullValue='logo.png', Converter={StaticResource ByteArrayToImage}}" HorizontalOptions="Center" VerticalOptions="Center" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer   Command="{Binding SelectedImageCommand}" NumberOfTapsRequired = "1">
+                                </TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+
+                        </Image>
+                    </StackLayout>
+
+
+
+
+                </Grid>
+
+
+            </ScrollView>
+
+
+
+            <Frame
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+				AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
+                HasShadow="True"
+                CornerRadius="30"
+                HeightRequest="60"
+                WidthRequest="60"
+                BackgroundColor="White"
+                Padding="0"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                Margin="18">
+
+                <Button
+                    Text="{x:Static fontawesome:FontAwesomeIcons.Save}"
+                    FontFamily="{StaticResource FontAwesomeSolid}"
+                    IsEnabled="{Binding IsError,Mode=TwoWay}"
+                    TextColor="White"
+                    BackgroundColor="#007bff"
+                    CornerRadius="30"
+                    HeightRequest="60"
+                    WidthRequest="60"
+                    Command="{Binding SaveCommand}"
+                    FontSize="30"
+                    Margin="0"
+                    />
+            </Frame>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

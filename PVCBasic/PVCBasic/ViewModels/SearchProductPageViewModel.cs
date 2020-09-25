@@ -54,8 +54,6 @@ namespace PVCBasic.ViewModels
 
         private async Task ExecuteDetailProductCommand(ProductsModel selectedProduct)
         {
-
-
             var param = new NavigationParameters();
             param.Add("SelectedProduct", selectedProduct);
             await this.NavigationService.GoBackAsync(param);
