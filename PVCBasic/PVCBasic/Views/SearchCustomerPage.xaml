@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:fontawesome="clr-namespace:FontAwesome"
+                xmlns:fontawesome="clr-namespace:FontAwesome"
              xmlns:behaviors="clr-namespace:PVCBasic.Behaviors"
              xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
               Title="{Binding Title}"
               Style="{StaticResource ContentPageStyle}"
-             x:Class="PVCBasic.Views.SearchProductPage">
+             x:Class="PVCBasic.Views.SearchCustomerPage">
     <ContentPage.Content>
 
         <AbsoluteLayout  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -22,7 +22,7 @@
                 </Grid.RowDefinitions>
 
                 <StackLayout  Grid.Row="0" Grid.Column="0" Padding="10,10,10,20">
-                    <SearchBar   Placeholder="Buscar Producto" Text="{Binding SearchText}">
+                    <SearchBar   Placeholder="Buscar Cliente" Text="{Binding SearchText}">
                         <SearchBar.Behaviors>
                             <behaviors:EventToCommandBehavior EventName="SearchButtonPressed" Command="{Binding SearchCommand}"/>
                             <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding SearchCommand}"/>
@@ -32,18 +32,18 @@
                 <StackLayout  Grid.Row="1" Grid.Column="0">
 
                     <ListView x:Name="_ListView" 
-                ItemsSource="{Binding ListOfProducts}"
+                ItemsSource="{Binding ListOfCustomers}"
               HasUnevenRows="true"
                 CachingStrategy="RecycleElement"
                            SeparatorColor="#343a40"
                 >
                         <ListView.Behaviors>
-                            <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailProductCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>
+                            <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailCustomersCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>
                         </ListView.Behaviors>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                
+
 
                                     <Grid Padding="5">
                                         <Grid.ColumnDefinitions>
@@ -68,7 +68,7 @@
                                     BackgroundColor="#fff"
                                     Grid.RowSpan="2">
                                             <Label
-                                        Text="{x:Static fontawesome:FontAwesomeIcons.Box}"
+                                        Text="{x:Static fontawesome:FontAwesomeIcons.UserFriends}"
                                         FontFamily="{StaticResource FontAwesomeSolid}" 
                                         TextColor="#28a745"
                                         HorizontalTextAlignment="Center"
@@ -90,7 +90,7 @@
                                       FontAttributes="Bold"
                                        />
                                         </StackLayout>
-                                       
+
                                     </Grid>
 
                                 </ViewCell>
@@ -100,7 +100,7 @@
                 </StackLayout>
             </Grid>
 
-          
+
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

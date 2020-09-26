@@ -22,6 +22,8 @@ namespace PVCBasic.Database.Models
 
         public int? IdProduct { get; set; }
 
+        public string CodeProduct { get; set; }
+
         public int IdInvoices { get; set; }
 
         public Invoices Invoices { get; set; }

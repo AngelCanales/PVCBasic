@@ -26,6 +26,7 @@ namespace PVCBasic.Database.Repositories
             oldEntity.Price = newEntity.Price;
             oldEntity.Quantity = newEntity.Quantity;
             oldEntity.IdProduct = newEntity.IdProduct;
+            oldEntity.CodeProduct = newEntity.CodeProduct;
             oldEntity.Tax = newEntity.Tax;
             oldEntity.Discount = newEntity.Discount;
             return oldEntity;

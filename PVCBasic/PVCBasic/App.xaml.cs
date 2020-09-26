@@ -19,6 +19,8 @@ using PVCBasic.PVCBCore.Products;
 using PVCBasic.PVCBCore.Parameters;
 using PVCBasic.PVCBCore.Inventories;
 using Microsoft.EntityFrameworkCore;
+using PVCBasic.PVCBCore.Providers;
+using PVCBasic.PVCBCore.Customers;
 
 namespace PVCBasic
 {
@@ -94,16 +96,38 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<ListParametersPage, ListParametersPageViewModel>();
             containerRegistry.RegisterForNavigation<ParametersDetailPage, ParametersDetailPageViewModel>();
 
+            containerRegistry.RegisterForNavigation<ListProvidersPage, ListProvidersPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListProvidersDetailPage, ListProvidersDetailPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddProviderPage, AddProviderPageViewModel>();
+            containerRegistry.RegisterForNavigation<SearchProviderPage, SearchProviderPageViewModel>();
+
+            containerRegistry.RegisterForNavigation<ListCustomersPage, ListCustomersPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListCustomersDetailPage, ListCustomersDetailPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddCustomersPage, AddCustomersPageViewModel>();
+            containerRegistry.RegisterForNavigation<SearchCustomerPage, SearchCustomerPageViewModel>();
+
             // Data access
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.DetailInvoices>, DetailInvoicesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Products>, ProductRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Parameters>, ParametersRepository>();
+
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.Providers>, ProvidersRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.Customers>, CustomersRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.PaymentTypes>, PaymentTypesRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.SalesTypes>, SalesTypesRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.Routes>, RoutesRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.Employees>, EmployeesRepository>();
+
             containerRegistry.RegisterSingleton<IInvoicesManager, InvoicesManager>();
             containerRegistry.RegisterSingleton<IProductsManager, ProductsManager>();
             containerRegistry.RegisterSingleton<IParametersManager, ParametersManager>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Inventories>, InventoriesRepository>();
             containerRegistry.RegisterSingleton<IInventoriesManager, InventoriesManager>();
+
+            containerRegistry.RegisterSingleton<IProvidersManager, ProvidersManager>();
+            containerRegistry.RegisterSingleton<ICustomersManager, CustomersManager>();
+
 
             containerRegistry.RegisterSingleton<PrintInvoice.PrintInvoice>();
         }
