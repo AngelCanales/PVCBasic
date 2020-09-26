@@ -12,6 +12,8 @@ using System.Windows.Input;
 using Plugin.Toast;
 using Plugin.Toast.Abstractions;
 using PVCBasic.PVCBCore.Inventories;
+using PVCBasic.PVCBCore.Parameters;
+using PVCBasic.ConstantName;
 
 namespace PVCBasic.ViewModels
 {
@@ -31,13 +33,15 @@ namespace PVCBasic.ViewModels
         private string receipt;
         private readonly IInvoicesManager invoicesManager;
         private readonly IInventoriesManager inventoriesManager;
+        private readonly IParametersManager parametersManager;
         private  int? idProduct;
 
-        public SalesViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager, IInventoriesManager inventoriesManager) : base(navigationService)
+        public SalesViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager, IInventoriesManager inventoriesManager, IParametersManager parametersManager) : base(navigationService)
         {
             this.dialogService = dialogService;
             this.invoicesManager = invoicesManager;
             this.inventoriesManager = inventoriesManager;
+            this.parametersManager = parametersManager;
             this.DetailInvoices = new ObservableCollection<DetailInvoicesViewModel>();
             this.SalvarCommand = new DelegateCommand(async () => await this.ExecuteSalvarCommand());
             this.AddItemCommand = new DelegateCommand(async () => await this.ExecuteAddItemCommand());
@@ -196,6 +200,7 @@ namespace PVCBasic.ViewModels
         {
             if (!this.DetailInvoices.Any()) { return; }
 
+            string numberinvoice = string.Empty;
             try
             {
                 var invoice = new Invoices();
@@ -205,8 +210,11 @@ namespace PVCBasic.ViewModels
                 invoice.InvoicesTypes = this.TypeInvoice;
                 invoice.Total = this.DetailInvoices.Sum(t => t.TotalItem);
                 invoice.DetailInvoices = detail;
-
-                
+                invoice.Exchange = this.Exchange != null ? this.Exchange.Value : 0;
+                invoice.Cash =   this.Cash != null ? this.Cash.Value : 0;
+                invoice.Tax = this.DetailInvoices.Sum(t => t.Tax);
+                numberinvoice = Guid.NewGuid().ToString();
+                invoice.NumFactura = numberinvoice;
                 await this.invoicesManager.CreateAsync(invoice);
 
                 foreach (var item in this.DetailInvoices)
@@ -279,6 +287,9 @@ namespace PVCBasic.ViewModels
 
             var param = new NavigationParameters();
             param.Add("Receipt", this.Receipt);
+            param.Add("Title", this.Title);
+
+            param.Add("NumberInvoice", numberinvoice);
             await this.NavigationService.NavigateAsync("ReceiptPage", param);
         }
         public int? Quantity
@@ -477,6 +488,17 @@ namespace PVCBasic.ViewModels
         }
         public async Task<string> ReceiptGenerateAsyc()
         {
+            var parameter = await parametersManager.GetAllAsync();
+
+            var storeName = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.StoreName).Value;
+            var address = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.Address).Value;
+            var phonenumber = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.Phonenumbe).Value;
+            var email = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.Email).Value;
+            var logo = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.Logo).ValueImage;
+            var thankMessage = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.ThankMessage).Value;
+
+            var imgSrc = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(logo));
+
             decimal value = 0;
             var exchangenewx = this.Exchange != null ? this.Exchange.Value.ToString("C2") : value.ToString("C2");
             var cashnew = this.Cash != null ? this.Cash.Value.ToString("C2") : value.ToString("C2");
@@ -484,6 +506,9 @@ namespace PVCBasic.ViewModels
 <html>
 <body>
 <section class='container'>
+<div style = 'text-align:center'>
+<img src='" + imgSrc +"'"+ @" />
+</div> 
                         <div style = 'font-family:monospace'>
 <section>
 <div>
@@ -494,18 +519,18 @@ namespace PVCBasic.ViewModels
                         <dt style = 'color:black;font-weight: bold; font-family:Arial'>
                             " + $"{this.Title}" + @"
                         </dt>
-                        <dt style = 'color:black;font-weight: bold; font-family:Arial'>Depósito Canales</dt>                       
+                        <dt style = 'color:black;font-weight: bold; font-family:Arial'>" + $"{storeName}" + @"</dt>                       
                         <dt>
                             Fecha: " + $"{DateTime.Now.ToString("dd/mm/yyyy")}" + @"
                         </dt>
                         <dt>
-                            Dirrecion:La Lima,Cortés
+                            Dirrecion:" + $"{address}" + @"
                         </dt>
                         <dt>
-                            Telefono: +504 2509-1893
+                            Telefono:" + $"{phonenumber}" + @"
                         </dt>
                         <dt>
-                            Email: acanales199@gmail.com
+                            Email: " + $"{email}" + @"
                         </dt>
                     </dl>
                  
@@ -517,7 +542,7 @@ namespace PVCBasic.ViewModels
                     <table style='text-align:left'>
                         <thead>
                             <tr>
-                                <th 'color:black;font-weight: bold; font-family:Arial' >
+                                <th style = 'text-align:center;color:black;font-weight: bold; font-family:Arial' >
                                     Detalle
                                 </th>
                             </tr>
@@ -563,7 +588,8 @@ namespace PVCBasic.ViewModels
             </div>
         </section>
         <hr style='border:1px dashed black; width:300px' />
-        <dl > *** Gracias por su compra ***</dl>
+        <dl style = 'text-align:center'> ********************</dl>
+        <dl style = 'text-align:center'>" + $"{thankMessage}" + @"</dl>
         <dl style = 'text-align:center'> ********************</dl>
     </div>
 

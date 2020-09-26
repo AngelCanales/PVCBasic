@@ -15,6 +15,8 @@ namespace PVCBasic.PVCBCore.Invoices
 
         Task<PVCBasic.Database.Models.Invoices> FindByIdAsync(int id);
 
+        Task<PVCBasic.Database.Models.Invoices> FindByNumberInvoicesAsync(string number);
+
         Task<PVCBasic.Database.Models.Invoices> FindAllByDateAsync(DateTime date);
 
         Task CreateAsync(PVCBasic.Database.Models.Invoices invoices);

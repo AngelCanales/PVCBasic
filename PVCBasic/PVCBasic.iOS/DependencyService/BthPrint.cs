@@ -107,6 +107,10 @@ namespace PVCBasic.iOS
                 ex = ex;
             }
         }
-            
+
+        public Task PrintImage(byte[] ValueImage)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

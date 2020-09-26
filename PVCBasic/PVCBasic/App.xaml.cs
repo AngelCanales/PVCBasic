@@ -94,8 +94,6 @@ namespace PVCBasic
             containerRegistry.RegisterForNavigation<ListParametersPage, ListParametersPageViewModel>();
             containerRegistry.RegisterForNavigation<ParametersDetailPage, ParametersDetailPageViewModel>();
 
-
-
             // Data access
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Invoices>, InvoicesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.DetailInvoices>, DetailInvoicesRepository>();
@@ -106,6 +104,8 @@ namespace PVCBasic
             containerRegistry.RegisterSingleton<IParametersManager, ParametersManager>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Inventories>, InventoriesRepository>();
             containerRegistry.RegisterSingleton<IInventoriesManager, InventoriesManager>();
+
+            containerRegistry.RegisterSingleton<PrintInvoice.PrintInvoice>();
         }
     }
 }

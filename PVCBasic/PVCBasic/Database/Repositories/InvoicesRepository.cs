@@ -26,6 +26,9 @@ namespace PVCBasic.Database.Repositories
             oldEntity.Total = newEntity.Total;
             oldEntity.DetailInvoices = newEntity.DetailInvoices;
             oldEntity.NumFactura = newEntity.NumFactura;
+            oldEntity.Cash = newEntity.Cash;
+            oldEntity.Tax = newEntity.Tax;
+            oldEntity.Exchange = newEntity.Exchange;
             return oldEntity;
         }
     }

@@ -50,6 +50,12 @@ namespace PVCBasic.PVCBCore.Invoices
             return invoicesDatalist; 
         }
 
+        public async Task<Database.Models.Invoices> FindByNumberInvoicesAsync(string number)
+        {
+            var invoicesDatalist = await this.invoices.All().Include(i => i.DetailInvoices).FirstOrDefaultAsync(w => w.NumFactura == number);
+            return invoicesDatalist;
+        }
+
         public async Task<IEnumerable<Database.Models.Invoices>> GetAllAsync()
         {
             var invoicesDatalist = await this.invoices.All().Include( i => i.DetailInvoices).ToListAsync();

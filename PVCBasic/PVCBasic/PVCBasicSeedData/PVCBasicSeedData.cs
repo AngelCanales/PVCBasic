@@ -22,9 +22,7 @@ namespace PVCBasic.PVCBasicSeedData
             try
             {
                 SQLitePCL.Batteries_V2.Init();
-                //          this.Database.EnsureCreated();
                 exist = context.Database.EnsureCreated();
-
             }
             catch (Exception)
             {
@@ -49,15 +47,18 @@ namespace PVCBasic.PVCBasicSeedData
                 context.Add(new Parameters { Key = "FirstInvoiceNumber", Value = "" });
                 context.Add(new Parameters { Key = "LastInvoiceNumber", Value = "" });
                 context.Add(new Parameters { Key = "PrintCode", Value = "" });
-                context.Add(new Parameters { Key = "StoreName", Value = "" });
-                context.Add(new Parameters { Key = "Logo", Value = "" });
+                context.Add(new Parameters { Key = "StoreName", Value = "Parameter" });
+                context.Add(new Parameters { Key = "Logo", Value = "Parameter" });
                 context.Add(new Parameters { Key = "ValidUntilDate", Value = "" });
+                context.Add(new Parameters { Key = "NamePrint", Value = "Parameter" });
 
-                context.Add(new Parameters { Key = "Email", Value = "" });
-                context.Add(new Parameters { Key = "Phonenumbe", Value = "" });
-                context.Add(new Parameters { Key = "Address", Value = "" });
-                context.Add(new Parameters { Key = "RTN", Value = "" });
-                context.Add(new Parameters { Key = "ThankMessage", Value = "" });
+                context.Add(new Parameters { Key = "CAI", Value = "Parameter" });
+
+                context.Add(new Parameters { Key = "Email", Value = "Parameter" });
+                context.Add(new Parameters { Key = "Phonenumbe", Value = "Parameter" });
+                context.Add(new Parameters { Key = "Address", Value = "Parameter" });
+                context.Add(new Parameters { Key = "RTN", Value = "Parameter" });
+                context.Add(new Parameters { Key = "ThankMessage", Value = "ThankMessage" });
                 await context.SaveChangesAsync();
            
         }

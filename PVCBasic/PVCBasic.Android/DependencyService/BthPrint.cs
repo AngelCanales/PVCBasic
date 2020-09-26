@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -171,5 +172,23 @@ namespace PVCBasic.Droid.DependencyService
 				System.Diagnostics.Debug.WriteLine("BthSocket = null");
 			}
 		}
-    }
+
+        public async Task PrintImage(byte[] ValueImage)
+        {
+			try
+			{
+				await this.BthSocket.OutputStream.WriteAsync(ValueImage, 0, ValueImage.Length);
+				// Java.Lang.Thread.Sleep(2000);
+
+				//END IMAGE
+				Java.Lang.Thread.Sleep(2000);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Unable to print. Please re-configure the printer and try again!");
+			}
+		}
+
+		
+	}
 }

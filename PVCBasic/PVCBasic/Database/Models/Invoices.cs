@@ -16,6 +16,12 @@ namespace PVCBasic.Database.Models
 
         public decimal Total { get; set; }
 
+        public decimal Tax { get; set; }
+
+        public decimal Exchange { get; set; }
+
+        public decimal Cash { get; set; }
+
         public string InvoicesTypes { get; set; }
 
         public List<DetailInvoices> DetailInvoices { get; set; } = new List<DetailInvoices>();

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using PVCBasic.PrintInvoice;
 
 namespace PVCBasic.ViewModels
 {
@@ -23,13 +24,14 @@ namespace PVCBasic.ViewModels
         private string typeInvoice;
         private string titleInvoice;
         private string receipt;
-        
-
-        public ReceiptPageViewModel(INavigationService navigationService) : base(navigationService)
+        private string numberInvoice;
+        private readonly PrintInvoice.PrintInvoice printInvoice;
+        public ReceiptPageViewModel(INavigationService navigationService, PrintInvoice.PrintInvoice printInvoice) : base(navigationService)
         {
             this.PrintItemCommand = new DelegateCommand(async () => await this.ExecutePrintItemCommand());
             this.ShareItemCommand = new DelegateCommand(async () => await this.ExecuteShareItemCommand());
             this.CloseItemsCommand = new DelegateCommand(async () => await this.ExecuteCloseItemsCommand());
+            this.printInvoice = printInvoice;
             this.Title = "Recibo";
 
             
@@ -66,7 +68,15 @@ namespace PVCBasic.ViewModels
 
         private async Task ExecutePrintItemCommand()
         {
-            return;
+            try
+            {
+                printInvoice.Title = this.Title;
+               await printInvoice.PrintInvoices(this.NumberInvoice);
+            }
+            catch (Exception e)
+            {
+                CrossToastPopUp.Current.ShowToastError($"Error: {e.Message}", ToastLength.Long);
+            }
         }
 
         public async override void OnNavigatedTo(INavigationParameters parameters)
@@ -77,6 +87,17 @@ namespace PVCBasic.ViewModels
             {
                 this.Receipt = parameters["Receipt"] as string;
             }
+
+            if (parameters.ContainsKey("Title"))
+            {
+                this.Title = parameters["Title"] as string;
+            }
+
+            if (parameters.ContainsKey("NumberInvoice"))
+            {
+                this.NumberInvoice = parameters["NumberInvoice"] as string;
+            }
+           
         }
 
         public string Receipt
@@ -88,8 +109,17 @@ namespace PVCBasic.ViewModels
                 this.RaisePropertyChanged();
             }
         }
+        public string NumberInvoice
+        {
+            get => this.numberInvoice;
+            set
+            {
+                this.numberInvoice = value;
+                this.RaisePropertyChanged();
+            }
+        }
 
-    
+
         public ICommand PrintItemCommand { get; set; }
 
         public ICommand ShareItemCommand { get; set; }

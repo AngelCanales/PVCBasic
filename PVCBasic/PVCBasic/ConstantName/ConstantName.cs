@@ -9,7 +9,8 @@ namespace PVCBasic.ConstantName
         public  const string Sales = "V";
 
         public const string Purchases = "C";
-
+        
+        public const string NamePrint = "NamePrint";
         public const string EmissionPoint = "EmissionPoint";
         public const string Establishment = "Establishment";
         public const string DocumentType = "DocumentType";
@@ -21,7 +22,7 @@ namespace PVCBasic.ConstantName
         public const string StoreName = "StoreName";
         public const string Logo = "Logo";
         public const string ValidUntilDate = "ValidUntilDate";
-
+        public const string CAI = "CAI";
         public const string Email = "Email";
         public const string Phonenumbe = "Phonenumbe";
         public const string Address = "Address";
