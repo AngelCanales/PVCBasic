@@ -100,7 +100,8 @@ namespace PVCBasic.ViewModels
             get => this.customer;
             set
             {
-                this.SetProperty(ref this.customer, value);
+                this.customer = value;
+                this.RaisePropertyChanged();
             }
         }
     }

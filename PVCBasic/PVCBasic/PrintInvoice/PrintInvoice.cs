@@ -25,10 +25,11 @@ namespace PVCBasic.PrintInvoice
         private readonly IInventoriesManager inventoriesManager;
         private readonly IParametersManager parametersManager;
         private readonly IBthPrint bthPrint;
-        public PrintInvoice(IInvoicesManager invoicesManager, IInventoriesManager inventoriesManager, IBthPrint bthPrint)
+        public PrintInvoice(IInvoicesManager invoicesManager, IInventoriesManager inventoriesManager, IBthPrint bthPrint, IParametersManager parametersManager)
         {
             this.invoicesManager = invoicesManager;
             this.inventoriesManager = inventoriesManager;
+            this.parametersManager = parametersManager;
             this.bthPrint = bthPrint;
         }
 

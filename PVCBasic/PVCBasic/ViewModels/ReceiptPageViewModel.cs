@@ -20,9 +20,7 @@ namespace PVCBasic.ViewModels
 {
     public class ReceiptPageViewModel : BaseViewModel
     {
-        private ObservableCollection<DetailInvoicesViewModel> detailInvoices;
-        private string typeInvoice;
-        private string titleInvoice;
+        
         private string receipt;
         private string numberInvoice;
         private readonly PrintInvoice.PrintInvoice printInvoice;
@@ -47,7 +45,7 @@ namespace PVCBasic.ViewModels
 
             try
             {
-                
+              await Task.Delay(500);
               var path =  Xamarin.Forms.DependencyService.Get<IFileHelper>().StrartConverting(this.Receipt, "Receipt");
 
                // CrossToastPopUp.Current.ShowToastSuccess($"{path}", ToastLength.Long);

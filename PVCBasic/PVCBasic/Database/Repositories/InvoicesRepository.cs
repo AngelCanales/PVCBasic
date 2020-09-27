@@ -29,6 +29,10 @@ namespace PVCBasic.Database.Repositories
             oldEntity.Cash = newEntity.Cash;
             oldEntity.Tax = newEntity.Tax;
             oldEntity.Exchange = newEntity.Exchange;
+            oldEntity.IdCustomer = newEntity.IdCustomer;
+            oldEntity.IdProvider = newEntity.IdProvider;
+            oldEntity.CodeCustomer = newEntity.CodeCustomer;
+            oldEntity.CodeProvider = newEntity.CodeProvider;
             return oldEntity;
         }
     }

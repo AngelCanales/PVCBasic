@@ -35,9 +35,14 @@ namespace PVCBasic.ViewModels
         private readonly IInventoriesManager inventoriesManager;
         private readonly IParametersManager parametersManager;
         private  int? idProduct;
+        private CustomersModel customer;
+        private ProvidersModel provider;
+        private string typeDecription;
+        private ProductsModel product;
 
         public SalesViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager, IInventoriesManager inventoriesManager, IParametersManager parametersManager) : base(navigationService)
         {
+            try { 
             this.dialogService = dialogService;
             this.invoicesManager = invoicesManager;
             this.inventoriesManager = inventoriesManager;
@@ -49,7 +54,29 @@ namespace PVCBasic.ViewModels
             this.DeleteItemCommand = new DelegateCommand(async () => await this.ExecuteDeleteItemCommand());
             this.ClearItemsCommand = new DelegateCommand(async () => await this.ExecuteClearItemsCommand());
             this.SearchProductCommand = new DelegateCommand(async () => await this.ExecuteSearchProductCommand());
+            this.SearchProviderClitenCommand = new DelegateCommand(async () => await this.ExecuteSearchProviderClitenCommand());
+                this.Product = new ProductsModel();
+                this.Customer = new CustomersModel();
+                this.Provider = new ProvidersModel();
+        }
+            catch (Exception e)
+            {
 
+                CrossToastPopUp.Current.ShowToastError($"Error {e.Message}", ToastLength.Long);
+            }
+}
+
+        private async Task ExecuteSearchProviderClitenCommand()
+        {
+            if(this.TypeInvoice == ConstantName.ConstantName.Purchases) 
+            {
+                await this.NavigationService.NavigateAsync("SearchProviderPage");
+            }
+
+            if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+            {
+                await this.NavigationService.NavigateAsync("SearchCustomerPage");
+            }
             
         }
 
@@ -61,10 +88,23 @@ namespace PVCBasic.ViewModels
         public async override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            try
+            {
 
+           
             if (parameters.ContainsKey("TypeInvoice"))
             {
                 this.TypeInvoice = parameters["TypeInvoice"] as string;
+
+                if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                {
+                    this.TypeDecription = "Proveedor:";
+                }
+
+                if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+                {
+                    this.TypeDecription = "Cliente:";
+                }
             }
 
             if (parameters.ContainsKey("Title"))
@@ -72,23 +112,35 @@ namespace PVCBasic.ViewModels
                 this.Title = parameters["Title"] as string;
             }
 
+            if (parameters.ContainsKey("SelectedCustomers"))
+            {
+                this.Customer = parameters["SelectedCustomers"] as CustomersModel;
+                this.Description = this.Customer.ShortName;
+            }
+
+            if (parameters.ContainsKey("SelectedProvider"))
+            {
+                this.Provider = parameters["SelectedProvider"] as ProvidersModel;
+                this.Description = this.Provider.ShortName;
+            }
+
             if (parameters.ContainsKey("SelectedProduct"))
             {
-                var product = parameters["SelectedProduct"] as ProductsModel;
-                this.IdProduct = product.Id;
+                 this.Product = parameters["SelectedProduct"] as ProductsModel;
+                this.IdProduct = this.Product.Id;
                 //  CrossToastPopUp.Current.ShowToastSuccess($"price :{product.Price.Value.ToString()}", ToastLength.Long);
                 if (this.TypeInvoice == ConstantName.ConstantName.Sales) 
                 { 
-                this.NumberPrice = product.Price.Value.ToString();
-                this.Price = product.Price.Value;
-                this.NameProduct = product.ShortName;
+                this.NumberPrice = this.Product.Price.Value.ToString();
+                this.Price = this.Product.Price.Value;
+                this.NameProduct = this.Product.ShortName;
                 }
                 if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
                 {
                    
-                    this.NumberPrice = product.Cost.Value.ToString();
-                    this.Price = product.Cost.Value;
-                    this.NameProduct = product.ShortName;
+                    this.NumberPrice = this.Product.Cost.Value.ToString();
+                    this.Price = this.Product.Cost.Value;
+                    this.NameProduct = this.Product.ShortName;
                 }
 
             }
@@ -99,6 +151,12 @@ namespace PVCBasic.ViewModels
                 this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
             }
 
+            }
+            catch (Exception e)
+            {
+
+                CrossToastPopUp.Current.ShowToastError($"Error 2Receipt{e.Message}", ToastLength.Long);
+            }
         }
 
         public override async void OnNavigatedFrom(INavigationParameters parameters)
@@ -107,6 +165,9 @@ namespace PVCBasic.ViewModels
             parameters.Add("DetailInvoices", this.DetailInvoices);
             parameters.Add("Title", this.Title);
             parameters.Add("TypeInvoice", this.TypeInvoice);
+            parameters.Add("SelectedProvider", this.Provider);
+            parameters.Add("SelectedCustomers", this.Customer);
+
         }
 
         public DetailInvoicesViewModel SelectedItemDetails { get; set; }
@@ -116,6 +177,8 @@ namespace PVCBasic.ViewModels
         public ICommand ClearItemsCommand { get; set; }
 
         public ICommand SearchProductCommand { get; set; }
+
+        public ICommand SearchProviderClitenCommand { get; set; }
 
         private async Task ExecuteClearItemsCommand()
         {
@@ -137,7 +200,8 @@ namespace PVCBasic.ViewModels
                 ProductName = this.NameProduct,
                 Price = this.Price.Value,
                 Quantity = this.Quantity.Value,
-                IdProduct = this.IdProduct
+                IdProduct = this.IdProduct,
+                CodeProduct = this.Product.Code,
             };
             this.DetailInvoices.Add(item);
             this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
@@ -204,7 +268,7 @@ namespace PVCBasic.ViewModels
             try
             {
                 var invoice = new Invoices();
-                var detail = this.DetailInvoices.Select(s => new DetailInvoices { IdInvoices = invoice.Id, Invoices = invoice, Description = s.Description, TotalItem = s.TotalItem, Price = s.Price, Quantity = s.Quantity, Tax = s.Tax, IdProduct = this.IdProduct }).ToList();
+                var detail = this.DetailInvoices.Select(s => new DetailInvoices { IdInvoices = invoice.Id, Invoices = invoice, Description = s.Description, TotalItem = s.TotalItem, Price = s.Price, Quantity = s.Quantity, Tax = s.Tax, IdProduct = s.IdProduct ,CodeProduct = s.CodeProduct}).ToList();
                 invoice.Date = DateTime.Now;
                 invoice.Description = this.Description;
                 invoice.InvoicesTypes = this.TypeInvoice;
@@ -215,6 +279,18 @@ namespace PVCBasic.ViewModels
                 invoice.Tax = this.DetailInvoices.Sum(t => t.Tax);
                 numberinvoice = Guid.NewGuid().ToString();
                 invoice.NumFactura = numberinvoice;
+                if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                {
+                    invoice.CodeProvider = this.Provider.Code;
+                    invoice.IdProvider = this.Provider.Id;
+                }
+
+                if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+                {
+                    invoice.CodeCustomer = this.Customer.Code;
+                    invoice.IdCustomer = this.Customer.Id;
+                }
+
                 await this.invoicesManager.CreateAsync(invoice);
 
                 foreach (var item in this.DetailInvoices)
@@ -660,10 +736,50 @@ div
             }
         }
 
+        public string TypeDecription
+        {
+            get => this.typeDecription;
+            set
+            {
+                this.typeDecription = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
         public ObservableCollection<DetailInvoicesViewModel> DetailInvoices
         {
             get => this.detailInvoices;
             set => this.SetProperty(ref this.detailInvoices, value);
+        }
+
+        public CustomersModel Customer
+        {
+            get => this.customer;
+            set
+            {
+                this.customer = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        
+        public ProvidersModel Provider
+        {
+            get => this.provider;
+            set
+            {
+                this.provider = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public ProductsModel Product
+        {
+            get => this.product;
+            set
+            {
+                this.product = value;
+                this.RaisePropertyChanged();
+            }
         }
     }
 }

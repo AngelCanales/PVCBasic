@@ -102,9 +102,8 @@ namespace PVCBasic.iOS
                 outStream.Write(bytes);
                  System.Diagnostics.Debug.WriteLine("Exit the inner loop");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ex = ex;
             }
         }
 

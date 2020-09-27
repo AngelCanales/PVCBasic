@@ -101,8 +101,10 @@ namespace PVCBasic.ViewModels
             get => this.provider;
             set
             {
-                this.SetProperty(ref this.provider, value);
+                this.provider = value;
+                this.RaisePropertyChanged();
             }
         }
+     
     }
 }

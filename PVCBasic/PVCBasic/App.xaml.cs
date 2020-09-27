@@ -61,7 +61,7 @@ namespace PVCBasic
                     await PVCBasic.PVCBasicSeedData.PVCBasicSeedData.EnsurePVCBasicSeedData(context);
                 }
             }
-                catch (Exception e)
+                catch (Exception )
                 {
                 }
            

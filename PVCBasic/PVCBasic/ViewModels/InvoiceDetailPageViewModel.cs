@@ -15,6 +15,8 @@ namespace PVCBasic.ViewModels
         private ObservableCollection<DetailInvoicesViewModel> detailInvoices;
         private string typeInvoice;
         private string titleInvoice;
+        private ProvidersModel provider;
+        private CustomersModel customer;
 
         public InvoiceDetailPageViewModel(INavigationService navigationService) : base(navigationService)
         {
@@ -39,6 +41,16 @@ namespace PVCBasic.ViewModels
                 this.TitleInvoice = parameters["Title"] as string;
             }
 
+
+            if (parameters.ContainsKey("SelectedCustomers"))
+            {
+                this.Customer = parameters["SelectedCustomers"] as CustomersModel;
+            }
+
+            if (parameters.ContainsKey("SelectedProvider"))
+            {
+                this.Provider = parameters["SelectedProvider"] as ProvidersModel;
+            }
             if (parameters.ContainsKey("DetailInvoices"))
             {
                 this.DetailInvoices = parameters["DetailInvoices"] as ObservableCollection<DetailInvoicesViewModel>;
@@ -53,6 +65,8 @@ namespace PVCBasic.ViewModels
             parameters.Add("DetailInvoices", this.DetailInvoices);
             parameters.Add("Title", this.TitleInvoice);
             parameters.Add("TypeInvoice", this.TypeInvoice);
+            parameters.Add("SelectedProvider", this.Provider);
+            parameters.Add("SelectedCustomers", this.Customer);
         }
 
         public string TypeInvoice
@@ -71,6 +85,26 @@ namespace PVCBasic.ViewModels
             set
             {
                 this.titleInvoice = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public CustomersModel Customer
+        {
+            get => this.customer;
+            set
+            {
+                this.customer = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public ProvidersModel Provider
+        {
+            get => this.provider;
+            set
+            {
+                this.provider = value;
                 this.RaisePropertyChanged();
             }
         }

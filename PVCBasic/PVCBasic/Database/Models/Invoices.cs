@@ -24,6 +24,14 @@ namespace PVCBasic.Database.Models
 
         public string InvoicesTypes { get; set; }
 
+        public int IdCustomer { get; set; }
+
+        public int IdProvider { get; set; }
+
+        public string CodeCustomer { get; set; }
+
+        public string CodeProvider { get; set; }
+
         public List<DetailInvoices> DetailInvoices { get; set; } = new List<DetailInvoices>();
 
     }

@@ -244,7 +244,7 @@ namespace PVCBasic.ViewModels
             set
             {
                 searchText = value;
-                OnPropertyChanged("SearchText");
+                RaisePropertyChanged("SearchText");
             }
         }
 

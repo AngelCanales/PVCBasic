@@ -162,9 +162,9 @@ namespace PVCBasic.Droid.DependencyService
 
 					}
 				}
-				catch (Exception ex)
+				catch (Exception )
 				{
-					ex = ex;
+				
 				}
 			}
 			else
@@ -183,7 +183,7 @@ namespace PVCBasic.Droid.DependencyService
 				//END IMAGE
 				Java.Lang.Thread.Sleep(2000);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				throw new Exception("Unable to print. Please re-configure the printer and try again!");
 			}

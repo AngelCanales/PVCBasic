@@ -22,5 +22,7 @@ namespace PVCBasic.Models
 
         public int? IdProduct { get; set; }
 
+        public string CodeProduct { get; set; }
+
     }
 }
