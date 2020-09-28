@@ -34,7 +34,7 @@ namespace PVCBasic.ViewModels
         private readonly IInvoicesManager invoicesManager;
         private readonly IInventoriesManager inventoriesManager;
         private readonly IParametersManager parametersManager;
-        private  int? idProduct;
+        private int? idProduct;
         private CustomersModel customer;
         private ProvidersModel provider;
         private string typeDecription;
@@ -42,47 +42,54 @@ namespace PVCBasic.ViewModels
 
         public SalesViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager, IInventoriesManager inventoriesManager, IParametersManager parametersManager) : base(navigationService)
         {
-            try { 
-            this.dialogService = dialogService;
-            this.invoicesManager = invoicesManager;
-            this.inventoriesManager = inventoriesManager;
-            this.parametersManager = parametersManager;
-            this.DetailInvoices = new ObservableCollection<DetailInvoicesViewModel>();
-            this.SalvarCommand = new DelegateCommand(async () => await this.ExecuteSalvarCommand());
-            this.AddItemCommand = new DelegateCommand(async () => await this.ExecuteAddItemCommand());
-            this.UpdateItemCommand = new DelegateCommand(async () => await this.ExecuteUpdateItemCommand());
-            this.DeleteItemCommand = new DelegateCommand(async () => await this.ExecuteDeleteItemCommand());
-            this.ClearItemsCommand = new DelegateCommand(async () => await this.ExecuteClearItemsCommand());
-            this.SearchProductCommand = new DelegateCommand(async () => await this.ExecuteSearchProductCommand());
-            this.SearchProviderClitenCommand = new DelegateCommand(async () => await this.ExecuteSearchProviderClitenCommand());
-                this.Product = new ProductsModel();
-                this.Customer = new CustomersModel();
-                this.Provider = new ProvidersModel();
-        }
+            try
+            {
+                this.dialogService = dialogService;
+                this.invoicesManager = invoicesManager;
+                this.inventoriesManager = inventoriesManager;
+                this.parametersManager = parametersManager;
+                this.DetailInvoices = new ObservableCollection<DetailInvoicesViewModel>();
+                this.SalvarCommand = new DelegateCommand(async () => await this.ExecuteSalvarCommand());
+                this.AddItemCommand = new DelegateCommand(async () => await this.ExecuteAddItemCommand());
+                this.UpdateItemCommand = new DelegateCommand(async () => await this.ExecuteUpdateItemCommand());
+                this.DeleteItemCommand = new DelegateCommand(async () => await this.ExecuteDeleteItemCommand());
+                this.ClearItemsCommand = new DelegateCommand(async () => await this.ExecuteClearItemsCommand());
+                this.SearchProductCommand = new DelegateCommand(async () => await this.ExecuteSearchProductCommand());
+                this.SearchProviderClitenCommand = new DelegateCommand(async () => await this.ExecuteSearchProviderClitenCommand());
+            
+            }
             catch (Exception e)
             {
 
                 CrossToastPopUp.Current.ShowToastError($"Error {e.Message}", ToastLength.Long);
             }
-}
+        }
 
         private async Task ExecuteSearchProviderClitenCommand()
         {
-            if(this.TypeInvoice == ConstantName.ConstantName.Purchases) 
+
+            var param = new NavigationParameters();
+            param.Add("SelectedProduct", this.Product);
+
+            if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
             {
-                await this.NavigationService.NavigateAsync("SearchProviderPage");
+
+                await this.NavigationService.NavigateAsync("SearchProviderPage", param);
             }
 
             if (this.TypeInvoice == ConstantName.ConstantName.Sales)
             {
-                await this.NavigationService.NavigateAsync("SearchCustomerPage");
+                await this.NavigationService.NavigateAsync("SearchCustomerPage", param);
             }
-            
+
         }
 
         private async Task ExecuteSearchProductCommand()
         {
-            await this.NavigationService.NavigateAsync("SearchProductPage");
+            var param = new NavigationParameters();
+            param.Add("SelectedProvider", this.Provider);
+            param.Add("SelectedCustomers", this.Customer);
+            await this.NavigationService.NavigateAsync("SearchProductPage", param);
         }
 
         public async override void OnNavigatedTo(INavigationParameters parameters)
@@ -91,71 +98,84 @@ namespace PVCBasic.ViewModels
             try
             {
 
-           
-            if (parameters.ContainsKey("TypeInvoice"))
-            {
-                this.TypeInvoice = parameters["TypeInvoice"] as string;
 
-                if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                if (parameters.ContainsKey("TypeInvoice"))
                 {
-                    this.TypeDecription = "Proveedor:";
+                    this.TypeInvoice = parameters["TypeInvoice"] as string;
+
+                    if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                    {
+                        this.TypeDecription = "Proveedor:";
+                    }
+
+                    if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+                    {
+                        this.TypeDecription = "Cliente:";
+                    }
                 }
 
-                if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+                if (parameters.ContainsKey("Title"))
                 {
-                    this.TypeDecription = "Cliente:";
+                    this.Title = parameters["Title"] as string;
                 }
-            }
 
-            if (parameters.ContainsKey("Title"))
-            {
-                this.Title = parameters["Title"] as string;
-            }
-
-            if (parameters.ContainsKey("SelectedCustomers"))
-            {
-                this.Customer = parameters["SelectedCustomers"] as CustomersModel;
-                this.Description = this.Customer.ShortName;
-            }
-
-            if (parameters.ContainsKey("SelectedProvider"))
-            {
-                this.Provider = parameters["SelectedProvider"] as ProvidersModel;
-                this.Description = this.Provider.ShortName;
-            }
-
-            if (parameters.ContainsKey("SelectedProduct"))
-            {
-                 this.Product = parameters["SelectedProduct"] as ProductsModel;
-                this.IdProduct = this.Product.Id;
-                //  CrossToastPopUp.Current.ShowToastSuccess($"price :{product.Price.Value.ToString()}", ToastLength.Long);
-                if (this.TypeInvoice == ConstantName.ConstantName.Sales) 
-                { 
-                this.NumberPrice = this.Product.Price.Value.ToString();
-                this.Price = this.Product.Price.Value;
-                this.NameProduct = this.Product.ShortName;
-                }
-                if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                if (parameters.ContainsKey("SelectedCustomers"))
                 {
-                   
-                    this.NumberPrice = this.Product.Cost.Value.ToString();
-                    this.Price = this.Product.Cost.Value;
-                    this.NameProduct = this.Product.ShortName;
+                    this.Customer = parameters["SelectedCustomers"] as CustomersModel;
+                    if (this.Customer != null)
+                    {
+                        this.Description = this.Customer.ShortName;
+                    }
                 }
 
-            }
+                if (parameters.ContainsKey("SelectedProvider"))
+                {
+                    this.Provider = parameters["SelectedProvider"] as ProvidersModel;
+                    if (this.Provider != null)
+                    {
+                        this.Description = this.Provider.ShortName;
+                    }
+                }
 
-            if (parameters.ContainsKey("DetailInvoices"))
-            {
-                this.DetailInvoices = parameters["DetailInvoices"] as ObservableCollection<DetailInvoicesViewModel>;
-                this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
-            }
+                if (parameters.ContainsKey("SelectedProduct"))
+                {
+                    this.Product = parameters["SelectedProduct"] as ProductsModel;
+                    if (this.Product != null)
+                    {
+
+
+                        this.IdProduct = this.Product.Id;
+                        //  CrossToastPopUp.Current.ShowToastSuccess($"price :{product.Price.Value.ToString()}", ToastLength.Long);
+                        if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+                        {
+                            this.NumberPrice = this.Product.Price.Value.ToString();
+                            this.Price = this.Product.Price.Value;
+                            this.NameProduct = this.Product.ShortName;
+                        }
+                        if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                        {
+
+                            this.NumberPrice = this.Product.Cost.Value.ToString();
+                            this.Price = this.Product.Cost.Value;
+                            this.NameProduct = this.Product.ShortName;
+                        }
+                    }
+                }
+
+                if (parameters.ContainsKey("DetailInvoices"))
+                {
+                    if (this.DetailInvoices != null)
+                    {
+                        this.DetailInvoices = parameters["DetailInvoices"] as ObservableCollection<DetailInvoicesViewModel>;
+                        this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
+                    }
+                }
 
             }
             catch (Exception e)
             {
 
-                CrossToastPopUp.Current.ShowToastError($"Error 2Receipt{e.Message}", ToastLength.Long);
+                CrossToastPopUp.Current.ShowToastError($"Error {e.Message}", ToastLength.Long);
             }
         }
 
@@ -166,7 +186,8 @@ namespace PVCBasic.ViewModels
             parameters.Add("Title", this.Title);
             parameters.Add("TypeInvoice", this.TypeInvoice);
             parameters.Add("SelectedProvider", this.Provider);
-            parameters.Add("SelectedCustomers", this.Customer);
+            parameters.Add("SelectedCustomers", this.Customer); ;
+            parameters.Add("SelectedProduct", this.Product);
 
         }
 
@@ -187,21 +208,21 @@ namespace PVCBasic.ViewModels
         }
 
         private async Task ExecuteAddItemCommand()
-        { 
-            if(this.Quantity== null) { return; };
+        {
+            if (this.Quantity == null) { return; };
             if (this.Price == null) { return; };
 
             var des = $"{this.NameProduct} => {this.Quantity.Value} x {this.Price.Value} = {this.TotalItem.ToString("C2")}";
             var item = new DetailInvoicesViewModel
             {
-                Id =  Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 TotalItem = this.Quantity.Value * this.Price.Value,
-                Description =  des,
+                Description = des,
                 ProductName = this.NameProduct,
                 Price = this.Price.Value,
                 Quantity = this.Quantity.Value,
-                IdProduct = this.IdProduct,
-                CodeProduct = this.Product.Code,
+                IdProduct = this.IdProduct !=null ? this.IdProduct : null,
+                CodeProduct = this.Product != null? this.Product.Code : string.Empty,
             };
             this.DetailInvoices.Add(item);
             this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
@@ -219,7 +240,7 @@ namespace PVCBasic.ViewModels
         {
             foreach (var item in this.DetailInvoices)
             {
-                if( item.Id == this.SelectedItemDetails.Id) 
+                if (item.Id == this.SelectedItemDetails.Id)
                 {
                     var des = $"{this.NameProduct} => {this.Quantity} x {this.Price} = {this.TotalItem.ToString("C2")}";
 
@@ -234,7 +255,7 @@ namespace PVCBasic.ViewModels
                 this.Total = 0;
                 this.TotalItem = 0;
                 this.NameProduct = "";
-                
+
                 this.Quantity = null;
                 this.Price = null;
                 this.Cash = null;
@@ -268,39 +289,45 @@ namespace PVCBasic.ViewModels
             try
             {
                 var invoice = new Invoices();
-                var detail = this.DetailInvoices.Select(s => new DetailInvoices { IdInvoices = invoice.Id, Invoices = invoice, Description = s.Description, TotalItem = s.TotalItem, Price = s.Price, Quantity = s.Quantity, Tax = s.Tax, IdProduct = s.IdProduct ,CodeProduct = s.CodeProduct}).ToList();
+                var detail = this.DetailInvoices.Select(s => new DetailInvoices { IdInvoices = invoice.Id, Invoices = invoice, Description = s.Description, TotalItem = s.TotalItem, Price = s.Price, Quantity = s.Quantity, Tax = s.Tax, IdProduct = s.IdProduct, CodeProduct = s.CodeProduct }).ToList();
                 invoice.Date = DateTime.Now;
                 invoice.Description = this.Description;
                 invoice.InvoicesTypes = this.TypeInvoice;
                 invoice.Total = this.DetailInvoices.Sum(t => t.TotalItem);
                 invoice.DetailInvoices = detail;
                 invoice.Exchange = this.Exchange != null ? this.Exchange.Value : 0;
-                invoice.Cash =   this.Cash != null ? this.Cash.Value : 0;
+                invoice.Cash = this.Cash != null ? this.Cash.Value : 0;
                 invoice.Tax = this.DetailInvoices.Sum(t => t.Tax);
                 numberinvoice = Guid.NewGuid().ToString();
                 invoice.NumFactura = numberinvoice;
                 if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
                 {
+                    if(this.Provider != null) 
+                    {
                     invoice.CodeProvider = this.Provider.Code;
                     invoice.IdProvider = this.Provider.Id;
+                    }
                 }
 
                 if (this.TypeInvoice == ConstantName.ConstantName.Sales)
                 {
-                    invoice.CodeCustomer = this.Customer.Code;
-                    invoice.IdCustomer = this.Customer.Id;
+                    if (this.Customer != null)
+                    {
+                        invoice.CodeCustomer = this.Customer.Code;
+                        invoice.IdCustomer = this.Customer.Id;
+                    }
                 }
 
                 await this.invoicesManager.CreateAsync(invoice);
 
                 foreach (var item in this.DetailInvoices)
                 {
-                    if(item.IdProduct != null)
+                    if (item.IdProduct != null)
                     {
                         var exi = await this.inventoriesManager.FindByIdAsync(item.IdProduct.Value);
                         if (exi != null)
                         {
-                            if(this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                            if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
                             {
                                 exi.Existence = exi.Existence + item.Quantity;
                                 await this.inventoriesManager.EditAsync(exi);
@@ -346,27 +373,30 @@ namespace PVCBasic.ViewModels
 
                 CrossToastPopUp.Current.ShowToastError($"Error Receipt{e.Message}", ToastLength.Long);
             }
-            
+
             CrossToastPopUp.Current.ShowToastSuccess($"Se guardo en: {this.Title}", ToastLength.Long);
             this.Total = 0;
             this.TotalItem = 0;
             this.NameProduct = string.Empty;
             this.Description = string.Empty;
-            this.Quantity =  null;
+            this.Quantity = null;
             this.Price = null;
             this.Cash = null;
             this.NumberQuantity = "";
-            this.NumberPrice = null; 
-            this.NumberCash = string.Empty; 
+            this.NumberPrice = null;
+            this.NumberCash = string.Empty;
             this.Exchange = null;
             this.DetailInvoices.Clear();
 
-            var param = new NavigationParameters();
-            param.Add("Receipt", this.Receipt);
-            param.Add("Title", this.Title);
+            if (!string.IsNullOrEmpty(this.Receipt))
+            {
+                var param = new NavigationParameters();
+                param.Add("Receipt", this.Receipt);
+                param.Add("Title", this.Title);
 
-            param.Add("NumberInvoice", numberinvoice);
-            await this.NavigationService.NavigateAsync("ReceiptPage", param);
+                param.Add("NumberInvoice", numberinvoice);
+                await this.NavigationService.NavigateAsync("ReceiptPage", param);
+            }
         }
         public int? Quantity
         {
@@ -477,7 +507,7 @@ namespace PVCBasic.ViewModels
                 this.RaisePropertyChanged();
             }
         }
-        
+
         public string NumberCash
         {
             get
@@ -564,6 +594,11 @@ namespace PVCBasic.ViewModels
         }
         public async Task<string> ReceiptGenerateAsyc()
         {
+            string reci = string.Empty;
+            try
+            {
+
+           
             var parameter = await parametersManager.GetAllAsync();
 
             var storeName = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.StoreName).Value;
@@ -572,18 +607,22 @@ namespace PVCBasic.ViewModels
             var email = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.Email).Value;
             var logo = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.Logo).ValueImage;
             var thankMessage = parameter.FirstOrDefault(c => c.Key == ConstantName.ConstantName.ThankMessage).Value;
+                
+                string imgSrc = string.Empty;
 
-            var imgSrc = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(logo));
-
-            decimal value = 0;
+                if (logo != null) 
+                { 
+             imgSrc = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(logo));
+                }
+                decimal value = 0;
             var exchangenewx = this.Exchange != null ? this.Exchange.Value.ToString("C2") : value.ToString("C2");
             var cashnew = this.Cash != null ? this.Cash.Value.ToString("C2") : value.ToString("C2");
-            var reci = @" <!DOCTYPE html>
+             reci = @" <!DOCTYPE html>
 <html>
 <body>
 <section class='container'>
 <div style = 'text-align:center'>
-<img src='" + imgSrc +"'"+ @" />
+<img src='" + imgSrc + "'" + @" />
 </div> 
                         <div style = 'font-family:monospace'>
 <section>
@@ -625,14 +664,14 @@ namespace PVCBasic.ViewModels
                         </thead>
                         <tbody>
 ";
-                            foreach(var item in this.DetailInvoices)
-                            {
+            foreach (var item in this.DetailInvoices)
+            {
                 reci = reci + @"<tr>
-                                    <td style = 'padding-right:4px;text-align:center;' > " + $"{item.Description}"+ @" </td>
+                                    <td style = 'padding-right:4px;text-align:center;' > " + $"{item.Description}" + @" </td>
                                      </tr>";
-                            }
+            }
 
-                     reci = reci + @"</tbody>
+            reci = reci + @"</tbody>
                     </table>
                     <br />
                     <hr style = 'border:1px dashed black; width:300px' />
@@ -714,9 +753,15 @@ div
 </style>
 </body>
 </html> ";
+            }
+            catch (Exception e)
+            {
 
+                CrossToastPopUp.Current.ShowToastError($"{e.Message} ", ToastLength.Long); 
+            }
             return reci;
         }
+
         public string Receipt
         {
             get => this.receipt;
@@ -726,6 +771,7 @@ div
                 this.RaisePropertyChanged();
             }
         }
+
         public string TypeInvoice
         {
             get => this.typeInvoice;
@@ -761,7 +807,7 @@ div
                 this.RaisePropertyChanged();
             }
         }
-        
+
         public ProvidersModel Provider
         {
             get => this.provider;

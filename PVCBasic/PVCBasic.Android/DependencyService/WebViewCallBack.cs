@@ -20,7 +20,8 @@ using Xamarin.Forms;
 
 namespace PVCBasic.Droid.DependencyService
 {
-    class WebViewCallBack : WebViewClient
+
+  public  class WebViewCallBack : WebViewClient
     {
        
 
@@ -30,6 +31,7 @@ namespace PVCBasic.Droid.DependencyService
         {
             this.fileNameWithPath = path;
         }
+
 
 
         public override void OnPageFinished(Android.Webkit.WebView myWebview, string url)

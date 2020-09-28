@@ -32,9 +32,28 @@ namespace PVCBasic.ViewModels
             CultureInfo.DefaultThreadCurrentCulture = myCurrency;
 
             this.DeleteCommand = new DelegateCommand(async () => await this.ExecuteDeleteCommand());
+            this.ReceiptCommand = new DelegateCommand(async () => await this.ExecuteReceiptCommand());
         }
 
-       
+        private async Task ExecuteReceiptCommand()
+        {
+            var param = new NavigationParameters();
+            // param.Add("Receipt", this.Receipt);
+            string title = string.Empty;
+            if (this.Invoices.InvoicesTypes == ConstantName.ConstantName.Purchases)
+            {
+                title = "Compras";
+            }
+
+            if (this.Invoices.InvoicesTypes == ConstantName.ConstantName.Sales)
+            {
+                title = "Ventas";
+            }
+            param.Add("Title", title );
+
+            param.Add("NumberInvoice", this.Invoices.NumFactura);
+            await this.NavigationService.NavigateAsync("ReceiptPage", param);
+        }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -55,6 +74,9 @@ namespace PVCBasic.ViewModels
             set => this.SetProperty(ref this.detailInvoices, value);
         }
         public ICommand DeleteCommand { get; set; }
+
+        public ICommand ReceiptCommand { get; set; }
+
         private async Task ExecuteDeleteCommand()
         {
             if (this.Invoices == null) { return; };

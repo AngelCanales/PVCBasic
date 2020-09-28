@@ -23,6 +23,7 @@ namespace PVCBasic.ViewModels
         
         private string receipt;
         private string numberInvoice;
+        private InvoicesViewModel invoices;
         private readonly PrintInvoice.PrintInvoice printInvoice;
         public ReceiptPageViewModel(INavigationService navigationService, PrintInvoice.PrintInvoice printInvoice) : base(navigationService)
         {
@@ -46,9 +47,12 @@ namespace PVCBasic.ViewModels
             try
             {
               await Task.Delay(500);
-              var path =  Xamarin.Forms.DependencyService.Get<IFileHelper>().StrartConverting(this.Receipt, "Receipt");
 
-               // CrossToastPopUp.Current.ShowToastSuccess($"{path}", ToastLength.Long);
+                string path = string.Empty;
+
+                var t = $"Receipt-{Guid.NewGuid().ToString()}";
+                path = Xamarin.Forms.DependencyService.Get<IFileHelper>().StrartConverting(this.Receipt, t);
+                // CrossToastPopUp.Current.ShowToastSuccess($"{path}", ToastLength.Long);
 
                 await Share.RequestAsync(new ShareFileRequest
                 {
@@ -80,7 +84,7 @@ namespace PVCBasic.ViewModels
         public async override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-
+         //   CrossToastPopUp.Current.ShowToastSuccess($"{this.NumberInvoice} ", ToastLength.Long);
             if (parameters.ContainsKey("Receipt"))
             {
                 this.Receipt = parameters["Receipt"] as string;
@@ -91,11 +95,31 @@ namespace PVCBasic.ViewModels
                 this.Title = parameters["Title"] as string;
             }
 
+            if (parameters.ContainsKey("Invoice"))
+            {
+                if (this.Invoices != null)
+                {
+                    this.Invoices = parameters["Invoice"] as InvoicesViewModel;
+                }
+            }
+
+
             if (parameters.ContainsKey("NumberInvoice"))
             {
                 this.NumberInvoice = parameters["NumberInvoice"] as string;
             }
-           
+
+            if (string.IsNullOrEmpty(this.Receipt))
+            {
+            //   CrossToastPopUp.Current.ShowToastSuccess($"n{this.NumberInvoice} ", ToastLength.Long);
+                this.Receipt = await printInvoice.GetHtmlInvoices(this.NumberInvoice);
+            }
+        }
+
+        public InvoicesViewModel Invoices
+        {
+            get => this.invoices;
+            set => this.SetProperty(ref this.invoices, value);
         }
 
         public string Receipt
@@ -107,6 +131,7 @@ namespace PVCBasic.ViewModels
                 this.RaisePropertyChanged();
             }
         }
+
         public string NumberInvoice
         {
             get => this.numberInvoice;

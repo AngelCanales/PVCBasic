@@ -27,11 +27,13 @@ namespace PVCBasic.ViewModels
         private bool isBusySearchBar;
         private bool isBusy;
         private bool isError;
+        private ProductsModel product;
+        private ObservableCollection<DetailInvoicesViewModel> detailInvoices;
 
         public SearchCustomerPageViewModel(INavigationService navigationService, ICustomersManager customersManager) : base(navigationService)
         {
             this.customersManager = customersManager;
-
+            this.DetailInvoices = new ObservableCollection<DetailInvoicesViewModel>();
             this.DetailCustomersCommand = new DelegateCommand<CustomersModel>(async (c) => await this.ExecuteDetailCustomersCommand(c));
             this.SearchCommand = new DelegateCommand(async () => await this.PerformSearch());
             this.AddCommand = new DelegateCommand(async () => await this.ExecuteAddCommand());
@@ -59,9 +61,20 @@ namespace PVCBasic.ViewModels
         {
             var param = new NavigationParameters();
             param.Add("SelectedCustomers", selectedProduct);
+            param.Add("SelectedProduct", this.Product);
+            param.Add("DetailInvoices", this.DetailInvoices);
             await this.NavigationService.GoBackAsync(param);
         }
 
+        public ProductsModel Product
+        {
+            get => this.product;
+            set
+            {
+                this.product = value;
+                this.RaisePropertyChanged();
+            }
+        }
         public async Task PerformSearch()
         {
             await this.FilterDataAsync();
@@ -203,9 +216,23 @@ namespace PVCBasic.ViewModels
                 this.Title = parameters["Title"] as string;
             }
 
+            if (parameters.ContainsKey("SelectedProduct"))
+            {
+                this.Product = parameters["SelectedProduct"] as ProductsModel;
+            }
+
+            if (parameters.ContainsKey("DetailInvoices"))
+            {
+                this.DetailInvoices = parameters["DetailInvoices"] as ObservableCollection<DetailInvoicesViewModel>;
+            }
             await LoadAsync();
         }
 
+        public ObservableCollection<DetailInvoicesViewModel> DetailInvoices
+        {
+            get => this.detailInvoices;
+            set => this.SetProperty(ref this.detailInvoices, value);
+        }
         public bool IsBusySearchBar
         {
             get => this.isBusySearchBar;

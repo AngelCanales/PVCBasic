@@ -10,6 +10,7 @@ using System.Text;
 using Prism.Commands;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PVCBasic.Models;
 
 namespace PVCBasic.ViewModels
 {
@@ -27,6 +28,7 @@ namespace PVCBasic.ViewModels
         private bool isVisibleContent;
         private bool isVisibleStarAnimation;
         private string nameFile;
+        private ProductsModel product;
         private readonly IInvoicesManager invoicesManager;
         public SummaryPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IInvoicesManager invoicesManager) : base(navigationService)
         {
@@ -159,6 +161,16 @@ namespace PVCBasic.ViewModels
             set
             {
                 this.totalSales = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public ProductsModel Product
+        {
+            get => this.product;
+            set
+            {
+                this.product = value;
                 this.RaisePropertyChanged();
             }
         }

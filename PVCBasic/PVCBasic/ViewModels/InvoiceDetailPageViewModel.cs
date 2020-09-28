@@ -17,6 +17,7 @@ namespace PVCBasic.ViewModels
         private string titleInvoice;
         private ProvidersModel provider;
         private CustomersModel customer;
+        private ProductsModel product;
 
         public InvoiceDetailPageViewModel(INavigationService navigationService) : base(navigationService)
         {
@@ -51,6 +52,12 @@ namespace PVCBasic.ViewModels
             {
                 this.Provider = parameters["SelectedProvider"] as ProvidersModel;
             }
+
+            if (parameters.ContainsKey("SelectedProduct"))
+            {
+                this.Product = parameters["SelectedProduct"] as ProductsModel;
+            }
+
             if (parameters.ContainsKey("DetailInvoices"))
             {
                 this.DetailInvoices = parameters["DetailInvoices"] as ObservableCollection<DetailInvoicesViewModel>;
@@ -67,6 +74,7 @@ namespace PVCBasic.ViewModels
             parameters.Add("TypeInvoice", this.TypeInvoice);
             parameters.Add("SelectedProvider", this.Provider);
             parameters.Add("SelectedCustomers", this.Customer);
+            parameters.Add("SelectedProduct", this.Product);
         }
 
         public string TypeInvoice
@@ -79,6 +87,15 @@ namespace PVCBasic.ViewModels
             }
         }
 
+        public ProductsModel Product
+        {
+            get => this.product;
+            set
+            {
+                this.product = value;
+                this.RaisePropertyChanged();
+            }
+        }
         public string TitleInvoice
         {
             get => this.titleInvoice;

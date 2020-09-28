@@ -101,7 +101,15 @@ namespace PVCBasic.ViewModels
                 Description = s.Description,
                 Id = s.Id,
                 InvoicesTypes = s.InvoicesTypes,
-                Total = s.Total
+                Total = s.Total,
+                NumFactura  = s.NumFactura,
+                Cash = s.Cash,
+                CodeCustomer = s.CodeCustomer,
+                Exchange = s.Exchange,
+                CodeProvider = s.CodeProvider,
+                IdCustomer = s.IdCustomer,
+                IdProvider = s.IdProvider,
+                Tax = s.Tax,
             }).ToList();
 
             this.ListInvoices.Clear();

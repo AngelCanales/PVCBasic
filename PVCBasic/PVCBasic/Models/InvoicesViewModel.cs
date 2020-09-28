@@ -15,5 +15,22 @@ namespace PVCBasic.Models
         public decimal Total { get; set; }
 
         public string InvoicesTypes { get; set; }
+
+
+        public string NumFactura { get; set; }
+
+        public decimal Tax { get; set; }
+
+        public decimal Exchange { get; set; }
+
+        public decimal Cash { get; set; }
+
+        public int IdCustomer { get; set; }
+
+        public int IdProvider { get; set; }
+
+        public string CodeCustomer { get; set; }
+
+        public string CodeProvider { get; set; }
     }
 }

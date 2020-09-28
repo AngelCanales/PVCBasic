@@ -26,11 +26,13 @@ namespace PVCBasic.ViewModels
         private bool isBusySearchBar;
         private bool isBusy;
         private bool isError;
+        private ProductsModel product;
+        private ObservableCollection<DetailInvoicesViewModel> detailInvoices;
 
         public SearchProviderPageViewModel(INavigationService navigationService, IProvidersManager providersManager) : base(navigationService)
         {
             this.providersManager = providersManager;
-
+            this.DetailInvoices = new ObservableCollection<DetailInvoicesViewModel>();
             this.DetailProvidersCommand = new DelegateCommand<ProvidersModel>(async (c) => await this.ExecuteDetailProviderCommand(c));
             this.SearchCommand = new DelegateCommand(async () => await this.PerformSearch());
             this.AddCommand = new DelegateCommand(async () => await this.ExecuteAddCommand());
@@ -58,6 +60,8 @@ namespace PVCBasic.ViewModels
         {
             var param = new NavigationParameters();
             param.Add("SelectedProvider", selectedProvider);
+            param.Add("SelectedProduct", this.Product);
+            
             await this.NavigationService.GoBackAsync(param);
         }
 
@@ -136,6 +140,12 @@ namespace PVCBasic.ViewModels
             }
         }
 
+        public ObservableCollection<DetailInvoicesViewModel> DetailInvoices
+        {
+            get => this.detailInvoices;
+            set => this.SetProperty(ref this.detailInvoices, value);
+        }
+
         public async Task GetProductsListAsync()
         {
             this.ListOfProviders = new ObservableCollection<ProvidersModel>();
@@ -206,6 +216,15 @@ namespace PVCBasic.ViewModels
                 this.Title = parameters["Title"] as string;
             }
 
+            if (parameters.ContainsKey("SelectedProduct"))
+            {
+                this.Product = parameters["SelectedProduct"] as ProductsModel;
+            }
+
+            if (parameters.ContainsKey("DetailInvoices"))
+            {
+                this.DetailInvoices = parameters["DetailInvoices"] as ObservableCollection<DetailInvoicesViewModel>;
+            }
             await LoadAsync();
         }
 
@@ -254,6 +273,16 @@ namespace PVCBasic.ViewModels
             {
                 searchText = value;
                 RaisePropertyChanged("SearchText");
+            }
+        }
+
+        public ProductsModel Product
+        {
+            get => this.product;
+            set
+            {
+                this.product = value;
+                this.RaisePropertyChanged();
             }
         }
 

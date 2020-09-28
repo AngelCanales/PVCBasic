@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace PVCBasic.ViewModels
 {
-   public class SearchProductPageViewModel :BaseViewModel
+    public class SearchProductPageViewModel : BaseViewModel
     {
         private readonly IProductsManager productsManager;
         private ObservableCollection<ProductsModel> listOfProducts;
@@ -24,11 +24,15 @@ namespace PVCBasic.ViewModels
         private bool isBusySearchBar;
         private bool isBusy;
         private bool isError;
+        private string description;
+        private CustomersModel customer;
+        private ProvidersModel provider;
+        private ObservableCollection<DetailInvoicesViewModel> detailInvoices;
 
         public SearchProductPageViewModel(INavigationService navigationService, IProductsManager productsManager) : base(navigationService)
         {
             this.productsManager = productsManager;
-
+            this.DetailInvoices = new ObservableCollection<DetailInvoicesViewModel>();
             this.DetailProductCommand = new DelegateCommand<ProductsModel>(async (c) => await this.ExecuteDetailProductCommand(c));
             this.SearchCommand = new DelegateCommand(async () => await this.PerformSearch());
             this.AddCommand = new DelegateCommand(async () => await this.ExecuteAddCommand());
@@ -40,6 +44,7 @@ namespace PVCBasic.ViewModels
             this.IsBusySearchBar = false;
             this.IsError = false;
         }
+
 
         private async Task ExecuteAddCommand()
         {
@@ -56,6 +61,7 @@ namespace PVCBasic.ViewModels
         {
             var param = new NavigationParameters();
             param.Add("SelectedProduct", selectedProduct);
+            param.Add("DetailInvoices", this.DetailInvoices);
             await this.NavigationService.GoBackAsync(param);
         }
 
@@ -122,6 +128,7 @@ namespace PVCBasic.ViewModels
             this.ListOfProductsbackup.Clear();
             await this.GetProductsListAsync();
         }
+
 
         public bool IsError
         {
@@ -196,7 +203,28 @@ namespace PVCBasic.ViewModels
         public async override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            try
+            {
 
+                if (parameters.ContainsKey("SelectedCustomers"))
+                {
+                    this.Customer = parameters["SelectedCustomers"] as CustomersModel;
+                }
+
+                if (parameters.ContainsKey("SelectedProvider"))
+                {
+                    this.Provider = parameters["SelectedProvider"] as ProvidersModel;
+                }
+
+                if (parameters.ContainsKey("DetailInvoices"))
+                {
+                    this.DetailInvoices = parameters["DetailInvoices"] as ObservableCollection<DetailInvoicesViewModel>;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
             await LoadAsync();
         }
 
@@ -210,6 +238,11 @@ namespace PVCBasic.ViewModels
             }
         }
 
+        public ObservableCollection<DetailInvoicesViewModel> DetailInvoices
+        {
+            get => this.detailInvoices;
+            set => this.SetProperty(ref this.detailInvoices, value);
+        }
         public bool IsBusy
         {
             get => this.isBusy;
@@ -256,5 +289,26 @@ namespace PVCBasic.ViewModels
                 this.SetProperty(ref this.listProducts, value);
             }
         }
+
+        public CustomersModel Customer
+        {
+            get => this.customer;
+            set
+            {
+                this.customer = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public ProvidersModel Provider
+        {
+            get => this.provider;
+            set
+            {
+                this.provider = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
     }
 }
