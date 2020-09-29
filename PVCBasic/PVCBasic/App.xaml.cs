@@ -117,12 +117,12 @@ namespace PVCBasic
             containerRegistry.RegisterSingleton<IRepository<Database.Models.PaymentTypes>, PaymentTypesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.SalesTypes>, SalesTypesRepository>();
             containerRegistry.RegisterSingleton<IRepository<Database.Models.Routes>, RoutesRepository>();
-            containerRegistry.RegisterSingleton<IRepository<Database.Models.Employees>, EmployeesRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.Employees>, EmployeesRepository>(); 
+            containerRegistry.RegisterSingleton<IRepository<Database.Models.Inventories>, InventoriesRepository>();
 
             containerRegistry.RegisterSingleton<IInvoicesManager, InvoicesManager>();
             containerRegistry.RegisterSingleton<IProductsManager, ProductsManager>();
             containerRegistry.RegisterSingleton<IParametersManager, ParametersManager>();
-            containerRegistry.RegisterSingleton<IRepository<Database.Models.Inventories>, InventoriesRepository>();
             containerRegistry.RegisterSingleton<IInventoriesManager, InventoriesManager>();
 
             containerRegistry.RegisterSingleton<IProvidersManager, ProvidersManager>();
@@ -130,6 +130,11 @@ namespace PVCBasic
 
 
             containerRegistry.RegisterSingleton<PrintInvoice.PrintInvoice>();
+            containerRegistry.RegisterSingleton<PVCBContext>();
+            containerRegistry.RegisterSingleton<PVCBasic.PVCBasicSeedData.PVCBasicSeedData>();
+            
+
+
         }
     }
 }

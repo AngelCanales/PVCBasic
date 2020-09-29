@@ -32,13 +32,23 @@ namespace PVCBasic.PVCBCore.Inventories
 
         public async Task EditAsync(Database.Models.Inventories inventories)
         {
-            this.inventories.Update(inventories);
-            await this.inventories.SaveChangesAsync();
+            try
+            {
+                this.inventories.Update(inventories);
+                await this.inventories.SaveChangesAsync();
+               
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
 
         public async Task<Database.Models.Inventories> FindByIdAsync(int id)
         {
-            var inventories = await this.inventories.All().FirstOrDefaultAsync( w => w.IdProduct == id);
+            var inventories = await this.inventories.All().Where( w => w.IdProduct == id).FirstOrDefaultAsync();
             return inventories; 
         }
 

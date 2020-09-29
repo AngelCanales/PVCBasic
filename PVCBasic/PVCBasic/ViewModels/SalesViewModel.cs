@@ -70,6 +70,7 @@ namespace PVCBasic.ViewModels
 
             var param = new NavigationParameters();
             param.Add("SelectedProduct", this.Product);
+            param.Add("TypeInvoice", this.TypeInvoice);
 
             if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
             {
@@ -89,6 +90,7 @@ namespace PVCBasic.ViewModels
             var param = new NavigationParameters();
             param.Add("SelectedProvider", this.Provider);
             param.Add("SelectedCustomers", this.Customer);
+            param.Add("TypeInvoice", this.TypeInvoice);
             await this.NavigationService.NavigateAsync("SearchProductPage", param);
         }
 
@@ -213,17 +215,21 @@ namespace PVCBasic.ViewModels
             if (this.Price == null) { return; };
 
             var des = $"{this.NameProduct} => {this.Quantity.Value} x {this.Price.Value} = {this.TotalItem.ToString("C2")}";
-            var item = new DetailInvoicesViewModel
+            var item = new DetailInvoicesViewModel();
+
+            item.Id = Guid.NewGuid();
+            item.TotalItem = this.Quantity.Value * this.Price.Value;
+            item.Description = des;
+            item.ProductName = this.NameProduct;
+            item.Price = this.Price.Value;
+            item.Quantity = this.Quantity.Value;
+
+            if (this.Product != null)
             {
-                Id = Guid.NewGuid(),
-                TotalItem = this.Quantity.Value * this.Price.Value,
-                Description = des,
-                ProductName = this.NameProduct,
-                Price = this.Price.Value,
-                Quantity = this.Quantity.Value,
-                IdProduct = this.IdProduct !=null ? this.IdProduct : null,
-                CodeProduct = this.Product != null? this.Product.Code : string.Empty,
-            };
+                item.IdProduct = this.Product.Id ;
+                item.CodeProduct = this.Product.Code ;
+            }
+          
             this.DetailInvoices.Add(item);
             this.Total = this.DetailInvoices.Sum(s => s.TotalItem);
             this.NameProduct = "";
@@ -231,6 +237,7 @@ namespace PVCBasic.ViewModels
             this.NumberQuantity = string.Empty;
             this.NumberPrice = string.Empty; ;
             this.NumberCash = string.Empty; ;
+            this.Product = null;
             this.Exchange = null;
         }
 
@@ -285,6 +292,8 @@ namespace PVCBasic.ViewModels
         {
             if (!this.DetailInvoices.Any()) { return; }
 
+          
+
             string numberinvoice = string.Empty;
             try
             {
@@ -320,43 +329,6 @@ namespace PVCBasic.ViewModels
 
                 await this.invoicesManager.CreateAsync(invoice);
 
-                foreach (var item in this.DetailInvoices)
-                {
-                    if (item.IdProduct != null)
-                    {
-                        var exi = await this.inventoriesManager.FindByIdAsync(item.IdProduct.Value);
-                        if (exi != null)
-                        {
-                            if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
-                            {
-                                exi.Existence = exi.Existence + item.Quantity;
-                                await this.inventoriesManager.EditAsync(exi);
-                            }
-                            if (this.TypeInvoice == ConstantName.ConstantName.Sales)
-                            {
-                                exi.Existence = exi.Existence - item.Quantity;
-                                await this.inventoriesManager.EditAsync(exi);
-                            }
-                        }
-                        else
-                        {
-                            if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
-                            {
-                                var p = new Inventories();
-                                p.Existence = item.Quantity;
-                                p.IdProduct = item.IdProduct.Value;
-                                await this.inventoriesManager.CreateAsync(p);
-                            }
-                            if (this.TypeInvoice == ConstantName.ConstantName.Sales)
-                            {
-                                var p = new Inventories();
-                                p.Existence = (-1 * item.Quantity);
-                                p.IdProduct = item.IdProduct.Value;
-                                await this.inventoriesManager.CreateAsync(p);
-                            }
-                        }
-                    }
-                }
 
             }
             catch (Exception e)
@@ -364,6 +336,73 @@ namespace PVCBasic.ViewModels
                 CrossToastPopUp.Current.ShowToastError($"Error Data base{e.Message}", ToastLength.Long);
             }
 
+            try
+            {
+
+                foreach (var item in this.DetailInvoices)
+                {
+                    // await this.dialogService.DisplayAlertAsync("MSG", $"new item", "OK");
+
+                    if (item.IdProduct != null)
+                    {
+                        //  await this.dialogService.DisplayAlertAsync("MSG", $"IdProduct:{item.IdProduct}", "OK");
+                        var exi = await this.inventoriesManager.FindByIdAsync(item.IdProduct.Value);
+                        if (exi != null)
+                        {
+                            // CrossToastPopUp.Current.ShowToastMessage($"Existencia ", ToastLength.Long);
+                            System.Diagnostics.Debug.WriteLine("Exi");
+                            if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                            {
+                                // await this.dialogService.DisplayAlertAsync("MSG", $"Existencia compra:{exi.IdProduct} - Q{exi.Existence} + P{item.Quantity}", "OK");
+
+                                //CrossToastPopUp.Current.ShowToastMessage($"Existencia compra {exi.Existence} + {item.Quantity}", ToastLength.Long);
+                                exi.Existence = exi.Existence + item.Quantity;
+                                await this.inventoriesManager.EditAsync(exi);
+                                System.Diagnostics.Debug.WriteLine($"Existencia edit Compras-{item.IdProduct.Value}");
+                            }
+                            if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+                            {
+                                //await this.dialogService.DisplayAlertAsync("MSG", $"Existencia venta:{exi.IdProduct} - Q{exi.Existence} - P{item.Quantity}", "OK");
+
+                                exi.Existence = exi.Existence - item.Quantity;
+                                await this.inventoriesManager.EditAsync(exi);
+                                //    CrossToastPopUp.Current.ShowToastMessage($"Existencia venta {exi.Existence} - {item.Quantity}", ToastLength.Long);
+                                System.Diagnostics.Debug.WriteLine($"Existencia edit Ventas-{item.IdProduct.Value}");
+                            }
+                        }
+                        else
+                        {
+                            if (this.TypeInvoice == ConstantName.ConstantName.Purchases)
+                            {
+                                // await this.dialogService.DisplayAlertAsync("MSG", $"Existencia compra:{exi.IdProduct} - Q{exi.Existence} + P{item.Quantity}", "OK");
+
+                                //CrossToastPopUp.Current.ShowToastMessage($"Existencia compra 0 + {item.Quantity}", ToastLength.Long);
+                                var p = new Inventories();
+                                p.Existence = item.Quantity;
+                                p.IdProduct = item.IdProduct.Value;
+                                await this.inventoriesManager.CreateAsync(p);
+                                System.Diagnostics.Debug.WriteLine($"Exi create Compras- {item.IdProduct.Value}");
+                            }
+                            if (this.TypeInvoice == ConstantName.ConstantName.Sales)
+                            {
+                                //  await this.dialogService.DisplayAlertAsync("MSG", $"Existencia venta:{exi.IdProduct} - Q{exi.Existence} + P{item.Quantity}", "OK");
+
+                                var p = new Inventories();
+                                p.Existence = (-1 * item.Quantity);
+                                p.IdProduct = item.IdProduct.Value;
+                                await this.inventoriesManager.CreateAsync(p);
+                                //  CrossToastPopUp.Current.ShowToastMessage($"Existencia ventas 0 + {item.Quantity}", ToastLength.Long);
+                                System.Diagnostics.Debug.WriteLine($"Exi create Ventas-{item.IdProduct.Value}");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+                CrossToastPopUp.Current.ShowToastError($"Error Receipt{e.Message}", ToastLength.Long);
+            }
             try
             {
                 this.Receipt = await this.ReceiptGenerateAsyc();

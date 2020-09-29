@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
-      "Com.Airbnb.Xamarin.Forms.Lottie/4.0.0": {
+      "Com.Airbnb.Xamarin.Forms.Lottie/4.0.2": {
         "type": "package",
         "dependencies": {
           "Xamarin.Forms": "4.5.0.657"
@@ -732,15 +732,15 @@
     }
   },
   "libraries": {
-    "Com.Airbnb.Xamarin.Forms.Lottie/4.0.0": {
-      "sha512": "NSeUnKlIdTcYP59HDDf/D+NyYaCeeKYIcstlqV4qh8uwzmgapNPnXROygNLoU3G24wxj9HTdPAGzprTTSnidmQ==",
+    "Com.Airbnb.Xamarin.Forms.Lottie/4.0.2": {
+      "sha512": "xBdEKZ5woRU1XGPbs+dGjIkKTgnGBWXHNM79WwbmODy635lLUDJ1DdaTVOV5SM5s8L67kdCsuwBw+mQ0XKgrmg==",
       "type": "package",
-      "path": "com.airbnb.xamarin.forms.lottie/4.0.0",
+      "path": "com.airbnb.xamarin.forms.lottie/4.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
-        "com.airbnb.xamarin.forms.lottie.4.0.0.nupkg.sha512",
+        "com.airbnb.xamarin.forms.lottie.4.0.2.nupkg.sha512",
         "com.airbnb.xamarin.forms.lottie.nuspec",
         "icon.png",
         "lib/monoandroid10.0/Lottie.Forms.dll",
@@ -2787,7 +2787,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "Com.Airbnb.Xamarin.Forms.Lottie >= 4.0.0",
+      "Com.Airbnb.Xamarin.Forms.Lottie >= 4.0.2",
+      "Microsoft.Data.Sqlite.Core >= 3.1.8",
       "Microsoft.EntityFrameworkCore.Sqlite >= 3.1.8",
       "NETStandard.Library >= 2.0.3",
       "Plugin.Toast >= 2.2.0",
@@ -2845,7 +2846,11 @@
         "dependencies": {
           "Com.Airbnb.Xamarin.Forms.Lottie": {
             "target": "Package",
-            "version": "[4.0.0, )"
+            "version": "[4.0.2, )"
+          },
+          "Microsoft.Data.Sqlite.Core": {
+            "target": "Package",
+            "version": "[3.1.8, )"
           },
           "Microsoft.EntityFrameworkCore.Sqlite": {
             "target": "Package",

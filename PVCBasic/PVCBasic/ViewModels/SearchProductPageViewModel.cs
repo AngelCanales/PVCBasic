@@ -28,6 +28,7 @@ namespace PVCBasic.ViewModels
         private CustomersModel customer;
         private ProvidersModel provider;
         private ObservableCollection<DetailInvoicesViewModel> detailInvoices;
+        private string typeInvoice;
 
         public SearchProductPageViewModel(INavigationService navigationService, IProductsManager productsManager) : base(navigationService)
         {
@@ -62,6 +63,10 @@ namespace PVCBasic.ViewModels
             var param = new NavigationParameters();
             param.Add("SelectedProduct", selectedProduct);
             param.Add("DetailInvoices", this.DetailInvoices);
+            param.Add("TypeInvoice", this.TypeInvoice);
+            param.Add("SelectedProvider", this.Provider);
+            param.Add("SelectedCustomers", this.Customer);
+
             await this.NavigationService.GoBackAsync(param);
         }
 
@@ -205,6 +210,10 @@ namespace PVCBasic.ViewModels
             base.OnNavigatedTo(parameters);
             try
             {
+                if (parameters.ContainsKey("TypeInvoice"))
+                {
+                    this.TypeInvoice = parameters["TypeInvoice"] as string;
+                }
 
                 if (parameters.ContainsKey("SelectedCustomers"))
                 {
@@ -238,6 +247,15 @@ namespace PVCBasic.ViewModels
             }
         }
 
+        public string TypeInvoice
+        {
+            get => this.typeInvoice;
+            set
+            {
+                this.typeInvoice = value;
+                this.RaisePropertyChanged();
+            }
+        }
         public ObservableCollection<DetailInvoicesViewModel> DetailInvoices
         {
             get => this.detailInvoices;

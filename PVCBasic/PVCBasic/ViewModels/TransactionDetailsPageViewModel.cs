@@ -95,6 +95,7 @@ namespace PVCBasic.ViewModels
             {
                 Description = s.Description,
                 IdD = s.Id,
+                TotalItem = s.TotalItem,
             }).ToList();
 
             this.DetailInvoices.Clear();

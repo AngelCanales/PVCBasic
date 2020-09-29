@@ -48,7 +48,11 @@
           "dependencies": {
             "Com.Airbnb.Xamarin.Forms.Lottie": {
               "target": "Package",
-              "version": "[4.0.0, )"
+              "version": "[4.0.2, )"
+            },
+            "Microsoft.Data.Sqlite.Core": {
+              "target": "Package",
+              "version": "[3.1.8, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",

@@ -28,6 +28,7 @@ namespace PVCBasic.ViewModels
         private bool isError;
         private ProductsModel product;
         private ObservableCollection<DetailInvoicesViewModel> detailInvoices;
+        private string typeInvoice;
 
         public SearchProviderPageViewModel(INavigationService navigationService, IProvidersManager providersManager) : base(navigationService)
         {
@@ -61,7 +62,8 @@ namespace PVCBasic.ViewModels
             var param = new NavigationParameters();
             param.Add("SelectedProvider", selectedProvider);
             param.Add("SelectedProduct", this.Product);
-            
+            param.Add("TypeInvoice", this.TypeInvoice);
+            param.Add("DetailInvoices", this.DetailInvoices);
             await this.NavigationService.GoBackAsync(param);
         }
 
@@ -211,6 +213,11 @@ namespace PVCBasic.ViewModels
         {
             base.OnNavigatedTo(parameters);
 
+            if (parameters.ContainsKey("TypeInvoice"))
+            {
+                this.TypeInvoice = parameters["TypeInvoice"] as string;
+            }
+
             if (parameters.ContainsKey("Title"))
             {
                 this.Title = parameters["Title"] as string;
@@ -286,6 +293,15 @@ namespace PVCBasic.ViewModels
             }
         }
 
+        public string TypeInvoice
+        {
+            get => this.typeInvoice;
+            set
+            {
+                this.typeInvoice = value;
+                this.RaisePropertyChanged();
+            }
+        }
         public List<ProvidersModel> ListProviders
         {
             get => this.listProviders;

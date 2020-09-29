@@ -17,6 +17,13 @@ namespace PVCBasic.Database
 
         }
 
+    //    public PVCBContext(DbContextOptions<PVCBContext> options)
+    //: base(options)
+    //    {
+    //        SQLitePCL.Batteries_V2.Init();
+    //        this.Database.EnsureCreated();
+    //    }
+
         public DbSet<Invoices> Invoices { get; set; }
 
         public DbSet<DetailInvoices> DetailInvoices { get; set; }
@@ -55,8 +62,8 @@ namespace PVCBasic.Database
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "PVCB.db3");
 
             optionsBuilder
-                .UseSqlite($"Filename={dbPath}")
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                .UseSqlite($"Filename={dbPath}");
+              //  .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }     
     }
 }

@@ -9,6 +9,8 @@ namespace PVCBasic.DependencyService
 {
   public interface IBthPrint
     {
+        bool IsConnected { get; set; }
+
         string NamePrint { get; set; }
 
         Task WriteAsync(string content);

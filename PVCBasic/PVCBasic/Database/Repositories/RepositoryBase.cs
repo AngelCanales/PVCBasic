@@ -139,10 +139,14 @@ namespace PVCBasic.Database.Repositories
         /// </returns>
         public virtual TEntity Update(TEntity entity)
         {
-            var entry = this.Context.Entry(entity);
+            var entry = this.Context.Update(entity);
             entry.State = EntityState.Modified;
             return entity;
         }
+
+       
+
+
 
         /// <summary>
         /// Marks the entity as deleted.
@@ -155,7 +159,7 @@ namespace PVCBasic.Database.Repositories
         /// </returns>
         public virtual TEntity Delete(TEntity entity)
         {
-            var entry = this.Context.Entry(entity);
+            var entry = this.Context.Remove(entity);
             entry.State = EntityState.Deleted;
             return entity;
         }

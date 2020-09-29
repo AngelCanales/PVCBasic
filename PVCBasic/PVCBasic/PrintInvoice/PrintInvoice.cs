@@ -60,11 +60,17 @@ namespace PVCBasic.PrintInvoice
                 var inv = await invoicesManager.FindByNumberInvoicesAsync(id);
 
                 await this.bthPrint.ConnectAsync();
-
-                await ExecutePrintInvoicesHeader();
-                await ExecutePrintInvoicesDetail(inv.DetailInvoices);
-                await ExecutePrintInvoicesFoother(inv);
-                await this.bthPrint.DisconnectAsync();
+                if (this.bthPrint.IsConnected)
+                {
+                    await ExecutePrintInvoicesHeader();
+                    await ExecutePrintInvoicesDetail(inv.DetailInvoices);
+                    await ExecutePrintInvoicesFoother(inv);
+                    await this.bthPrint.DisconnectAsync();
+                }
+                else
+                {
+                    CrossToastPopUp.Current.ShowToastError($"Error: Not Connected", ToastLength.Long);
+                }
             }
             catch (Exception e)
             {

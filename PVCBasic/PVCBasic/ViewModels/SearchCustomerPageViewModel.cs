@@ -29,6 +29,7 @@ namespace PVCBasic.ViewModels
         private bool isError;
         private ProductsModel product;
         private ObservableCollection<DetailInvoicesViewModel> detailInvoices;
+        private string typeInvoice;
 
         public SearchCustomerPageViewModel(INavigationService navigationService, ICustomersManager customersManager) : base(navigationService)
         {
@@ -63,6 +64,8 @@ namespace PVCBasic.ViewModels
             param.Add("SelectedCustomers", selectedProduct);
             param.Add("SelectedProduct", this.Product);
             param.Add("DetailInvoices", this.DetailInvoices);
+            param.Add("TypeInvoice", this.TypeInvoice);
+            
             await this.NavigationService.GoBackAsync(param);
         }
 
@@ -211,6 +214,11 @@ namespace PVCBasic.ViewModels
         {
             base.OnNavigatedTo(parameters);
 
+            if (parameters.ContainsKey("TypeInvoice"))
+            {
+                this.TypeInvoice = parameters["TypeInvoice"] as string;
+            }
+
             if (parameters.ContainsKey("Title"))
             {
                 this.Title = parameters["Title"] as string;
@@ -239,6 +247,16 @@ namespace PVCBasic.ViewModels
             set
             {
                 this.isBusySearchBar = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public string TypeInvoice
+        {
+            get => this.typeInvoice;
+            set
+            {
+                this.typeInvoice = value;
                 this.RaisePropertyChanged();
             }
         }

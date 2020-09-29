@@ -24,9 +24,11 @@ namespace PVCBasic.Droid.DependencyService
 {
     public class BthPrint : IBthPrint
     {
-		//github.com/acaliaro/TestBth
+        //github.com/acaliaro/TestBth
 
-		private BluetoothDevice device = null;
+        public bool IsConnected { get; set; }
+
+        private BluetoothDevice device = null;
 		private BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
 		private BluetoothSocket BthSocket = null;
 		private StreamWriter outStream = null;
@@ -40,9 +42,9 @@ namespace PVCBasic.Droid.DependencyService
         public async Task ConnectAsync()
         {
 			//Thread.Sleep(1000);
-			_ct = new CancellationTokenSource();
-			while (_ct.IsCancellationRequested == false)
-			{
+			//_ct = new CancellationTokenSource();
+			//while (_ct.IsCancellationRequested == false)
+			//{
 
 				try
 				{
@@ -50,15 +52,21 @@ namespace PVCBasic.Droid.DependencyService
 
 					adapter = BluetoothAdapter.DefaultAdapter;
 
-					if (adapter == null)
-						System.Diagnostics.Debug.WriteLine("No Bluetooth adapter found.");
-					else
-						System.Diagnostics.Debug.WriteLine("Adapter found!!");
+				if (adapter == null)
+				{
+					this.IsConnected = false;
+					System.Diagnostics.Debug.WriteLine("No Bluetooth adapter found.");
+				}
+				else
+					System.Diagnostics.Debug.WriteLine("Adapter found!!");
 
-					if (!adapter.IsEnabled)
-						System.Diagnostics.Debug.WriteLine("Bluetooth adapter is not enabled.");
-					else
-						System.Diagnostics.Debug.WriteLine("Adapter enabled!");
+				if (!adapter.IsEnabled)
+				{
+					this.IsConnected = false;
+					System.Diagnostics.Debug.WriteLine("Bluetooth adapter is not enabled.");
+				}
+				else
+					System.Diagnostics.Debug.WriteLine("Adapter enabled!");
 
 					System.Diagnostics.Debug.WriteLine("Try to connect to " + this.NamePrint);
 
@@ -74,54 +82,62 @@ namespace PVCBasic.Droid.DependencyService
 						}
 					}
 
-					if (device == null)
-						System.Diagnostics.Debug.WriteLine("Named device not found.");
+				if (device == null)
+				{
+					this.IsConnected = false;
+					System.Diagnostics.Debug.WriteLine("Named device not found.");
+				}
+				else
+				{
+					UUID uuid = UUID.FromString("00001101-0000-1000-8000-00805f9b34fb");
+					if ((int)Android.OS.Build.VERSION.SdkInt >= 10) // Gingerbread 2.3.3 2.3.4
+						BthSocket = device.CreateInsecureRfcommSocketToServiceRecord(uuid);
 					else
+						BthSocket = device.CreateRfcommSocketToServiceRecord(uuid);
+
+					if (BthSocket != null)
 					{
-						UUID uuid = UUID.FromString("00001101-0000-1000-8000-00805f9b34fb");
-						if ((int)Android.OS.Build.VERSION.SdkInt >= 10) // Gingerbread 2.3.3 2.3.4
-							BthSocket = device.CreateInsecureRfcommSocketToServiceRecord(uuid);
-						else
-							BthSocket = device.CreateRfcommSocketToServiceRecord(uuid);
 
-						if (BthSocket != null)
+
+
+						await BthSocket.ConnectAsync();
+						await Task.Delay(500);
+
+						if (BthSocket.IsConnected)
 						{
-
-
-							
-							await BthSocket.ConnectAsync();
-							await Task.Delay(500);
-							
-							if (BthSocket.IsConnected)
+							this.IsConnected = true;
+							System.Diagnostics.Debug.WriteLine("Connected!");
+							Thread.Sleep(200);
+							try
 							{
-								System.Diagnostics.Debug.WriteLine("Connected!");
-								Thread.Sleep(200);
-									try
-									{
-									this.outStream = new StreamWriter(this.BthSocket.OutputStream);
-									}
-									catch (Exception e)
-									{
-									System.Diagnostics.Debug.WriteLine(e.Message);
-									}
-								}
-								
-								System.Diagnostics.Debug.WriteLine("Exit the inner loop");
-
-							
+								this.outStream = new StreamWriter(this.BthSocket.OutputStream);
+							}
+							catch (Exception e)
+							{
+								System.Diagnostics.Debug.WriteLine(e.Message);
+							}
 						}
-						else
-							System.Diagnostics.Debug.WriteLine("BthSocket = null");
+
+						System.Diagnostics.Debug.WriteLine("Exit the inner loop");
+
 
 					}
+					else
+					{
+						this.IsConnected = false;
+						System.Diagnostics.Debug.WriteLine("BthSocket = null");
+					}
+
+				}
 
 
 				}
 				catch (Exception ex)
 				{
-					System.Diagnostics.Debug.WriteLine("EXCEPTION: " + ex.Message);
+				this.IsConnected = false;
+				System.Diagnostics.Debug.WriteLine("EXCEPTION: " + ex.Message);
 				}
-			}
+			//}
 
 			System.Diagnostics.Debug.WriteLine("Exit the external loop");
 		}
