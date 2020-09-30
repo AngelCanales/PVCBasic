@@ -40,6 +40,9 @@ namespace PVCBasic.Droid
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IBthPrint, BthPrint>();
+            containerRegistry.RegisterSingleton<IFileHelper, FileHelper>();
+            containerRegistry.RegisterSingleton<WebViewCallBack>();
+            
         }
     }
 }

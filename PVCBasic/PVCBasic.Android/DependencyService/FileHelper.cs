@@ -36,9 +36,10 @@ namespace PVCBasic.Droid.DependencyService
             int width = 2102;
             int height = 2973;
 
+            
             webpage.Layout(0, 0, width, height);
             webpage.SetWebViewClient(new WebViewCallBack(file.ToString()));
-            webpage.LoadDataWithBaseURL("", html, "text/html", "UTF-8", null);
+            webpage.LoadData( html, "text/html", "UTF-8");
 
             webpage?.Dispose();
             webpage = null;

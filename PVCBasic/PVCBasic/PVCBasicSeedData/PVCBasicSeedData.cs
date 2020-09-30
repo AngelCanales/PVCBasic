@@ -47,18 +47,18 @@ namespace PVCBasic.PVCBasicSeedData
                 context.Add(new Parameters { Key = "FirstInvoiceNumber", Value = "" });
                 context.Add(new Parameters { Key = "LastInvoiceNumber", Value = "" });
                 context.Add(new Parameters { Key = "PrintCode", Value = "" });
-                context.Add(new Parameters { Key = "StoreName", Value = "Parameter" });
+                context.Add(new Parameters { Key = "StoreName", Value = "ParameterStoreName" });
                 context.Add(new Parameters { Key = "Logo", Value = "Parameter" });
                 context.Add(new Parameters { Key = "ValidUntilDate", Value = "" });
-                context.Add(new Parameters { Key = "NamePrint", Value = "Parameter" });
+                context.Add(new Parameters { Key = "NamePrint", Value = "ParameterNamePrint" });
 
                 context.Add(new Parameters { Key = "CAI", Value = "Parameter" });
 
-                context.Add(new Parameters { Key = "Email", Value = "Parameter" });
-                context.Add(new Parameters { Key = "Phonenumbe", Value = "Parameter" });
-                context.Add(new Parameters { Key = "Address", Value = "Parameter" });
-                context.Add(new Parameters { Key = "RTN", Value = "Parameter" });
-                context.Add(new Parameters { Key = "ThankMessage", Value = "ThankMessage" });
+                context.Add(new Parameters { Key = "Email", Value = "ParameterEmail" });
+                context.Add(new Parameters { Key = "Phonenumbe", Value = "ParameterPhonenumbe" });
+                context.Add(new Parameters { Key = "Address", Value = "ParameterAddress" });
+                context.Add(new Parameters { Key = "RTN", Value = "ParameterRTN" });
+                context.Add(new Parameters { Key = "ThankMessage", Value = "ParameterThankMessage" });
                 await context.SaveChangesAsync();
            
         }
