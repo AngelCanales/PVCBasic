@@ -1,14 +1,19 @@
-﻿using System;
+﻿using PVCBasic.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PVCBasic.DependencyService
 {
     public interface IFileHelper
     {
      
-        string StrartConverting(string html, string namefile);
-       
+        Task<string> StrartConverting(string html, string namefile);
+
+        string DocumentFilePath { get; }
+
+        void ConvertHTMLtoPDF(PDFToHtml _PDFToHtml);
     }
 }

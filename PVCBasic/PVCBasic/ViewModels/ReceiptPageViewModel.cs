@@ -50,8 +50,10 @@ namespace PVCBasic.ViewModels
 
                 string path = string.Empty;
 
-                var t = $"Receipt-{Guid.NewGuid().ToString()}";
-                path = Xamarin.Forms.DependencyService.Get<IFileHelper>().StrartConverting(this.Receipt, t);
+                    var t = $"Receipt-{Guid.NewGuid().ToString()}";
+                //    path = await Xamarin.Forms.DependencyService.Get<IFileHelper>().StrartConverting(this.Receipt, t);
+               path = await this.printInvoice.GeneratePDF(this.Receipt, t);
+                
                 // CrossToastPopUp.Current.ShowToastSuccess($"{path}", ToastLength.Long);
 
                 await Share.RequestAsync(new ShareFileRequest

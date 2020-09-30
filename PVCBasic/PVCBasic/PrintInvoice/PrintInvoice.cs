@@ -16,6 +16,7 @@ using PVCBasic.DependencyService;
 using PVCBasic.PVCBCore.Parameters;
 using System.Collections.Generic;
 using DryIoc;
+using System.IO;
 
 namespace PVCBasic.PrintInvoice
 {
@@ -32,6 +33,8 @@ namespace PVCBasic.PrintInvoice
             this.parametersManager = parametersManager;
             this.bthPrint = bthPrint;
         }
+
+      
 
         public async Task<string> GetHtmlInvoices(string id)
         {
@@ -79,6 +82,44 @@ namespace PVCBasic.PrintInvoice
 
         }
 
+       
+        public async Task<string> GeneratePDF(string html, string namefile)
+        {
+            string path = string.Empty;
+            try
+            {
+                var pdf = new PDFToHtml();
+                pdf.StatusFailed = false;
+                pdf.FileName = namefile;
+                pdf.HTMLString = html;
+                pdf.FilePath = CreateTempPath(pdf.FileName);
+                pdf.FileStream = File.Create(pdf.FilePath);
+                path = pdf.FilePath;
+                Xamarin.Forms.DependencyService.Get<IFileHelper>().ConvertHTMLtoPDF(pdf);
+               
+            }
+            catch
+            {
+                await App.Current.MainPage.DisplayAlert("ERROR!", "PDF is not generated", "Ok");
+            }
+            return path;
+        }
+
+        public static string CreateTempPath(string fileName)
+        {
+            string tempPath = Path.Combine(Xamarin.Forms.DependencyService.Get<IFileHelper>().DocumentFilePath, "temp");
+            if (!Directory.Exists(tempPath))
+                Directory.CreateDirectory(tempPath);
+
+            string path = Path.Combine(tempPath, fileName + ".pdf");
+            while (File.Exists(path))
+            {
+                fileName = Path.GetFileNameWithoutExtension(fileName) + "_" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + Path.GetExtension(fileName);
+                path = Path.Combine(tempPath, fileName + ".pdf");
+            }
+
+            return path;
+        }
 
         public async Task ExecutePrintInvoicesHeader()
         {
