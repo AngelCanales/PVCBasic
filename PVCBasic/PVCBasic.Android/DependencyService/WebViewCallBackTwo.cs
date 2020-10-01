@@ -57,7 +57,10 @@ namespace PVCBasic.Droid.DependencyService
                 if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Kitkat)
                 {
                     var builder = new PrintAttributes.Builder();
-                    builder.SetMediaSize(PrintAttributes.MediaSize.IsoA6);
+
+                    var p = new PrintAttributes.MediaSize("pdf", "pdf",4133, 11692);
+
+                    builder.SetMediaSize(p);
                    
                     builder.SetResolution(new PrintAttributes.Resolution("pdf", "pdf", (int)pDFToHtml.PageDPI, (int)pDFToHtml.PageDPI));
                     builder.SetMinMargins(PrintAttributes.Margins.NoMargins);

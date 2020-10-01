@@ -293,6 +293,10 @@ namespace PVCBasic.ViewModels
             if (!this.DetailInvoices.Any()) { return; }
 
           
+            //if(this.Cash.Value == 0)
+            //{
+            //    this.Cash = this.Total.Value;
+            //}
 
             string numberinvoice = string.Empty;
             try
