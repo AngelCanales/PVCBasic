@@ -31,20 +31,20 @@
             </SearchBar>
             </StackLayout>
                 <StackLayout  Grid.Row="1" Grid.Column="0">
-
-                <ListView x:Name="_ListView" 
+                    <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                        <ListView x:Name="_ListView" 
                 ItemsSource="{Binding ListOfProducts}"
               HasUnevenRows="true"
                 CachingStrategy="RecycleElement"
                            SeparatorColor="#343a40"
                 >
-                    <ListView.Behaviors>
-                            <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailProductCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>
-                    </ListView.Behaviors>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <!--<StackLayout Padding="10">
+                            <ListView.Behaviors>
+                                <behaviors:EventToCommandBehavior EventName="ItemTapped"  Command="{Binding DetailProductCommand}" Converter="{StaticResource ItemTappedEventArgsToObjectConverter}"/>
+                            </ListView.Behaviors>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <!--<StackLayout Padding="10">
 
                                     <Label Text="{Binding Name}" 
                        LineBreakMode="NoWrap" 
@@ -53,19 +53,19 @@
                                   
                                 </StackLayout>-->
 
-                                <Grid Padding="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="40"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <!--<RowDefinition Height="Auto"></RowDefinition>-->
-                                    </Grid.RowDefinitions>
+                                        <Grid Padding="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="40"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="40"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                <!--<RowDefinition Height="Auto"></RowDefinition>-->
+                                            </Grid.RowDefinitions>
 
-                                        <Frame 
+                                            <Frame 
                                     HeightRequest="40"
                                     WidthRequest="40"
                                     CornerRadius="20"
@@ -76,33 +76,33 @@
                                            BorderColor="#28a745"
                                     BackgroundColor="#fff"
                                     Grid.RowSpan="2">
-                                            <Label
+                                                <Label
                                         Text="{x:Static fontawesome:FontAwesomeIcons.Box}"
                                         FontFamily="{StaticResource FontAwesomeSolid}" 
                                         TextColor="#28a745"
                                         HorizontalTextAlignment="Center"
                                         VerticalTextAlignment="Center" />
-                                        </Frame>
+                                            </Frame>
 
-                                    
-                                      
-                                        <Label Text="{Binding Name}" 
+
+
+                                            <Label Text="{Binding Name}" 
                                        LineBreakMode="NoWrap"
                                       TextColor="Black" 
                                        FontSize="{StaticResource BigSize}"
                                            FontAttributes="Bold"
                                        Grid.Row="0"
                                        Grid.Column="1" />
-                                    <StackLayout Padding="0,-7,0,0" Grid.Row="1"
+                                            <StackLayout Padding="0,-7,0,0" Grid.Row="1"
                                        Grid.Column="1" >
-                                        <Label Text="{Binding Code}"
+                                                <Label Text="{Binding Code}"
                                        LineBreakMode="NoWrap" 
                                        TextColor="Black" 
                                        FontSize="{StaticResource LittleSize}"
                                       FontAttributes="Bold"
                                        />
-                                    </StackLayout>
-                                    <!--<StackLayout Padding="0,-7,0,0" Grid.Row="2"
+                                            </StackLayout>
+                                            <!--<StackLayout Padding="0,-7,0,0" Grid.Row="2"
                                        Grid.Column="1">
                                         <Label Text="{Binding ShortName}"
                                       TextColor="Black" 
@@ -110,13 +110,14 @@
                                        FontAttributes="Bold"
                                        />
                                     </StackLayout>-->
-                                </Grid>
+                                        </Grid>
 
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollView>
+                </StackLayout>
             </Grid>
 
             <Frame

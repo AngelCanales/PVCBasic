@@ -30,8 +30,8 @@
                     </SearchBar>
                 </StackLayout>
                 <StackLayout  Grid.Row="1" Grid.Column="0">
-
-                    <ListView x:Name="_ListView" 
+                    <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                        <ListView x:Name="_ListView" 
                 ItemsSource="{Binding ListOfProviders}"
               HasUnevenRows="true"
                 CachingStrategy="RecycleElement"
@@ -97,6 +97,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                        </ScrollView>
                 </StackLayout>
             </Grid>
 
